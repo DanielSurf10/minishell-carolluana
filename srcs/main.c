@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/09/19 20:28:09 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/09/20 20:05:31 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,49 @@
 
 int	main(void)
 {
-	char	*line;
-	int	i = 0;
+	char	*prompt;
+	char	*cpy_prompt;
+	char	*dest;
+
+	dest = malloc(sizeof (char) * (2 * strlen(prompt)));
 	while (1)
 	{
-		line = readline("minihell: ");
-		printf("prompt: %s\n", line);
-		if (strcmp(line, "exit") == 0)
+		prompt = readline("minihell: ");
+		printf("prompt: %s\n", prompt);
+		if (strcmp(prompt, "exit") == 0)
 		{
-			free(line);
+			free(prompt);
 			exit(1);
 		}
-		rl_on_new_line();
+		add_history(prompt);
+	}
+}
+
+int	is_metachar(char *prompt)
+{
+	int	i;
+
+	i = 0;
+	while (prompt[i])
+	{
+		if (prompt[i] == '"')
+			return (1);
+		else if (prompt[i] == "'")
+			return (1);
+		else if (prompt[i] == '|')
+			return(1);
 		i++;
 	}
 }
+
+// char	*strcpy_space(char *prompt, char *dest)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while(prompt[i])
+// 	{
+// 		dest[i] = prompt[i];
+// 		i++;
+// 	}
+// }
