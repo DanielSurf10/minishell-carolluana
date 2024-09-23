@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   metachar.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/19 18:17:04 by cshingai          #+#    #+#             */
-/*   Updated: 2024/09/23 19:04:57 by cshingai         ###   ########.fr       */
+/*   Created: 2024/09/23 18:06:08 by cshingai          #+#    #+#             */
+/*   Updated: 2024/09/23 18:24:19 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+int	is_metachar(char c)
+{
+	if (c == '"')
+		return (2);
+	else if (c == '\'')
+		return (2);
+	else if (c == '|')
+		return (1);
+	else if (c == '<')
+		return (1);
+	else if (c == '>')
+		return (1);
+	else
+		return (0);
+}
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <signal.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libs/libft/libft.h"
-
-
-void	*strcpy_space(char *prompt, char *dest);
-int		is_metachar(char c);
-
-#endif
+// int	sep_signals(char c)
+// {
+// 	if ()
+// }

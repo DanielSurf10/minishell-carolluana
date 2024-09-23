@@ -6,7 +6,7 @@
 #    By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 17:34:18 by cshingai          #+#    #+#              #
-#    Updated: 2024/09/19 20:44:28 by cshingai         ###   ########.fr        #
+#    Updated: 2024/09/23 18:07:41 by cshingai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ HEADERS = -I ./include
 
 SRCS = ${addprefix srcs/, \
 					main.c \
+					metachar.c \
 				 }
 
 OBJ = $(SRCS:srcs/%.c=obj/%.o)

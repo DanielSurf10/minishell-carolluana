@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/09/20 20:05:31 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/09/23 19:23:30 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,47 +16,44 @@ int	main(void)
 {
 	char	*prompt;
 	char	*cpy_prompt;
-	char	*dest;
 
-	dest = malloc(sizeof (char) * (2 * strlen(prompt)));
+
+	cpy_prompt = malloc(sizeof (char) * (3 * strlen(prompt)));
 	while (1)
 	{
 		prompt = readline("minihell: ");
-		printf("prompt: %s\n", prompt);
+		strcpy_space(prompt, cpy_prompt);
+		printf("prompt: %s\n", cpy_prompt);
+		// signal(SIGTERM, SIG_DFL);
 		if (strcmp(prompt, "exit") == 0)
 		{
 			free(prompt);
+			free(cpy_prompt);
 			exit(1);
 		}
 		add_history(prompt);
 	}
 }
 
-int	is_metachar(char *prompt)
+void	*strcpy_space(char *prompt, char *dest)
 {
-	int	i;
+	int	p;
+	int	d;
 
-	i = 0;
-	while (prompt[i])
+	p = 0;
+	d = 0;
+	while(prompt[p])
 	{
-		if (prompt[i] == '"')
-			return (1);
-		else if (prompt[i] == "'")
-			return (1);
-		else if (prompt[i] == '|')
-			return(1);
-		i++;
+		if (is_metachar(prompt[p]))
+		{
+			if (dest[d -1] != ' ')
+				dest[d++] = ' ';
+			dest[d++] = prompt[p++];
+			dest[d++] = ' ';
+		}
+		else
+			dest[d++] = prompt[p++];
 	}
+	dest[d] = '\0';
+	return (NULL);
 }
-
-// char	*strcpy_space(char *prompt, char *dest)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while(prompt[i])
-// 	{
-// 		dest[i] = prompt[i];
-// 		i++;
-// 	}
-// }
