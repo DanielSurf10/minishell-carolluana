@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/09/23 19:23:30 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/09/23 19:30:41 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	main(void)
 {
 	char	*prompt;
 	char	*cpy_prompt;
-
 
 	cpy_prompt = malloc(sizeof (char) * (3 * strlen(prompt)));
 	while (1)
