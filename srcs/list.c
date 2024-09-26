@@ -6,9 +6,13 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:28:09 by cshingai          #+#    #+#             */
-/*   Updated: 2024/09/25 20:11:35 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/09/26 17:03:32 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// uma modificação aleatória
+// mais modificações
+
 
 #include "../include/minishell.h"
 
