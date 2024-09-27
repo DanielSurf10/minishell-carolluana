@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 18:17:04 by cshingai          #+#    #+#             */
-/*   Updated: 2024/09/27 19:07:54 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/09/27 19:18:32 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libs/libft/libft.h"
-# include <unistd.h>
 
 typedef struct s_token
 {
