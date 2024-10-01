@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 18:17:04 by cshingai          #+#    #+#             */
-/*   Updated: 2024/09/27 19:18:32 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/09/30 21:42:22 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,22 @@ typedef struct s_token
 
 typedef struct s_list
 {
-	char	value;
+	t_token			token;
 	struct s_list	*next;
 	struct s_list	*prev;
 }	t_list ;
+
+typedef struct s_tkn_data
+{
+	int		lex_len;
+	char	*lexema;
+	int		state;
+}	t_tkn_data ;
+
+typedef struct s_minishell
+{
+	struct s_list	*token_list;
+}	t_minishell ;
 
 // main.c
 int		is_metachar(char c);
