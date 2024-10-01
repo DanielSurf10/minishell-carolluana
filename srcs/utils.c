@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 18:06:08 by cshingai          #+#    #+#             */
-/*   Updated: 2024/09/28 18:46:01 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/09/30 18:13:54 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,9 @@ void	ft_strcpy(char *prompt, char *copy)
 		copy[i] = prompt[i];
 		i++;
 	}
+}
+
+int ft_isspace(char c)
+{
+	return (c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == 'v');
 }
