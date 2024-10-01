@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 18:17:04 by cshingai          #+#    #+#             */
-/*   Updated: 2024/09/30 21:42:22 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/09/30 22:32:28 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,21 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libs/libft/libft.h"
+
+//****************************************************************************//
+//                               TOKENIZER                                    //
+//****************************************************************************//
+
+enum e_token
+{
+	WORD,
+	PIPE,
+	REDIRECT_INPUT,
+	REDIRECT_HEREDOC,
+	REDIRECT_OUTPUT,
+	REDIRECT_OUTPUT_APPEND,
+	COMMAND
+};
 
 typedef struct s_token
 {
@@ -35,9 +50,12 @@ typedef struct s_list
 
 typedef struct s_tkn_data
 {
+	int		str_len;
 	int		lex_len;
 	char	*lexema;
 	int		state;
+	int		tkn_type;
+	int		final_token;
 }	t_tkn_data ;
 
 typedef struct s_minishell
