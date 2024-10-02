@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/09/25 19:10:30 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/09/30 21:31:28 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,13 @@
 int	main(void)
 {
 	char	*prompt;
+	t_minishell	base;
 
+	base.token_list = NULL;
 	while (1)
 	{
 		prompt = readline("minihell: ");
+		tokenizer(prompt, base.token_list);
 		push_prompt_to_list(&prompt);
 		if (strcmp(prompt, "exit") == 0)
 		{
