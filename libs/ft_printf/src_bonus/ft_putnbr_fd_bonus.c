@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   metachar.c                                         :+:      :+:    :+:   */
+/*   ft_putnbr_fd_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/23 18:06:08 by cshingai          #+#    #+#             */
-/*   Updated: 2024/09/23 18:24:19 by cshingai         ###   ########.fr       */
+/*   Created: 2023/10/27 16:23:44 by cshingai          #+#    #+#             */
+/*   Updated: 2024/01/10 18:20:04 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	is_metachar(char c)
-{
-	if (c == '"')
-		return (2);
-	else if (c == '\'')
-		return (2);
-	else if (c == '|')
-		return (1);
-	else if (c == '<')
-		return (1);
-	else if (c == '>')
-		return (1);
-	else
-		return (0);
-}
+#include "ft_printf_bonus.h"
 
-// int	sep_signals(char c)
-// {
-// 	if ()
-// }
+int	ft_putnbr(int n)
+{
+	char	str;
+	int		x;
+
+	x = 0;
+	if (n == -2147483648)
+		return (write(1, "-2147483648", 11));
+	if (n < 0)
+	{
+		x += write(1, "-", 1);
+		n *= -1;
+	}
+	if (n > 9)
+	{
+		x += ft_putnbr(n / 10);
+		x += ft_putnbr(n % 10);
+	}
+	else
+	{
+		str = n + '0';
+		x += write(1, &str, 1);
+	}
+	return (x);
+}
