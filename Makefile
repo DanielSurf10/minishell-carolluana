@@ -6,43 +6,61 @@
 #    By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 17:34:18 by cshingai          #+#    #+#              #
-#    Updated: 2024/09/25 19:54:07 by cshingai         ###   ########.fr        #
+#    Updated: 2024/09/27 18:19:21 by cshingai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Wextra -Werror -g3
 LIBFT = libs/libft
-LIBS = $(LIBFT)/libft.a
-HEADERS = -I ./include
+FT_PRINTF = libs/ft_printf
+LIBS = $(LIBFT)/libft.a $(FT_PRINTF)/libftprintf.a
+HEADERS = -I $(LIBFT) -I ./include
 
+# source files
 SRCS = ${addprefix srcs/, \
-					main.c \
-					metachar.c \
-					list.c \
-				 }
+			main.c \
+			list.c \
+			utils.c \
+		}
 
 OBJ = $(SRCS:srcs/%.c=obj/%.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-			@cc $(FLAGS) $(HEADERS) $(OBJ) -lreadline -o $@
+$(NAME): libft ft_printf ${OBJ}
+			@cc $(FLAGS) $(OBJ) $(LIBS) -lreadline -o $@
 			@echo "compiling $(NAME)"
 
-obj/%.o: srcs/%.c
-			@mkdir -p obj
+# building libraries
+libft:
+			@make -C $(LIBFT) all
+
+ft_printf:
+			@make -C $(FT_PRINTF) all
+
+# compiling objects files
+obj/%.o: srcs/%.c ./include/minishell.h
+			mkdir -p obj
 			@cc $(FLAGS) $(HEADERS) -c $< -o $@
-			@echo "compiling $(notdir $<)"
+			@echo "compiling objects"
 
+# cleanning up objects files
 clean:
-			@echo "removing object files"
+			@echo "removing objects"
 			@rm -rf $(OBJ)
+			@make clean -C $(LIBFT)
+			@make clean -C $(FT_PRINTF)
 
-fclean: clean
+# cleaning up executables
+fclean:	clean
 			@echo "removing executables"
 			@rm -rf $(NAME)
+			@echo "removing libs"
+			@make fclean -C $(LIBFT)
+			@make fclean -C $(FT_PRINTF)
+			@echo "everything was removed 🧹🗑️"
 
 re: fclean all
 
-.PHONY: all, clean, fclean, re
+.PHONY: all libft ft_printf clean fclean re

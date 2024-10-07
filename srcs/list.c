@@ -6,15 +6,14 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:28:09 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/07 17:30:10 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/07 17:33:04 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// uma modificação aleatória
-// mais modificações
+// // uma modificação aleatória
+// // mais modificações
 
-
-// #include "../include/minishell.h"
+// // #include "../include/minishell.h"
 
 // /*
 // 	My intention here is to pass the copy_prompt, with spaces between the
