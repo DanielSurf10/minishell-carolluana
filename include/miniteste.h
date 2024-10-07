@@ -5,9 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/07 19:52:05 by lsouza-r         ###   ########.fr       */
-/*                                                                            */
+/*   Created: 2024/09/19 18:17:04 by cshingai          #+#    #+#             */
+/*   Updated: 2024/09/30 22:32:28 by lsouza-r         ###   ########.fr       */                                                     */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
@@ -38,14 +37,14 @@ enum e_token
 typedef struct s_token
 {
 	int		type;
-	char	*lexeme;
+	char	*lexame;
 }	t_token;
 
 typedef struct s_token_list
 {
 	t_token			token;
-	struct s_token_list	*next;
-	struct s_token_list	*prev;
+	struct s_list	*next;
+	struct s_list	*prev;
 }	t_list ;
 
 typedef struct s_tkn_data
@@ -60,38 +59,22 @@ typedef struct s_tkn_data
 
 typedef struct s_minishell
 {
-	t_list	*token_list;
+	struct s_list	*token_list;
 }	t_minishell ;
 
 // main.c
 
 // lexing.c
-// void	push_prompt_to_list(char **prompt);
-// void	print_list(t_token_list **list);
-// void	create_node(t_token_list **list, char *tolken);
-// void	*strcpy_space(char *prompt, char *dest);
-// char *send_word(char *cpy_prompt);
-void	tokenizer(char *str, t_list *token_list);
-void	init_token_data(t_tkn_data *tkn_data, char *str);
-int	is_final_state(t_tkn_data tkn_data);
-void	put_token_on_list(t_tkn_data tkn_data, char *str, t_list *token_list, int i);
-int	get_token_type(int	state);
-int	token_get_next_state(int state, char c);
-int	token_get_state_30(char c);
-int	token_get_state_40(char c);
-void	state_requires_backtrack(t_tkn_data *tkn_data, int	*i);
-int	token_get_state_1(char c);
-int	ft_is_space(char c);
-int	is_metachar(char c);
-int	token_get_state_50(char c);
-int	token_get_state_51(char c);
-int	token_get_state_52(char c);
+void	push_prompt_to_list(char **prompt);
+void	print_list(t_token_list **list);
+void	create_node(t_token_list **list, char *tolken);
+void	*strcpy_space(char *prompt, char *dest);
+char *send_word(char *cpy_prompt);
 
 //utils.c
 void	ft_strcpy(char *prompt, char *copy);
 int		is_metachar(char c);
-int		ft_isspace(char c);
-void	token_add_to_list(t_list **token_list, char *lexeme, int token_type);
-void	free_list(t_list **token_list);
+int		ft_isspace(char c)
+
 
 #endif
