@@ -6,25 +6,25 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 18:06:08 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/07 17:34:09 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/07 17:35:37 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	is_metachar(char c)
-{
-	if (c == '"')
-		return (2);
-	else if (c == '\'')
-		return (2);
-	else if (c == '|')
-		return (1);
-	else if (c == '<')
-		return (1);
-	else if (c == '>')
-		return (1);
-	else
-		return (0);
-}
+// int	is_metachar(char c)
+// {
+// 	if (c == '"')
+// 		return (2);
+// 	else if (c == '\'')
+// 		return (2);
+// 	else if (c == '|')
+// 		return (1);
+// 	else if (c == '<')
+// 		return (1);
+// 	else if (c == '>')
+// 		return (1);
+// 	else
+// 		return (0);
+// }
 
 // int	sep_signals(char c)
 // {
