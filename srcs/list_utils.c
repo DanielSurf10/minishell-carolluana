@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 19:26:31 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/07 20:39:57 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/07 22:22:40 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	token_add_to_list(t_list **token_list, char *lexeme, int token_type)
 	t_list	*new_token;
 	t_list	*last_node;
 
-	printf("teste 1\n");
+	// printf("teste 1\n");
 	last_node = *token_list;
 	new_token = token_create_node(lexeme, token_type);
 	while (last_node && last_node->next)
@@ -38,8 +38,8 @@ void	token_add_to_list(t_list **token_list, char *lexeme, int token_type)
 	else
 		*token_list = new_token;
 	// printf("lastnode type: %d\n", last_node->token.type);
-	printf("type: %d lexema: %s\n", new_token->token.type, new_token->token.lexeme);
-	printf("teste 2");
+	// printf("type: %d lexema: %s\n", (*token_list)->token.type, (*token_list)->token.lexeme);
+	// printf("teste 2");
 }
 
 void	free_list(t_list **token_list)
