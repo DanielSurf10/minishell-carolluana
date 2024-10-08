@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+         #
+#    By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 17:34:18 by cshingai          #+#    #+#              #
-#    Updated: 2024/09/27 18:19:21 by cshingai         ###   ########.fr        #
+#    Updated: 2024/10/07 19:50:25 by lsouza-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,9 @@ SRCS = ${addprefix srcs/, \
 			main.c \
 			list.c \
 			utils.c \
+			list_utils.c \
+			tokenizer.c \
+			tokens2.c \
 		}
 
 OBJ = $(SRCS:srcs/%.c=obj/%.o)
