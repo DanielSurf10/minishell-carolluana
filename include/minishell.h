@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/07 19:52:05 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/07 22:21:11 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ typedef struct s_minishell
 // void	create_node(t_token_list **list, char *tolken);
 // void	*strcpy_space(char *prompt, char *dest);
 // char *send_word(char *cpy_prompt);
-void	tokenizer(char *str, t_list *token_list);
+t_list	*tokenizer(char *str);
 void	init_token_data(t_tkn_data *tkn_data, char *str);
 int	is_final_state(t_tkn_data tkn_data);
-void	put_token_on_list(t_tkn_data tkn_data, char *str, t_list *token_list, int i);
+void	put_token_on_list(t_tkn_data tkn_data, char *str, t_list **token_list, int i);
 int	get_token_type(int	state);
 int	token_get_next_state(int state, char c);
 int	token_get_state_30(char c);

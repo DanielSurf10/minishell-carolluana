@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/07 20:40:15 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/07 22:18:21 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,10 @@ int	main(void)
 	char	*prompt;
 	t_minishell	base;
 
-	base.token_list = NULL;
 	while (1)
 	{
 		prompt = readline("minihell: ");
-		tokenizer(prompt, (base).token_list);
+		base.token_list = tokenizer(prompt);
 		// push_prompt_to_list(&prompt);
 		print_list(base.token_list);
 		if (strcmp(prompt, "exit") == 0)
