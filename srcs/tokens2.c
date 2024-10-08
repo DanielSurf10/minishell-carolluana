@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 19:57:53 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/07 22:28:16 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:23:11 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	state_requires_backtrack(t_tkn_data *tkn_data, int	*i)
 	if (tkn_data->state == 32 || tkn_data->state == 42 || tkn_data->state == 53)
 	{
 		tkn_data->lex_len = tkn_data->lex_len - 1;
-		i = i - 1;
+		*i = (*i) - 1;
 	}
 }
 int	token_get_state_1(char c)
