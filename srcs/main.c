@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/08 16:32:59 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:06:42 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,18 @@ int	main(void)
 	while (1)
 	{
 		prompt = readline("minihell: ");
+		if (prompt == NULL)
+			break;
 		base.token_list = tokenizer(prompt);
 		// push_prompt_to_list(&prompt);
 		print_list(base.token_list);
 		if (strcmp(prompt, "exit") == 0)
 		{
 			free(prompt);
+			free_list(&base.token_list);
 			exit(1);
 		}
 		add_history(prompt);
+		free_list(&base.token_list);
 	}
 }
