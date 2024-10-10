@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 19:26:31 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/07 22:22:40 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/09 21:20:26 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static t_list	*token_create_node(char *lexeme, int token_type)
 	new_token->token.lexeme = lexeme;
 	new_token->token.type = token_type;
 	new_token->next = NULL;
+	new_token->prev = NULL;
 	return (new_token);
 }
 
@@ -34,7 +35,10 @@ void	token_add_to_list(t_list **token_list, char *lexeme, int token_type)
 	while (last_node && last_node->next)
 		last_node = last_node->next;
 	if (last_node)
+	{
 		last_node->next = new_token;
+		last_node->next->prev = last_node;
+	}
 	else
 		*token_list = new_token;
 	// printf("lastnode type: %d\n", last_node->token.type);

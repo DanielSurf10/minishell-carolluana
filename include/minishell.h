@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/08 17:47:18 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/09 20:50:30 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ typedef struct s_token
 
 typedef struct s_token_list
 {
-	t_token			token;
+	int					pos;
+	t_token				token;
 	struct s_token_list	*next;
 	struct s_token_list	*prev;
 }	t_list ;
@@ -57,10 +58,21 @@ typedef struct s_tkn_data
 	int		tkn_type;
 }	t_tkn_data ;
 
+typedef struct s_tree
+{
+	int				tkn_type;
+	char			*lexeme;
+	char			*cmd;
+	struct s_tree	*left;
+	struct s_tree	*right;
+}	t_tree ;
+
 typedef struct s_minishell
 {
 	t_list	*token_list;
+	t_tree	*tree;
 }	t_minishell ;
+
 
 // main.c
 
@@ -92,5 +104,10 @@ int		is_metachar(char c);
 int		ft_isspace(char c);
 void	token_add_to_list(t_list **token_list, char *lexeme, int token_type);
 void	free_list(t_list **token_list);
+
+//parsing-tree
+// t_tree	*build_tree(t_list	*tkn_list);
+t_list	*get_last_token(t_list	*tkn_list);
+t_list	*hunt_last_pipe(t_list	*tkn_list);
 
 #endif
