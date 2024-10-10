@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.h                                         :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/02 19:01:50 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/02 19:05:03 by cshingai         ###   ########.fr       */
+/*   Created: 2024/10/09 20:10:44 by cshingai          #+#    #+#             */
+/*   Updated: 2024/10/09 21:10:03 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef PARSING_H
+# define PARSING_H
 
-#ifndef EXPANDER_H
-# define EXPANDER_H
-
-# include "./minishell.h"
+# include "minishell.h"
 
 
+// int	valid_redirect(t_list *list);
 
 #endif

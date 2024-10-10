@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/08 17:47:18 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/09 21:18:55 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libs/libft/libft.h"
+# include "./parsing.h"
 
 //****************************************************************************//
 //                               TOKENIZER                                    //
@@ -88,9 +89,12 @@ int	token_get_state_52(char c);
 
 //utils.c
 void	ft_strcpy(char *prompt, char *copy);
-int		is_metachar(char c);
-int		ft_isspace(char c);
 void	token_add_to_list(t_list **token_list, char *lexeme, int token_type);
 void	free_list(t_list **token_list);
+
+//validation.c
+int	valid_redirect(t_list *list);
+int	valid_pipe(t_list *token_list);
+int	valid_list(t_list *list);
 
 #endif
