@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:09:36 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/10 20:56:29 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/10 21:24:36 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,11 @@ int	valid_redirect(t_list *list)
 		if ((aux->token.type >= 2 && aux->token.type <= 5)
 			&& (aux->next == NULL))
 			return (0);
-		else if (aux->token.type == 5
-			&& (aux->next->token.type == 4 || aux->next->token.type == 5))
+		else if (aux->token.type == 5 && aux->next->token.type != 0)
 			return (0);
-		else if (aux->token.type == 3
-			&& (aux->next->token.type == 2 || aux->next->token.type == 3))
+		else if (aux->token.type == 3 && aux->next->token.type != 0)
 			return (0);
-		else if ((aux->token.type == 2 && aux->next->token.type == 4)
-			||	(aux->token.type == 2 && aux->next->token.type == 4))
+		else if ((aux->token.type == 2 || aux->token.type == 4) && aux->next->token.type != 0)
 			return (0);
 		aux = aux->next;
 	}
