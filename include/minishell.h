@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/09 20:50:30 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/11 19:09:19 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ typedef struct s_tkn_data
 typedef struct s_tree
 {
 	int				tkn_type;
-	char			*lexeme;
-	char			*cmd;
+	t_list			*sub_list;
 	struct s_tree	*left;
 	struct s_tree	*right;
 }	t_tree ;
@@ -106,7 +105,7 @@ void	token_add_to_list(t_list **token_list, char *lexeme, int token_type);
 void	free_list(t_list **token_list);
 
 //parsing-tree
-// t_tree	*build_tree(t_list	*tkn_list);
+t_tree	*build_tree(t_list	*tkn_list);
 t_list	*get_last_token(t_list	*tkn_list);
 t_list	*hunt_last_pipe(t_list	*tkn_list);
 
