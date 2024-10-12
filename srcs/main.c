@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/11 19:09:36 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/12 14:05:51 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(void)
 		base.token_list = tokenizer(prompt);
 		// push_prompt_to_list(&prompt);
 		// print_list(base.token_list);
-		base.tree = build_tree(base.token_list);
+		base.tree = build_root(base.token_list);
 		// if (last_pipe)
 		// 	printf("\npos last pipe: %d\n", last_pipe->pos);
 		if (strcmp(prompt, "exit") == 0)
