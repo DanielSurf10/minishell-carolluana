@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/11 19:09:19 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/12 16:10:38 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,14 @@ void	ft_strcpy(char *prompt, char *copy);
 int		is_metachar(char c);
 int		ft_isspace(char c);
 void	token_add_to_list(t_list **token_list, char *lexeme, int token_type);
-void	free_list(t_list **token_list);
+void	free_list(t_list **t_tree);
 
 //parsing-tree
 t_tree	*build_tree(t_list	*tkn_list);
 t_list	*get_last_token(t_list	*tkn_list);
 t_list	*hunt_last_pipe(t_list	*tkn_list);
+t_tree	*build_root(t_list	*tkn_list);
+void	build_branch(t_list *tkn_list, t_tree *pivot);
+void	*free_tree(t_tree **tree);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 19:26:31 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/09 21:20:26 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/12 16:09:53 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,19 @@ void	free_list(t_list **token_list)
 		}
 		*token_list = NULL;
 	}
+}
+void	*free_tree(t_tree **tree)
+{
+	if (*tree == NULL)
+		return (NULL);
+	if ((*tree)->right)
+		free_tree(&(*tree)->right);
+	if ((*tree)->left)
+		free_tree(&(*tree)->left);
+	if ((*tree)->sub_list)
+		free_list(&(*tree)->sub_list);
+	free(*tree);
+	*tree = NULL;
+	return (NULL);
 }
 
