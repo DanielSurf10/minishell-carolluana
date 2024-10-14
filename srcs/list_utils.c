@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 19:26:31 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/07 22:22:40 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/14 18:27:11 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static t_list	*token_create_node(char *lexeme, int token_type)
 	new_token->token.lexeme = lexeme;
 	new_token->token.type = token_type;
 	new_token->next = NULL;
+	new_token->prev = NULL;
 	return (new_token);
 }
 
@@ -34,7 +35,10 @@ void	token_add_to_list(t_list **token_list, char *lexeme, int token_type)
 	while (last_node && last_node->next)
 		last_node = last_node->next;
 	if (last_node)
+	{
 		last_node->next = new_token;
+		last_node->next->prev = last_node;
+	}
 	else
 		*token_list = new_token;
 	// printf("lastnode type: %d\n", last_node->token.type);
@@ -61,4 +65,36 @@ void	free_list(t_list **token_list)
 		*token_list = NULL;
 	}
 }
+void	*free_tree(t_tree **tree)
+{
+	if (*tree == NULL)
+		return (NULL);
+	if ((*tree)->right)
+		free_tree(&(*tree)->right);
+	if ((*tree)->left)
+		free_tree(&(*tree)->left);
+	if ((*tree)->sub_list)
+		free_list(&(*tree)->sub_list);
+	free(*tree);
+	*tree = NULL;
+	return (NULL);
+}
 
+t_list	*get_last_token(t_list	*tkn_list)
+{
+	t_list	*tmp;
+	int		i;
+
+	i = 0;
+	if (!tkn_list)
+		return (NULL);
+	tmp = tkn_list;
+	while (tmp->next != NULL)
+	{
+		tmp->pos = i;
+		tmp = tmp->next;
+		i++;
+	}
+	tmp->pos = i;
+	return (tmp);
+}

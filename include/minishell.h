@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/09 21:18:55 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/14 20:37:21 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 //                               TOKENIZER                                    //
 //****************************************************************************//
 
-enum e_token
+typedef enum e_token
 {
 	WORD,
 	PIPE,
@@ -34,7 +34,7 @@ enum e_token
 	REDIRECT_OUTPUT,
 	REDIRECT_OUTPUT_APPEND,
 	COMMAND
-};
+}	t_token_enum;
 
 typedef struct s_token
 {
@@ -44,7 +44,8 @@ typedef struct s_token
 
 typedef struct s_token_list
 {
-	t_token			token;
+	int					pos;
+	t_token				token;
 	struct s_token_list	*next;
 	struct s_token_list	*prev;
 }	t_list ;
@@ -58,10 +59,20 @@ typedef struct s_tkn_data
 	int		tkn_type;
 }	t_tkn_data ;
 
+typedef struct s_tree
+{
+	int				tkn_type;
+	t_list			*sub_list;
+	struct s_tree	*left;
+	struct s_tree	*right;
+}	t_tree ;
+
 typedef struct s_minishell
 {
 	t_list	*token_list;
+	t_tree	*tree;
 }	t_minishell ;
+
 
 // main.c
 
@@ -90,7 +101,17 @@ int	token_get_state_52(char c);
 //utils.c
 void	ft_strcpy(char *prompt, char *copy);
 void	token_add_to_list(t_list **token_list, char *lexeme, int token_type);
-void	free_list(t_list **token_list);
+void	free_list(t_list **t_tree);
+
+//parsing-tree
+t_tree	*build_tree(t_list	*tkn_list);
+t_list	*get_last_token(t_list	*tkn_list);
+t_list	*hunt_last_pipe(t_list	*tkn_list);
+t_tree	*build_root(t_list	*tkn_list);
+void	build_branch(t_list *tkn_list, t_tree *pivot);
+void	*free_tree(t_tree **tree);
+t_list	*hunt_pipe_redir(t_list *tkn_list);
+t_list	*hunt_redir(t_list	*tkn_list);
 
 //validation.c
 int	valid_redirect(t_list *list);
