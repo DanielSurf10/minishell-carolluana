@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/12 16:10:38 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/14 18:16:36 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 //                               TOKENIZER                                    //
 //****************************************************************************//
 
-enum e_token
+typedef enum e_token
 {
 	WORD,
 	PIPE,
@@ -33,7 +33,7 @@ enum e_token
 	REDIRECT_OUTPUT,
 	REDIRECT_OUTPUT_APPEND,
 	COMMAND
-};
+}	t_token_enum;
 
 typedef struct s_token
 {
@@ -111,5 +111,7 @@ t_list	*hunt_last_pipe(t_list	*tkn_list);
 t_tree	*build_root(t_list	*tkn_list);
 void	build_branch(t_list *tkn_list, t_tree *pivot);
 void	*free_tree(t_tree **tree);
+t_list	*hunt_pipe_redir(t_list *tkn_list);
+t_list	*hunt_redir(t_list	*tkn_list);
 
 #endif

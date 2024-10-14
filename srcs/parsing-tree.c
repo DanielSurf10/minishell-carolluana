@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:53:50 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/12 14:27:43 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/14 18:27:17 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	build_branch(t_list *tkn_list, t_tree *pivot)
 {
-	pivot->sub_list = hunt_last_pipe(tkn_list);
+	pivot->sub_list = hunt_pipe_redir(tkn_list);
 	if (pivot->sub_list)
 	{	
-		pivot->tkn_type = PIPE;
+		pivot->tkn_type = pivot->sub_list->token.type;
 		pivot->sub_list->next->prev = NULL;
 		pivot->sub_list->prev->next = NULL;
 		pivot->right = build_root(pivot->sub_list->next);
@@ -42,6 +42,18 @@ t_tree	*build_root(t_list	*tkn_list)
 	return (pivot);
 }
 
+t_list	*hunt_pipe_redir(t_list *tkn_list)
+{
+	t_list	*node;
+	
+	node = hunt_last_pipe(tkn_list);
+	if (node)
+		return (node);
+	node = hunt_redir(tkn_list);
+	if (node)
+		return (node);
+	return (NULL);
+}
 t_list	*hunt_last_pipe(t_list	*tkn_list)
 {
 	t_list	*node;
@@ -62,21 +74,22 @@ t_list	*hunt_last_pipe(t_list	*tkn_list)
 	return (NULL);
 }
 
-t_list	*get_last_token(t_list	*tkn_list)
+t_list	*hunt_redir(t_list	*tkn_list)
 {
-	t_list	*tmp;
-	int		i;
-
-	i = 0;
-	if (!tkn_list)
-		return (NULL);
-	tmp = tkn_list;
-	while (tmp->next != NULL)
+	t_list	*node;
+	
+	node = NULL;
+	node = get_last_token(tkn_list);
+	if (node && !node->prev && node->token.type >= REDIRECT_INPUT && node->token.type <= REDIRECT_OUTPUT_APPEND)
+		return (node);
+	while (node)
 	{
-		tmp->pos = i;
-		tmp = tmp->next;
-		i++;
+		if (node->token.type >= REDIRECT_INPUT && node->token.type <= REDIRECT_OUTPUT_APPEND)
+		{
+			return (node);
+			break;
+		}
+		node = node->prev;
 	}
-	tmp->pos = i;
-	return (tmp);
+	return (NULL);
 }
