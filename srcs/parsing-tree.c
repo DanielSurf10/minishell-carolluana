@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:53:50 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/14 18:27:17 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:27:03 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ void	build_branch(t_list *tkn_list, t_tree *pivot)
 	{	
 		pivot->tkn_type = pivot->sub_list->token.type;
 		pivot->sub_list->next->prev = NULL;
-		pivot->sub_list->prev->next = NULL;
 		pivot->right = build_root(pivot->sub_list->next);
-		pivot->left = build_root(tkn_list);
+		if (pivot->sub_list->prev)
+		{
+			pivot->sub_list->prev->next = NULL;
+			pivot->left = build_root(tkn_list);
+		}
 		pivot->sub_list->next = NULL;
 		pivot->sub_list->prev = NULL;
 	}
