@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/15 21:12:16 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/17 19:27:52 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,26 +46,27 @@ int	main(int argc __attribute__((unused)), \
 		char **argv __attribute__((unused)), char **envp)
 {
 	char	*prompt;
-	t_minishell	base;
+	t_minishell	shell;
 
+	shell.envp = envp;
 	while (1)
 	{
 		prompt = readline("minihell: ");
 		if (prompt == NULL)
 			break;
-		base.token_list = NULL;
-		base.tree = NULL;
-		base.token_list = tokenizer(prompt);
-		base.tree = build_root(base.token_list);
+		shell.token_list = NULL;
+		shell.tree = NULL;
+		shell.token_list = tokenizer(prompt);
+		shell.tree = build_root(shell.token_list);
 		// print_tree(base.tree);
 		if (strcmp(prompt, "exit") == 0)
 		{
 			free(prompt);
-			base.token_list = NULL;
+			shell.token_list = NULL;
 			exit(1);
 		}
 		add_history(prompt);
-		free_tree(&base.tree);
-		base.token_list = NULL;
+		free_tree(&shell.tree);
+		shell.token_list = NULL;
 	}
 }

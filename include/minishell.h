@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/14 20:37:21 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/17 19:48:15 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,16 @@ typedef struct s_minishell
 {
 	t_list	*token_list;
 	t_tree	*tree;
+	char	**path;
+	char	**envp;
 }	t_minishell ;
+
+typedef struct s_execve
+{
+	char	**args;
+	char	*cmd;/* data */
+}	t_execve;
+
 
 
 // main.c
