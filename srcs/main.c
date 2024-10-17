@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/14 20:38:23 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:12:16 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ static void	print_tree(t_tree *tree)
 	}
 }
 
-int	main(void)
+int	main(int argc __attribute__((unused)), \
+		char **argv __attribute__((unused)), char **envp)
 {
 	char	*prompt;
 	t_minishell	base;
@@ -55,12 +56,8 @@ int	main(void)
 		base.token_list = NULL;
 		base.tree = NULL;
 		base.token_list = tokenizer(prompt);
-		// push_prompt_to_list(&prompt);
-		// print_list(base.token_list);
 		base.tree = build_root(base.token_list);
-		print_tree(base.tree);
-		// if (last_pipe)
-		// 	printf("\npos last pipe: %d\n", last_pipe->pos);
+		// print_tree(base.tree);
 		if (strcmp(prompt, "exit") == 0)
 		{
 			free(prompt);
@@ -68,7 +65,6 @@ int	main(void)
 			exit(1);
 		}
 		add_history(prompt);
-		// free_list(&base.token_list);
 		free_tree(&base.tree);
 		base.token_list = NULL;
 	}
