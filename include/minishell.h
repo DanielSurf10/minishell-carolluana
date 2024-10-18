@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/18 17:21:42 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/18 19:06:58 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,20 +67,21 @@ typedef struct s_tree
 	struct s_tree	*right;
 }	t_tree ;
 
-typedef struct s_minishell
-{
-	t_list	*token_list;
-	t_tree	*tree;
-	char	**envp;
-	char	**path;
-}	t_minishell ;
-
 typedef struct s_envp
 {
 	char				*key;
 	char				*value;
 	struct s_envp	*next;
 }	t_envp;
+
+typedef struct s_minishell
+{
+	t_list	*token_list;
+	t_tree	*tree;
+	t_envp	*envp;
+	char	**path;
+}	t_minishell ;
+
 
 // main.c
 
@@ -127,10 +128,13 @@ int	valid_pipe(t_list *token_list);
 int	valid_list(t_list *list);
 
 //export.c
-void	creat_env_list(char **environ);
+t_envp	*creat_env_list(char **environ);
 t_envp	*env_create_node(void);
 void	print_env_list(t_envp *env_list);
 void	add_node_to_list(t_envp **head, t_envp *node);
 t_envp	*node_from_environ(char *environ);
+void	export_new_var(char	*arg, t_envp **env_list);
+char	**new_var_split(char *arg);
+char	*ft_getenv(char *arg, t_envp *env_list);
 
 #endif

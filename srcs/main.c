@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/18 17:48:41 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/18 19:10:44 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int argc __attribute__((unused)), \
 	t_minishell	shell;
 	extern char **environ;
 
-	shell.envp = envp;
+	// shell.envp = envp;
 	while (1)
 	{
 		prompt = readline("minihell: ");
@@ -60,8 +60,11 @@ int	main(int argc __attribute__((unused)), \
 		shell.tree = NULL;
 		shell.token_list = tokenizer(prompt);
 		shell.tree = build_root(shell.token_list);
+		shell.envp = creat_env_list(envp);
+		//envp
 		// creat_env_list(environ);
-		creat_env_list(shell.envp);
+		export_new_var("shell=hell", &shell.envp);
+		print_env_list(shell.envp);
 		// print_tree(base.tree);
 		if (strcmp(prompt, "exit") == 0)
 		{

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 19:36:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/17 18:56:46 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/18 18:26:06 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ t_envp	*node_from_environ(char *environ)
 	return (node);
 }
 
-void	creat_env_list(char **environ)
+t_envp	*creat_env_list(char **environ)
 {
-	t_envp	*node;
+	t_envp	*envp_list;
 	t_envp	*head;
 	int		i;
 
@@ -73,9 +73,9 @@ void	creat_env_list(char **environ)
 	i = 0;
 	while (environ[i])
 	{
-		node = node_from_environ(environ[i]);
-		add_node_to_list(&head, node);
+		envp_list = node_from_environ(environ[i]);
+		add_node_to_list(&head, envp_list);
 		i++;
 	}
-	print_env_list(head);
+	return (head);
 }
