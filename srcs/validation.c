@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:09:36 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/10 21:24:36 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:22:38 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,12 @@ int	valid_pipe(t_list *list)
 		if ((aux->token.type == 1 && aux->next == NULL)
 			|| (aux->token.type == 1 && aux->prev == NULL))
 		{
+			printf("Pipe errado\n");
 				return (0);
 		}
 		else if (aux->token.type == 1 && aux->next->token.type == 1)
 		{
+			printf("Pipe errado\n");
 			return (0);
 		}
 		aux = aux->next;
