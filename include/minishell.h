@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/17 19:48:15 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/18 21:39:32 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/history.h>
 # include "../libs/libft/libft.h"
 # include "./parsing.h"
+#include <sys/wait.h>
 
 //****************************************************************************//
 //                               TOKENIZER                                    //
@@ -127,4 +128,8 @@ int	valid_redirect(t_list *list);
 int	valid_pipe(t_list *token_list);
 int	valid_list(t_list *list);
 
+//executor.c
+void	get_path(t_minishell *shell);
+void	get_args(t_list *sub_list, t_execve *exec);
+void	executor(t_tree	*tree, t_minishell *shell);
 #endif
