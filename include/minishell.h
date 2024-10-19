@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/18 19:06:58 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/18 21:47:21 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,5 +136,6 @@ t_envp	*node_from_environ(char *environ);
 void	export_new_var(char	*arg, t_envp **env_list);
 char	**new_var_split(char *arg);
 char	*ft_getenv(char *arg, t_envp *env_list);
+void	export(char *arg, t_envp *env_list);
 
 #endif
