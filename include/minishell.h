@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/18 21:39:32 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/21 20:50:09 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_tree
 	t_list			*sub_list;
 	struct s_tree	*left;
 	struct s_tree	*right;
+	int				*fd[2];
 }	t_tree ;
 
 typedef struct s_minishell
@@ -132,4 +133,6 @@ int	valid_list(t_list *list);
 void	get_path(t_minishell *shell);
 void	get_args(t_list *sub_list, t_execve *exec);
 void	executor(t_tree	*tree, t_minishell *shell);
+int		handle_pipe(t_tree *tree, t_minishell *shell);
+void	exex_cmd(t_tree	*tree, t_minishell *shell, char side, int *fd);
 #endif

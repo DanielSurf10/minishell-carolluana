@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:53:50 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/15 19:27:03 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/19 17:52:04 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	build_branch(t_list *tkn_list, t_tree *pivot)
 	else
 	{
 		pivot->sub_list = tkn_list;
+		pivot->tkn_type = COMMAND;
 		pivot->left = NULL;
 		pivot->right = NULL;
 	}
