@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:48:10 by cshingai          #+#    #+#             */
-/*   Updated: 2023/11/04 18:02:18 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/22 17:12:14 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char	*ft_strchr(char *str, int c);
 char	*ft_strdup(char *c);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 char	*ft_strjoin(char const *s1, char const *s2);
+int		ft_strcmp(char *str1, char *str2);
 size_t	ft_strlcat(char *dest, char *src, size_t n);
 size_t	ft_strlcpy(char *dest, char *src, size_t n);
 int		ft_strlen(const char *str);

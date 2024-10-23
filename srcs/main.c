@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/18 21:49:29 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/22 21:21:10 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,10 @@ int	main(int argc __attribute__((unused)), \
 		shell.tree = build_root(shell.token_list);
 		shell.envp = creat_env_list(envp);
 		//envp
-		// creat_env_list(environ);
-		export("PAGER=more", shell.envp);
+		export("PAG=les", &shell.envp);
 		print_env_list(shell.envp);
 		// print_tree(base.tree);
-		if (strcmp(prompt, "exit") == 0)
+		if (ft_strcmp(prompt, "exit") == 0)
 		{
 			free(prompt);
 			shell.token_list = NULL;
