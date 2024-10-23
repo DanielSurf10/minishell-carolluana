@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 19:36:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/18 21:46:24 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:45:03 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	print_env_list(t_envp *env_list)
 	temp = env_list;
 	while (temp != NULL)
 	{
-		printf("chave:%s valor:%s\n", temp->key, temp->value);
+		printf("%s=%s\n", temp->key, temp->value);
 		temp = temp->next;
 	}
 }

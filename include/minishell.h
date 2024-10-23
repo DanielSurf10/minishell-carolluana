@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/22 21:16:11 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:47:17 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,17 +127,20 @@ int	valid_redirect(t_list *list);
 int	valid_pipe(t_list *token_list);
 int	valid_list(t_list *list);
 
-//export.c
-t_envp	*creat_env_list(char **environ);
+//env_list.c
 t_envp	*env_create_node(void);
 void	print_env_list(t_envp *env_list);
 void	add_node_to_list(t_envp **head, t_envp *node);
 t_envp	*node_from_environ(char *environ);
+t_envp	*creat_env_list(char **environ);
+
+//export.c
 void	export_new_var(char **new_var, t_envp **env_list);
 char	**new_var_split(char *arg);
 char	*ft_getenv(char *arg, t_envp *env_list);
 void	change_env_value(char **new_var, t_envp **env_list);
-
+void	order_env_list(t_envp **env_list);
 void	export(char *arg, t_envp **env_list);
+int		check_arg(char	*arg);
 
 #endif
