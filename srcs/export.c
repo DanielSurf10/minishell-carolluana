@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:59:24 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/23 17:48:17 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:14:20 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,31 @@ void	export_new_var(char **new_var, t_envp **env_list)
 	new_env_var = env_create_node();
 	new_env_var->key = new_var[0];
 	new_env_var->value = new_var[1];
-	add_node_to_list(env_list, new_env_var);
+	if (check_key_name(new_env_var->key))
+		add_node_to_list(env_list, new_env_var);
 	return ;
+}
+
+int	check_key_name(char *key)
+{
+	int	i;
+
+	i = 0;
+	if (key[0] != '_' && !ft_isalpha(key[0]))
+	{
+		printf("export: not an intentifier: %s\n", key);
+		return(0);
+	}
+	while (key[i])
+	{
+		if (!ft_isalnum(key[i]) && key[i] != '_')
+		{
+			printf("export: not valid in this context: %s\n", key);
+			return(0);
+		}
+		i++;
+	}
+	return (1);
 }
 
 char	*ft_getenv(char *arg, t_envp *env_list)
@@ -76,8 +99,6 @@ int	check_arg(char	*arg)
 	return (0);
 }
 
-
-
 void	order_env_list(t_envp **env_list)
 {
 	char	*temp_key;
@@ -100,7 +121,6 @@ void	order_env_list(t_envp **env_list)
 		temp = temp->next;
 	}
 }
-
 
 void	export(char *arg, t_envp **env_list)
 {

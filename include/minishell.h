@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/23 17:47:17 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:13:46 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ typedef struct s_tree
 
 typedef struct s_envp
 {
-	char				*key;
-	char				*value;
+	char			*key;
+	char			*value;
 	struct s_envp	*next;
 }	t_envp;
 
@@ -133,6 +133,7 @@ void	print_env_list(t_envp *env_list);
 void	add_node_to_list(t_envp **head, t_envp *node);
 t_envp	*node_from_environ(char *environ);
 t_envp	*creat_env_list(char **environ);
+void	env(t_envp *env_list);
 
 //export.c
 void	export_new_var(char **new_var, t_envp **env_list);
@@ -142,5 +143,10 @@ void	change_env_value(char **new_var, t_envp **env_list);
 void	order_env_list(t_envp **env_list);
 void	export(char *arg, t_envp **env_list);
 int		check_arg(char	*arg);
+int		check_key_name(char *key);
+
+//unset.c
+void	unset(char *arg, t_envp **env_list);
+void	remove_node_from_list(char *arg, t_envp **env_list);
 
 #endif

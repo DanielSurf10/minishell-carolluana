@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/23 17:48:46 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:18:43 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int	main(int argc __attribute__((unused)), \
 		shell.tree = build_root(shell.token_list);
 		shell.envp = creat_env_list(envp);
 		//envp
-		export("luva=mao", &shell.envp);
+		export("233a=-R", &shell.envp);
+		env(shell.envp);
 		// print_env_list(shell.envp);
 		// print_tree(base.tree);
 		if (ft_strcmp(prompt, "exit") == 0)

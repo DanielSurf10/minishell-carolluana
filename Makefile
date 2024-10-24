@@ -6,7 +6,7 @@
 #    By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 17:34:18 by cshingai          #+#    #+#              #
-#    Updated: 2024/10/18 19:21:01 by cshingai         ###   ########.fr        #
+#    Updated: 2024/10/24 16:32:34 by cshingai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,8 @@ SRCS = ${addprefix srcs/, \
 			parsing-tree.c \
 			env_list.c \
 			export.c \
+			env.c \
+			unset.c \
 		}
 
 OBJ = $(SRCS:srcs/%.c=obj/%.o)
