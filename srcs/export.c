@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:59:24 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/24 17:14:20 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:30:51 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	export_new_var(char **new_var, t_envp **env_list)
 	new_env_var->value = new_var[1];
 	if (check_key_name(new_env_var->key))
 		add_node_to_list(env_list, new_env_var);
+	else
+		free(new_env_var);
 	return ;
 }
 
