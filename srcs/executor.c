@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/21 21:43:55 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/10/26 16:09:35 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	get_args(t_list *sub_list, t_execve *exec)
 	exec->args = args;
 }
 
-void	exex_cmd(t_tree	*tree, t_minishell *shell, char side, int *fd)
+void	exec_cmd(t_tree	*tree, t_minishell *shell)
 {
 	t_execve	*exec;
 	int			i;
@@ -61,19 +61,6 @@ void	exex_cmd(t_tree	*tree, t_minishell *shell, char side, int *fd)
 	char		*full_path;
 	// int			pid;
 	// int			status;
-	
-	if (side == 'L')
-	{
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
-		close(fd[0]);
-	}
-	else if (side == 'R')
-	{
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
-		close(fd[1]);
-	}
 	i = 0;
 	exec = ft_calloc(1, sizeof(t_execve));
 	get_path(shell);
@@ -101,28 +88,58 @@ void	exex_cmd(t_tree	*tree, t_minishell *shell, char side, int *fd)
 void	executor(t_tree *tree, t_minishell *shell)
 {
 	if (tree->tkn_type == COMMAND)
-		exex_cmd(tree, shell, NULL, NULL);
-	if (tree->tkn_type == PIPE)
-		handle_pipe(tree, shell);
+		exec_cmd(tree, shell);
+	else if (tree->tkn_type == PIPE && tree->left->tkn_type == PIPE)
+	{
+		tree->left->parent = tree;
+		pipe(tree->fd);
+		executor(tree->left, shell);
+		handle_pipe(tree, shell, 0);
+	}
+	else if (tree->tkn_type == PIPE && tree->left->tkn_type == COMMAND)
+	{
+		printf("entro aqui\n");
+		pipe(tree->fd);
+		handle_pipe(tree, shell, 1);
+	}
 }
 
-int	handle_pipe(t_tree *tree, t_minishell *shell)
+int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 {
-	int	fd[2];
 	pid_t pid[2];
 
-	if (pipe(fd) == -1)
-		return (EXIT_FAILURE);
-	// printf("pipe ok\n");
-	pid[0] = fork();
-	if (pid[0] == 0)
-		exex_cmd(tree->left, shell, 'L', fd);
+	if (left == 1)
+	{
+		pid[0] = fork();
+		if (pid[0] == 0)
+		{
+			dup2(tree->fd[1], STDOUT_FILENO);
+			close(tree->fd[0]);
+			close(tree->fd[1]);
+			exec_cmd(tree->left, shell);
+		}
+	}
 	pid[1] = fork();
 	if (pid[1] == 0)
-		exex_cmd(tree->right, shell, 'R', fd);
-	close(fd[0]);
-	close(fd[1]);
-	waitpid(pid[0], NULL, 0);
+	{
+		dup2(tree->fd[0], STDIN_FILENO);
+		if (tree->parent)
+		{
+			dup2(tree->parent->fd[1], STDOUT_FILENO);
+			close(tree->parent->fd[1]);
+
+			close(tree->parent->fd[0]);
+		}
+		close(tree->fd[0]);
+		close(tree->fd[1]);
+		exec_cmd(tree->right, shell);
+	}
+	close(tree->fd[1]);
+	if (left)
+	{
+		close(tree->fd[0]);
+		waitpid(pid[0], NULL, 0);
+	}
 	waitpid(pid[1], NULL, 0);
 	return (0);
 }
