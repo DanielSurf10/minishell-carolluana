@@ -6,7 +6,7 @@
 #    By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 17:34:18 by cshingai          #+#    #+#              #
-#    Updated: 2024/10/24 16:32:34 by cshingai         ###   ########.fr        #
+#    Updated: 2024/10/24 18:57:58 by cshingai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBS = $(LIBFT)/libft.a $(FT_PRINTF)/libftprintf.a
 HEADERS = -I $(LIBFT) -I ./include
 
 # source files
-SRCS = ${addprefix srcs/, \
+SRCS = $(addprefix srcs/, \
 			main.c \
 			list.c \
 			utils.c \
@@ -27,11 +27,13 @@ SRCS = ${addprefix srcs/, \
 			tokens2.c \
 			validation.c \
 			parsing-tree.c \
-			env_list.c \
-			export.c \
-			env.c \
-			unset.c \
-		}
+			builtin/env_utils.c \
+			builtin/env.c \
+			builtin/export.c \
+			builtin/unset.c \
+			builtin/pwd.c \
+			builtin/echo.c \
+		)
 
 OBJ = $(SRCS:srcs/%.c=obj/%.o)
 
@@ -50,7 +52,7 @@ ft_printf:
 
 # compiling objects files
 obj/%.o: srcs/%.c ./include/minishell.h
-			mkdir -p obj
+			mkdir -p $(dir $@)
 			@cc $(FLAGS) $(HEADERS) -c $< -o $@
 			@echo "compiling objects"
 

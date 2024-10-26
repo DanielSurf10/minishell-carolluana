@@ -6,20 +6,23 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/24 17:13:46 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/26 17:41:11 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# define PATH_MAX 4096
 
 # include <stdlib.h>
 # include <stdio.h>
 # include <signal.h>
+# include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libs/libft/libft.h"
 # include "./parsing.h"
+
 
 //****************************************************************************//
 //                               TOKENIZER                                    //
@@ -133,7 +136,7 @@ void	print_env_list(t_envp *env_list);
 void	add_node_to_list(t_envp **head, t_envp *node);
 t_envp	*node_from_environ(char *environ);
 t_envp	*creat_env_list(char **environ);
-void	env(t_envp *env_list);
+int	env(t_envp *env_list);
 
 //export.c
 void	export_new_var(char **new_var, t_envp **env_list);
@@ -141,12 +144,18 @@ char	**new_var_split(char *arg);
 char	*ft_getenv(char *arg, t_envp *env_list);
 void	change_env_value(char **new_var, t_envp **env_list);
 void	order_env_list(t_envp **env_list);
-void	export(char *arg, t_envp **env_list);
+int		export(char *arg, t_envp **env_list);
 int		check_arg(char	*arg);
 int		check_key_name(char *key);
 
 //unset.c
-void	unset(char *arg, t_envp **env_list);
+int	unset(char *arg, t_envp **env_list);
 void	remove_node_from_list(char *arg, t_envp **env_list);
+
+// pwd.c
+int		pwd(void);
+
+//echo.c
+int	echo(char **arg);
 
 #endif

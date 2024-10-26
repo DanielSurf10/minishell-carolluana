@@ -6,20 +6,25 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:40:29 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/24 16:43:08 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/26 16:04:04 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	unset(char *arg, t_envp **env_list)
+int	unset(char *arg, t_envp **env_list)
 {
-	char **key;
+	char	**new_var;
+	int		status_command;
 
-	key = ft_split(arg, '=');
-	if (ft_getenv(key[0], *env_list) != NULL)
-		remove_node_from_list(key[0], env_list);
-	return ;
+	new_var = ft_split(arg, '=');
+	status_command = check_key_name(new_var[0]);
+	if (status_command)
+	{
+		if (ft_getenv(new_var[0], *env_list) != NULL)
+			remove_node_from_list(new_var[0], env_list);
+	}
+	return (status_command);
 }
 
 void	remove_node_from_list(char *arg, t_envp **env_list)

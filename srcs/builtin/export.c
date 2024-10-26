@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:59:24 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/24 17:14:20 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/26 16:02:01 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,22 @@
 // verificar se a variavel existe no env
 // Criar variável jogar no env
 // pegar a varival e jogar na lista
-void	export_new_var(char **new_var, t_envp **env_list)
+int	export_new_var(char **new_var, t_envp **env_list)
 {
 	t_envp	*new_env_var;
+	int	status_command;
 
+	status_command = 0;
 	new_env_var = env_create_node();
 	new_env_var->key = new_var[0];
 	new_env_var->value = new_var[1];
 	if (check_key_name(new_env_var->key))
 		add_node_to_list(env_list, new_env_var);
-	return ;
+	else
+		status_command = 1;
+	return (status_command);
 }
+
 
 int	check_key_name(char *key)
 {
@@ -122,18 +127,20 @@ void	order_env_list(t_envp **env_list)
 	}
 }
 
-void	export(char *arg, t_envp **env_list)
+int	export(char *arg, t_envp **env_list)
 {
 	char	*var;
 	char	**new_var;
 	t_envp	*temp;
+	int		status_command;
 
-	printf("arg:%s\n", arg);
+	status_command = 0;
 	var = NULL;
 	if (check_arg(arg) == 0)
 	{
 		order_env_list(env_list);
-		return (print_env_list(*env_list));
+		print_env_list(*env_list);
+		return (status_command);
 	}
 	new_var = new_var_split(arg);
 	var = ft_getenv(new_var[0], *env_list);
@@ -141,5 +148,6 @@ void	export(char *arg, t_envp **env_list)
 	if (var != NULL)
 		change_env_value(new_var, env_list);
 	else
-		export_new_var(new_var, env_list);
+		status_command = export_new_var(new_var, env_list);
+	return (status_command);
 }
