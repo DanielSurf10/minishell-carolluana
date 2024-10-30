@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/26 17:41:11 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/29 21:05:52 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,10 +139,10 @@ t_envp	*creat_env_list(char **environ);
 int	env(t_envp *env_list);
 
 //export.c
-void	export_new_var(char **new_var, t_envp **env_list);
+int	export_new_var(char **new_var, t_envp **env_list);
 char	**new_var_split(char *arg);
 char	*ft_getenv(char *arg, t_envp *env_list);
-void	change_env_value(char **new_var, t_envp **env_list);
+void	change_env_value(char *key, char *value,t_envp **env_list);
 void	order_env_list(t_envp **env_list);
 int		export(char *arg, t_envp **env_list);
 int		check_arg(char	*arg);
@@ -157,5 +157,9 @@ int		pwd(void);
 
 //echo.c
 int	echo(char **arg);
+
+//change_directory.c
+int	change_directory(t_envp **env_list, char *path);
+void	update_pwd(t_envp **env_list, char *old_pwd, char *pwd);
 
 #endif

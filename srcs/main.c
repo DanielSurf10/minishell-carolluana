@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/24 18:56:35 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/29 21:09:55 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,13 @@
 int	main(int argc __attribute__((unused)), \
 		char **argv __attribute__((unused)), char **envp)
 {
-	char *args1[] = {"echo", "Hello", "World", NULL};
-	char *args2[] = {"echo", "n", "Hello", "World", NULL};
-	char *args3[] = {"echo", NULL};
 	char	*prompt;
 	t_minishell	shell;
 	extern char **environ;
 
-	// shell.envp = envp;
+	// pwd();
+	// printf("chdir:%d\n", chdir("libs"));
+	// pwd();
 	while (1)
 	{
 		prompt = readline("minihell: ");
@@ -73,14 +72,8 @@ int	main(int argc __attribute__((unused)), \
 		add_history(prompt);
 		free_tree(&shell.tree);
 		shell.token_list = NULL;
-
-		printf("Test 1:\n");
-		echo(args1);
-
-		printf("Test 2:\n");
-		echo(args2);
-
-		printf("Test 3:\n");
-		echo(args3);
+		pwd();
+		change_directory(&shell.envp, "libs");
+		pwd();
 	}
 }

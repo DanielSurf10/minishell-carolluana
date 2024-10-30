@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:59:24 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/26 16:02:01 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/29 20:56:12 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,15 @@ char	**new_var_split(char *arg)
 	return (new_var);
 }
 
-void	change_env_value(char **new_var, t_envp **env_list)
+void	change_env_value(char *key, char *value, t_envp **env_list)
 {
 	t_envp	*temp;
 
 	temp = *env_list;
-	while (temp && ft_strcmp(temp->key, new_var[0]) != 0)
+	while (temp && ft_strcmp(temp->key, key) != 0)
 			temp = temp->next;
 	free(temp->value);
-	temp->value = ft_strdup(new_var[1]);
+	temp->value = ft_strdup(value);
 }
 
 int	check_arg(char	*arg)
@@ -146,7 +146,7 @@ int	export(char *arg, t_envp **env_list)
 	var = ft_getenv(new_var[0], *env_list);
 	temp = *env_list;
 	if (var != NULL)
-		change_env_value(new_var, env_list);
+		change_env_value(new_var[0], new_var[1], env_list);
 	else
 		status_command = export_new_var(new_var, env_list);
 	return (status_command);

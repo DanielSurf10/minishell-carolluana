@@ -6,7 +6,7 @@
 #    By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 17:34:18 by cshingai          #+#    #+#              #
-#    Updated: 2024/10/24 18:57:58 by cshingai         ###   ########.fr        #
+#    Updated: 2024/10/29 21:08:07 by cshingai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS = $(addprefix srcs/, \
 			builtin/unset.c \
 			builtin/pwd.c \
 			builtin/echo.c \
+			builtin/change_directory.c\
 		)
 
 OBJ = $(SRCS:srcs/%.c=obj/%.o)
