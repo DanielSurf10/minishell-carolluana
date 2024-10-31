@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/29 21:09:55 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/31 17:11:11 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int argc __attribute__((unused)), \
 {
 	char	*prompt;
 	t_minishell	shell;
-	extern char **environ;
+	// extern char **environ;
 
 	// pwd();
 	// printf("chdir:%d\n", chdir("libs"));
@@ -62,7 +62,7 @@ int	main(int argc __attribute__((unused)), \
 		shell.tree = NULL;
 		shell.token_list = tokenizer(prompt);
 		shell.tree = build_root(shell.token_list);
-		shell.envp = creat_env_list(envp);
+		shell.envp_list = creat_env_list(envp);
 		if (ft_strcmp(prompt, "exit") == 0)
 		{
 			free(prompt);
@@ -73,7 +73,7 @@ int	main(int argc __attribute__((unused)), \
 		free_tree(&shell.tree);
 		shell.token_list = NULL;
 		pwd();
-		change_directory(&shell.envp, "libs");
+		change_directory(&shell.envp_list, "libs HOME");
 		pwd();
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:56:04 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/29 21:22:34 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/31 17:11:11 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ int	exec_builting(char *command, char **argv, t_minishell shell)
 	if (ft_strcmp(command, "pwd") == 0)
 		status_command = pwd();
 	else if (ft_strcmp(command, "cd") == 0)
-		change_directory(shell.envp, *argv);
+		change_directory(shell.envp_list, *argv);
 	else if (ft_strcmp(command, "env") == 0)
 		status_command = echo(argv);
 	else if (ft_strcmp(command, "env") == 0)
-		status_command = env(shell.envp);
+		status_command = env(shell.envp_list);
 	else if (ft_strcmp(command, "export") == 0)
-		status_command = export(*argv, shell.envp);
+		status_command = export(*argv, shell.envp_list);
 	else if (ft_strcmp(command, "unset") == 0)
-		status_command = unset(*argv, shell.envp);
+		status_command = unset(*argv, shell.envp_list);
 }

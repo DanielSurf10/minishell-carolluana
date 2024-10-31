@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carol <carol@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:59:24 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/29 20:56:12 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/31 03:22:17 by carol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int	export(char *arg, t_envp **env_list)
 {
 	char	*var;
 	char	**new_var;
-	t_envp	*temp;
+	// t_envp	*temp;
 	int		status_command;
 
 	status_command = 0;
@@ -144,7 +144,7 @@ int	export(char *arg, t_envp **env_list)
 	}
 	new_var = new_var_split(arg);
 	var = ft_getenv(new_var[0], *env_list);
-	temp = *env_list;
+	// temp = *env_list;
 	if (var != NULL)
 		change_env_value(new_var[0], new_var[1], env_list);
 	else

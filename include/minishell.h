@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/29 21:05:52 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/31 17:11:37 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ typedef struct s_minishell
 {
 	t_list	*token_list;
 	t_tree	*tree;
-	t_envp	*envp;
+	t_envp	*envp_list;
+	char	**envp;
 	char	**path;
 }	t_minishell ;
 
@@ -161,5 +162,6 @@ int	echo(char **arg);
 //change_directory.c
 int	change_directory(t_envp **env_list, char *path);
 void	update_pwd(t_envp **env_list, char *old_pwd, char *pwd);
+int	check_path(char *path);
 
 #endif
