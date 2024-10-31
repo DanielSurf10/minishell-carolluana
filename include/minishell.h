@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/31 17:11:37 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/31 18:46:03 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int	token_get_state_52(char c);
 void	ft_strcpy(char *prompt, char *copy);
 void	token_add_to_list(t_list **token_list, char *lexeme, int token_type);
 void	free_list(t_list **t_tree);
+void	*ft_free_split(char **split);
 
 //parsing-tree
 t_tree	*build_tree(t_list	*tkn_list);
@@ -127,9 +128,9 @@ t_list	*hunt_pipe_redir(t_list *tkn_list);
 t_list	*hunt_redir(t_list	*tkn_list);
 
 //validation.c
-int	valid_redirect(t_list *list);
-int	valid_pipe(t_list *token_list);
-int	valid_list(t_list *list);
+int		valid_redirect(t_list *list);
+int		valid_pipe(t_list *token_list);
+int		valid_list(t_list *list);
 
 //env_list.c
 t_envp	*env_create_node(void);
@@ -137,10 +138,14 @@ void	print_env_list(t_envp *env_list);
 void	add_node_to_list(t_envp **head, t_envp *node);
 t_envp	*node_from_environ(char *environ);
 t_envp	*creat_env_list(char **environ);
-int	env(t_envp *env_list);
+int		env(t_envp *env_list);
+int		count_nodes(t_envp *env_list);
+char	**list_to_str(t_envp *env_list);
+void	free_env_list(t_envp *env_list);
+void	free_envp_str(char	**envp);
 
 //export.c
-int	export_new_var(char **new_var, t_envp **env_list);
+int		export_new_var(char **new_var, t_envp **env_list);
 char	**new_var_split(char *arg);
 char	*ft_getenv(char *arg, t_envp *env_list);
 void	change_env_value(char *key, char *value,t_envp **env_list);
@@ -157,11 +162,11 @@ void	remove_node_from_list(char *arg, t_envp **env_list);
 int		pwd(void);
 
 //echo.c
-int	echo(char **arg);
+int		echo(char **arg);
 
 //change_directory.c
-int	change_directory(t_envp **env_list, char *path);
+int		change_directory(t_envp **env_list, char *path);
 void	update_pwd(t_envp **env_list, char *old_pwd, char *pwd);
-int	check_path(char *path);
+int		check_path(char *path);
 
 #endif

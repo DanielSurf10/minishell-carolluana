@@ -5,7 +5,7 @@
 			"name": "Debug with gdb",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/minishell",  // Substitua pelo caminho do binário.
+			"program": "${workspaceFolder}/minishell",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
@@ -20,7 +20,7 @@
 				}
 			],
 			"preLaunchTask": "Build with make",
-			"miDebuggerPath": "/usr/bin/gdb",  // Caminho para o GDB, verifique se está correto no seu sistema.
+			"miDebuggerPath": "/usr/bin/gdb",
 			"logging": { "engineLogging": true }
 		}
 	]

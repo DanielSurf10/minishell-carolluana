@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_list.c                                         :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 19:36:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/23 17:45:03 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/31 18:45:07 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ t_envp	*env_create_node(void)
 	t_envp	*new_node;
 
 	new_node = malloc(sizeof(t_envp));
+	if (!new_node)
+		return (NULL);
 	new_node->key = NULL;
 	new_node->value = NULL;
 	new_node->next = NULL;
@@ -39,6 +41,7 @@ void	add_node_to_list(t_envp **head, t_envp *node)
 {
 	t_envp	*temp;
 
+	node->next = NULL;
 	if (*head == NULL)
 		*head = node;
 	else
@@ -57,9 +60,11 @@ t_envp	*node_from_environ(char *environ)
 
 	split_environ = ft_split(environ, '=');
 	node = env_create_node();
-	node->key = split_environ[0];
-	node->value = split_environ[1];
-	free(split_environ);
+	if (split_environ[0])
+		node->key = ft_strdup(split_environ[0]);
+	if (split_environ[1])
+		node->value = ft_strdup(split_environ[1]);
+	ft_free_split(split_environ);
 	return (node);
 }
 
@@ -78,4 +83,74 @@ t_envp	*creat_env_list(char **environ)
 		i++;
 	}
 	return (head);
+}
+
+int	count_nodes(t_envp *env_list)
+{
+	t_envp	*temp;
+	int		nbr_nodes;
+
+	nbr_nodes = 0;
+	temp = env_list;
+	while (temp)
+	{
+		nbr_nodes += 1;
+		temp = temp->next;
+	}
+	return (nbr_nodes);
+}
+
+char	**list_to_str(t_envp *env_list)
+{
+	int		size;
+	int		i;
+	char	**envp;
+	char	*temp;
+
+	i = 0;
+	size = count_nodes(env_list);
+	envp = malloc(sizeof(char *) * (size + 1));
+	while (env_list)
+	{
+		if (!env_list->key || !env_list->value)
+			envp[i] = NULL;
+		else
+		{
+			temp = ft_strjoin(env_list->key, "=");
+			envp[i] = ft_strjoin(temp, env_list->value);
+			free(temp);
+		}
+		env_list = env_list->next;
+		i++;
+	}
+	envp[i] = NULL;
+	free_env_list(env_list);
+	return (envp);
+}
+
+void	free_env_list(t_envp *env_list)
+{
+	t_envp	*temp;
+
+	temp = env_list;
+	while (temp)
+	{
+		free(temp->key);
+		free(temp->value);
+		free(temp);
+		temp = temp->next;
+	}
+}
+
+void	free_envp_str(char	**envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		free(envp[i]);
+		i++;
+	}
+	free(envp);
 }

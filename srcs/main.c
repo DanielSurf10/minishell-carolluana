@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/31 17:11:11 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/10/31 18:49:05 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,6 @@ int	main(int argc __attribute__((unused)), \
 {
 	char	*prompt;
 	t_minishell	shell;
-	// extern char **environ;
-
-	// pwd();
-	// printf("chdir:%d\n", chdir("libs"));
-	// pwd();
 	while (1)
 	{
 		prompt = readline("minihell: ");
@@ -60,9 +55,12 @@ int	main(int argc __attribute__((unused)), \
 			break;
 		shell.token_list = NULL;
 		shell.tree = NULL;
+		shell.envp_list = NULL;
+		shell.envp = NULL;
 		shell.token_list = tokenizer(prompt);
 		shell.tree = build_root(shell.token_list);
 		shell.envp_list = creat_env_list(envp);
+		shell.envp = list_to_str(shell.envp_list);
 		if (ft_strcmp(prompt, "exit") == 0)
 		{
 			free(prompt);
@@ -71,9 +69,8 @@ int	main(int argc __attribute__((unused)), \
 		}
 		add_history(prompt);
 		free_tree(&shell.tree);
+		// free_env_list(shell.envp_list);
 		shell.token_list = NULL;
-		pwd();
-		change_directory(&shell.envp_list, "libs HOME");
-		pwd();
+		free_envp_str(shell.envp);
 	}
 }
