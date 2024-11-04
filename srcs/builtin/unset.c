@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:40:29 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/26 16:04:04 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/04 18:12:22 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	unset(char *arg, t_envp **env_list)
 		if (ft_getenv(new_var[0], *env_list) != NULL)
 			remove_node_from_list(new_var[0], env_list);
 	}
+	ft_free_split(new_var);
 	return (status_command);
 }
 

@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/31 18:46:03 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:35:52 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_minishell
 	t_envp	*envp_list;
 	char	**envp;
 	char	**path;
+	char	*prompt;
 }	t_minishell ;
 
 
@@ -116,6 +117,7 @@ void	ft_strcpy(char *prompt, char *copy);
 void	token_add_to_list(t_list **token_list, char *lexeme, int token_type);
 void	free_list(t_list **t_tree);
 void	*ft_free_split(char **split);
+void	init_shell(t_minishell *shell);
 
 //parsing-tree
 t_tree	*build_tree(t_list	*tkn_list);
@@ -132,6 +134,7 @@ int		valid_redirect(t_list *list);
 int		valid_pipe(t_list *token_list);
 int		valid_list(t_list *list);
 
+//builtin
 //env_list.c
 t_envp	*env_create_node(void);
 void	print_env_list(t_envp *env_list);
@@ -143,7 +146,6 @@ int		count_nodes(t_envp *env_list);
 char	**list_to_str(t_envp *env_list);
 void	free_env_list(t_envp *env_list);
 void	free_envp_str(char	**envp);
-
 //export.c
 int		export_new_var(char **new_var, t_envp **env_list);
 char	**new_var_split(char *arg);
@@ -153,20 +155,19 @@ void	order_env_list(t_envp **env_list);
 int		export(char *arg, t_envp **env_list);
 int		check_arg(char	*arg);
 int		check_key_name(char *key);
-
 //unset.c
-int	unset(char *arg, t_envp **env_list);
+int		unset(char *arg, t_envp **env_list);
 void	remove_node_from_list(char *arg, t_envp **env_list);
-
 // pwd.c
 int		pwd(void);
-
 //echo.c
 int		echo(char **arg);
-
 //change_directory.c
 int		change_directory(t_envp **env_list, char *path);
 void	update_pwd(t_envp **env_list, char *old_pwd, char *pwd);
 int		check_path(char *path);
+
+//exit.c
+int ft_exit(t_minishell *shell, char *arg);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carol <carol@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:59:24 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/31 03:22:17 by carol            ###   ########.fr       */
+/*   Updated: 2024/11/04 18:07:32 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,9 +129,9 @@ void	order_env_list(t_envp **env_list)
 
 int	export(char *arg, t_envp **env_list)
 {
+	//limpar new_var;
 	char	*var;
 	char	**new_var;
-	// t_envp	*temp;
 	int		status_command;
 
 	status_command = 0;
@@ -142,12 +142,15 @@ int	export(char *arg, t_envp **env_list)
 		print_env_list(*env_list);
 		return (status_command);
 	}
-	new_var = new_var_split(arg);
-	var = ft_getenv(new_var[0], *env_list);
-	// temp = *env_list;
-	if (var != NULL)
-		change_env_value(new_var[0], new_var[1], env_list);
 	else
-		status_command = export_new_var(new_var, env_list);
+	{
+		new_var = new_var_split(arg);
+		var = ft_getenv(new_var[0], *env_list);
+		if (var != NULL)
+			change_env_value(new_var[0], new_var[1], env_list);
+		else
+			status_command = export_new_var(new_var, env_list);
+		ft_free_split(new_var);
+	}
 	return (status_command);
 }

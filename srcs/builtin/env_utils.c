@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 19:36:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/31 18:45:07 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/01 19:08:25 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ t_envp	*creat_env_list(char **environ)
 	while (environ[i])
 	{
 		envp_list = node_from_environ(environ[i]);
+		if (!envp_list)
+		{
+			free_env_list(head);
+			return (NULL);
+		}
 		add_node_to_list(&head, envp_list);
 		i++;
 	}
@@ -110,6 +115,8 @@ char	**list_to_str(t_envp *env_list)
 	i = 0;
 	size = count_nodes(env_list);
 	envp = malloc(sizeof(char *) * (size + 1));
+	if (!envp)
+		return (NULL);
 	while (env_list)
 	{
 		if (!env_list->key || !env_list->value)
@@ -124,7 +131,6 @@ char	**list_to_str(t_envp *env_list)
 		i++;
 	}
 	envp[i] = NULL;
-	free_env_list(env_list);
 	return (envp);
 }
 
@@ -132,13 +138,13 @@ void	free_env_list(t_envp *env_list)
 {
 	t_envp	*temp;
 
-	temp = env_list;
-	while (temp)
+	while (env_list)
 	{
+		temp = env_list;
+		env_list = env_list->next;
 		free(temp->key);
 		free(temp->value);
 		free(temp);
-		temp = temp->next;
 	}
 }
 
@@ -147,6 +153,8 @@ void	free_envp_str(char	**envp)
 	int	i;
 
 	i = 0;
+	if (!envp)
+		return ;
 	while (envp[i])
 	{
 		free(envp[i]);

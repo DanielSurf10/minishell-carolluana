@@ -1,16 +1,16 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "Build with make",
-            "type": "shell",
-            "command": "make",
-            "args": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": ["$gcc"]
-        }
-    ]
-}
+	"version": "2.0.0",
+	"tasks": [
+	  {
+		"label": "Build com Make",
+		"type": "shell",
+		"command": "make",
+		"group": {
+		  "kind": "build",
+		  "isDefault": true
+		},
+		"problemMatcher": ["$gcc"],
+		"detail": "Compilação com Make"
+	  }
+	]
+  }
