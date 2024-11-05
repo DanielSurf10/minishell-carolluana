@@ -6,13 +6,13 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:56:04 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/04 17:32:44 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/04 21:41:16 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	exec_builting(char *command, char **argv, t_minishell *shell)
+int	aux_exec_builting(char *command, char **argv, t_minishell *shell)
 {
 	int	status_command;
 	if (ft_strcmp(command, "pwd") == 0)
@@ -29,4 +29,17 @@ int	exec_builting(char *command, char **argv, t_minishell *shell)
 		status_command = export(*argv, shell->envp_list);
 	else if (ft_strcmp(command, "unset") == 0)
 		status_command = unset(*argv, shell->envp_list);
+}
+
+char	**execute_builtin(t_tree *tree)
+{
+	char	*space;
+	char	**command;
+
+
+	space = ft_strchr(tree->sub_list->token.lexeme, ' ');
+	if (tree->tkn_type == 6)
+	{
+		
+	}
 }

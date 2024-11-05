@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/04 17:35:52 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/04 21:27:34 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,13 @@ typedef struct s_envp
 	struct s_envp	*next;
 }	t_envp;
 
+typedef struct s_builtin
+{
+	char	**argv;
+	char	*command;
+	
+}
+
 typedef struct s_minishell
 {
 	t_list	*token_list;
@@ -146,6 +153,7 @@ int		count_nodes(t_envp *env_list);
 char	**list_to_str(t_envp *env_list);
 void	free_env_list(t_envp *env_list);
 void	free_envp_str(char	**envp);
+void	free_temp_str(char *envp);
 //export.c
 int		export_new_var(char **new_var, t_envp **env_list);
 char	**new_var_split(char *arg);
