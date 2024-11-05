@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/26 15:28:55 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/11/04 18:19:45 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,4 +136,7 @@ void	get_args(t_list *sub_list, t_execve *exec);
 void	executor(t_tree	*tree, t_minishell *shell);
 int		handle_pipe(t_tree *tree, t_minishell *shell, int left);
 void	exec_cmd(t_tree	*tree, t_minishell *shell);
+
+//utils.c
+void	*free_split(char **str);
 #endif

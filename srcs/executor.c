@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/26 16:09:35 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/11/04 19:49:26 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	get_args(t_list *sub_list, t_execve *exec)
 		i++;
 		node = node->next;
 	}
+	args[i] = NULL;
 	exec->args = args;
 }
 
@@ -59,30 +60,28 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 	int			i;
 	char		*path_slash;
 	char		*full_path;
-	// int			pid;
-	// int			status;
+
 	i = 0;
 	exec = ft_calloc(1, sizeof(t_execve));
 	get_path(shell);
-	// printf("get path ok\n");
 	get_args(tree->sub_list, exec);
-	// printf("get args ok\n");
 	while (shell->path[i])
 	{
 		path_slash = ft_strjoin(shell->path[i], "/");
 		full_path = ft_strjoin(path_slash, exec->cmd);
 		free(path_slash);
-		// printf("full path:%s\n", full_path);
 		if (access(full_path, F_OK | X_OK) == 0)
 		{
 			execve(full_path, exec->args, shell->envp);
-			// else
-			// 	waitpid(pid, &status, 0);
 			break;
 		}
 		free(full_path);
 		i++;
 	}
+	free_split(shell->path);
+	free_split(exec->args);
+	free(exec->cmd);
+	free(exec);
 }
 
 void	executor(t_tree *tree, t_minishell *shell)
@@ -127,7 +126,6 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 		{
 			dup2(tree->parent->fd[1], STDOUT_FILENO);
 			close(tree->parent->fd[1]);
-
 			close(tree->parent->fd[0]);
 		}
 		close(tree->fd[0]);
