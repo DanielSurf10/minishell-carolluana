@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/04 18:14:36 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/05 21:25:52 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ int	main(int argc __attribute__((unused)), \
 		shell.tree = build_root(shell.token_list);
 
 		//teste
-		pwd();
-		change_directory(&shell.envp_list, "~");
-		export("  ", &shell.envp_list);
+		unset("PWD", &shell.envp_list);
+		// env(shell.envp_list);
+		// printf("é builtin: %d\n", execute_builtin(shell.tree));
 
 		add_history(shell.prompt);
 		free_tree(&shell.tree);

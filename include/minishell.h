@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/04 21:27:34 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/05 20:34:52 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ typedef enum e_token
 	COMMAND
 }	t_token_enum;
 
+/*
+* @brief s_token
+*
+*/
 typedef struct s_token
 {
 	int		type;
@@ -81,8 +85,8 @@ typedef struct s_builtin
 {
 	char	**argv;
 	char	*command;
-	
-}
+	int		status_builtin;
+}	t_builtin;
 
 typedef struct s_minishell
 {
@@ -142,6 +146,10 @@ int		valid_pipe(t_list *token_list);
 int		valid_list(t_list *list);
 
 //builtin
+//exec_builtin.c
+int	aux_exec_builting(char *command, char **argv, t_minishell *shell);
+int	is_builtin(t_tree *tree);
+int	execute_builtin(t_tree *tree);
 //env_list.c
 t_envp	*env_create_node(void);
 void	print_env_list(t_envp *env_list);
@@ -176,6 +184,7 @@ void	update_pwd(t_envp **env_list, char *old_pwd, char *pwd);
 int		check_path(char *path);
 
 //exit.c
-int ft_exit(t_minishell *shell, char *arg);
+int	ft_exit(t_minishell *shell, char *arg);
+int	check_exit_arg(char *arg);
 
 #endif

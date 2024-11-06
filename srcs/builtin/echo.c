@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 18:32:45 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/29 17:44:41 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:27:21 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	echo(char **arg)
 	int	i;
 	int	has_flag;
 
-	i = 1; // Start from 1 to skip the command name
+	i = 1;
 	has_flag = 0;
 	if (arg[i] && ft_strcmp(arg[i], "-n") == 0)
 	{

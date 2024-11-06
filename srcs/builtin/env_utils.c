@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 19:36:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/04 18:46:54 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/05 20:40:09 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,18 @@ char	**list_to_str(t_envp *env_list)
 		return (NULL);
 	while (env_list)
 	{
-		if (!env_list->key || !env_list->value)
+		if (!env_list->key)
 			envp[i] = NULL;
 		else
 		{
 			temp = ft_strjoin(env_list->key, "=");
-			envp[i] = ft_strjoin(temp, env_list->value);
-			free(temp);
+			if (env_list->value)
+			{
+				envp[i] = ft_strjoin(temp, env_list->value);
+				free(temp);
+			}
+			else
+				envp[i] = temp;
 		}
 		env_list = env_list->next;
 		i++;
