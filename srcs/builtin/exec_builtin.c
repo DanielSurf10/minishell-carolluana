@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:56:04 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/05 18:01:39 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/07 03:05:11 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,29 @@ int	is_builtin(t_tree *tree)
 int	execute_builtin(t_tree *tree)
 {
 	// char	*space;
-	// char	**command;
+	char	*command;
+	t_builtin	*builtin;
 	int	status;
 
 	status = 0;
+	init_builtin(builtin);
 	if (tree->tkn_type == 0)
 	{
-		status = is_builtin(tree);
-		// space = ft_strchr(tree->sub_list->token.lexeme, ' ');
-		// strchr()
+		if(is_builtin(tree))
+		{
+			get_command(tree->sub_list->token.lexeme, builtin);
+		}
 	}
 	return (status);
+}
+
+void	get_command(char *content, t_builtin *builtin)
+{
+	char *command_argument;
+
+	command_argument = ft_strchr(content, ' ');
+	builtin->command = ft_strdup(content - command_argument);
+	builtin->argv = ft_strdup(command_argument);
 }
 
 void	init_builtin(t_builtin *builtin)

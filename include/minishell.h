@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/05 20:34:52 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/07 03:03:14 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct s_envp
 
 typedef struct s_builtin
 {
-	char	**argv;
+	char	*argv;
 	char	*command;
 	int		status_builtin;
 }	t_builtin;
@@ -150,6 +150,8 @@ int		valid_list(t_list *list);
 int	aux_exec_builting(char *command, char **argv, t_minishell *shell);
 int	is_builtin(t_tree *tree);
 int	execute_builtin(t_tree *tree);
+void	get_command(char *content, t_builtin *builtin);
+void	init_builtin(t_builtin *builtin);
 //env_list.c
 t_envp	*env_create_node(void);
 void	print_env_list(t_envp *env_list);
