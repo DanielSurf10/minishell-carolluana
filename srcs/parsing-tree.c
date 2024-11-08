@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:53:50 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/19 17:52:04 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/11/08 18:16:59 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	build_branch(t_list *tkn_list, t_tree *pivot)
 {
-	pivot->sub_list = hunt_pipe_redir(tkn_list);
+	pivot->sub_list = hunt_pipe(tkn_list);
 	if (pivot->sub_list)
 	{	
 		pivot->tkn_type = pivot->sub_list->token.type;

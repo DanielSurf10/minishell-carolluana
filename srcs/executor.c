@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/04 19:49:26 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/11/08 18:12:09 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	executor(t_tree *tree, t_minishell *shell)
 	}
 	else if (tree->tkn_type == PIPE && tree->left->tkn_type == COMMAND)
 	{
-		printf("entro aqui\n");
 		pipe(tree->fd);
 		handle_pipe(tree, shell, 1);
 	}
