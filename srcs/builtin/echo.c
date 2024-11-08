@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 18:32:45 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/07 18:29:05 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/08 18:53:05 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ int	echo(char **arg)
 
 	i = 1;
 	has_flag = 0;
+	if (arg == NULL)
+	{
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		return (0);
+	}
 	if (arg[i] && ft_strcmp(arg[i], "-n") == 0)
 	{
 		has_flag = 1;

@@ -6,32 +6,31 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:56:04 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/07 19:25:58 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/08 19:04:35 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	aux_exec_builting(char *command, char *argv, t_minishell *shell)
+int	aux_exec_builting(char *command, char **argv, t_minishell *shell)
 {
 	int	status_command;
 
 	status_command = 0;
-	printf("command: %s\n", command);
 	if (ft_strcmp(command, "pwd") == 0)
 		status_command = pwd();
 	else if (ft_strcmp(command, "cd") == 0)
-		change_directory(&shell->envp_list, argv);
+		change_directory(&shell->envp_list, *argv);
 	else if (ft_strcmp(command, "echo") == 0)
-		status_command = echo(&argv);
+		status_command = echo(argv);
 	else if (ft_strcmp(command, "env") == 0)
 		status_command = env(shell->envp_list);
 	else if (ft_strcmp(command, "exit") == 0)
-		status_command = ft_exit(shell, argv);
+		status_command = ft_exit(shell, *argv);
 	else if (ft_strcmp(command, "export") == 0)
-		status_command = export(argv, &shell->envp_list);
+		status_command = export(*argv, &shell->envp_list);
 	else if (ft_strcmp(command, "unset") == 0)
-		status_command = unset(argv, &shell->envp_list);
+		status_command = unset(*argv, &shell->envp_list);
 	return (status_command);
 }
 
@@ -54,45 +53,54 @@ int	execute_builtin(t_minishell *shell)
 {
 	t_builtin	builtin;
 	int	status;
+	int	i;
 
 	builtin.command = NULL;
 	builtin.argv = NULL;
-	builtin.status_builtin = 0;
 	status = 0;
+	i = 0;
 	if (shell->tree->tkn_type == 0)
 	{
 		if(is_builtin(shell->tree))
 		{
-			get_command(shell->tree->sub_list->token.lexeme, &builtin);
+			get_args_builtin(shell->token_list, &builtin);
 			status = aux_exec_builting(builtin.command, builtin.argv, shell);
 		}
 		else
 			return (0);
 	}
+	while (builtin.argv[i])
+		free(builtin.argv[i++]);
 	free(builtin.argv);
 	free(builtin.command);
 	return (status);
 }
 
-void	get_command(char *content, t_builtin *builtin)
+void	get_args_builtin(t_list *sub_list, t_builtin *builtin)
 {
-	char	*command_argument;
-	int		len;
+	t_list	*node;
+	int		i;
+	char	**args;
 
-	command_argument = ft_strchr(content, ' ');
-	printf("lexing: %s\n", content);
-	if (command_argument != NULL)
+	i = 0;
+	node = sub_list;
+	if (!sub_list)
+		return ;
+	builtin->command = ft_strdup(node->token.lexeme);
+	while (node)
 	{
-		len = ft_strlen(content) - ft_strlen(command_argument);
-		builtin->command = malloc (sizeof (char) * (len + 1));
-		if (!builtin->command)
-			return ;
-		builtin->command = ft_substr(content, 0, len);
-		builtin->argv = ft_strdup(command_argument);
+		i++;
+		node = node->next;
 	}
-	else
+	args = ft_calloc(i + 1, sizeof (char *));
+	i = 0;
+	node = sub_list;
+	while (node)
 	{
-		len = ft_strlen(content);
-		builtin->command = ft_strdup(content);
+		args[i] = ft_strdup(node->token.lexeme);
+		i++;
+		node = node->next;
 	}
+	args[i] = NULL;
+	builtin->argv = args;
 }
