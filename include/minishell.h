@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/07 03:03:14 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/07 19:19:55 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,9 +147,9 @@ int		valid_list(t_list *list);
 
 //builtin
 //exec_builtin.c
-int	aux_exec_builting(char *command, char **argv, t_minishell *shell);
+int	aux_exec_builting(char *command, char *argv, t_minishell *shell);
 int	is_builtin(t_tree *tree);
-int	execute_builtin(t_tree *tree);
+int	execute_builtin(t_minishell *shell);
 void	get_command(char *content, t_builtin *builtin);
 void	init_builtin(t_builtin *builtin);
 //env_list.c
