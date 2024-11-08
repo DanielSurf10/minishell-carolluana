@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/08 18:12:09 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/11/08 19:07:24 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 			dup2(tree->fd[1], STDOUT_FILENO);
 			close(tree->fd[0]);
 			close(tree->fd[1]);
+			handle_redir(tree->left);
 			exec_cmd(tree->left, shell);
 		}
 	}
@@ -139,4 +140,20 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 	}
 	waitpid(pid[1], NULL, 0);
 	return (0);
+}
+
+void	handle_redir(t_tree	tree)
+{
+	t_redir	*node;
+
+	node = tree.redir;
+	while (node)
+	{
+		if (node->rd_type == REDIRECT_INPUT)
+		{
+			
+		}
+	}
+
+	
 }

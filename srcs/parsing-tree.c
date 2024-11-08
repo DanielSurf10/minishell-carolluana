@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:53:50 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/08 18:16:59 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/11/08 18:54:09 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,20 @@
 
 void	build_branch(t_list *tkn_list, t_tree *pivot)
 {
-	pivot->sub_list = hunt_pipe(tkn_list);
+	pivot->sub_list = hunt_last_pipe(tkn_list);
 	if (pivot->sub_list)
 	{	
 		pivot->tkn_type = pivot->sub_list->token.type;
 		pivot->sub_list->next->prev = NULL;
 		pivot->right = build_root(pivot->sub_list->next);
-		if (pivot->sub_list->prev)
-		{
-			pivot->sub_list->prev->next = NULL;
-			pivot->left = build_root(tkn_list);
-		}
+		pivot->sub_list->prev->next = NULL;
+		pivot->left = build_root(tkn_list);
 		pivot->sub_list->next = NULL;
 		pivot->sub_list->prev = NULL;
 	}
 	else
 	{
+		pivot->redir = hunt_redir(tkn_list);
 		pivot->sub_list = tkn_list;
 		pivot->tkn_type = COMMAND;
 		pivot->left = NULL;
@@ -46,18 +44,6 @@ t_tree	*build_root(t_list	*tkn_list)
 	return (pivot);
 }
 
-t_list	*hunt_pipe_redir(t_list *tkn_list)
-{
-	t_list	*node;
-	
-	node = hunt_last_pipe(tkn_list);
-	if (node)
-		return (node);
-	node = hunt_redir(tkn_list);
-	if (node)
-		return (node);
-	return (NULL);
-}
 t_list	*hunt_last_pipe(t_list	*tkn_list)
 {
 	t_list	*node;
@@ -78,22 +64,26 @@ t_list	*hunt_last_pipe(t_list	*tkn_list)
 	return (NULL);
 }
 
-t_list	*hunt_redir(t_list	*tkn_list)
+t_redir	*hunt_redir(t_list	*tkn_list)
 {
 	t_list	*node;
+	t_redir	*redir;
 	
 	node = NULL;
-	node = get_last_token(tkn_list);
-	if (node && !node->prev && node->token.type >= REDIRECT_INPUT && node->token.type <= REDIRECT_OUTPUT_APPEND)
-		return (node);
+	redir = NULL;
+	node = tkn_list;
 	while (node)
 	{
 		if (node->token.type >= REDIRECT_INPUT && node->token.type <= REDIRECT_OUTPUT_APPEND)
 		{
-			return (node);
-			break;
+			ft_lstadd_back(&redir, ft_lstnew(node->next->token.lexeme, node->token.type));
+			if (node->prev)
+				node->prev->next = node->next->next;
+			if (node->next->next)
+				node->next->next->prev = node->prev;
+			node = node->next;
 		}
-		node = node->prev;
+		node = node->next;
 	}
-	return (NULL);
+	return (redir);
 }

@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/04 18:19:45 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/11/08 18:54:04 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,18 @@ typedef struct s_tkn_data
 	int		tkn_type;
 }	t_tkn_data ;
 
+typedef struct s_redir
+{
+	int	rd_type;
+	char	*file;
+	struct s_redir	*next;
+}	t_redir;
+
 typedef struct s_tree
 {
 	int				tkn_type;
 	t_list			*sub_list;
+	t_redir			*redir;
 	int				fd[2];
 	struct s_tree	*left;
 	struct s_tree	*right;
@@ -83,6 +91,8 @@ typedef struct s_execve
 	char	**args;
 	char	*cmd;/* data */
 }	t_execve;
+
+
 
 
 
@@ -114,6 +124,9 @@ int	token_get_state_52(char c);
 void	ft_strcpy(char *prompt, char *copy);
 void	token_add_to_list(t_list **token_list, char *lexeme, int token_type);
 void	free_list(t_list **t_tree);
+t_redir	*ft_lstnew(char *file, int rd_type);
+void	ft_lstadd_back(t_redir **lst, t_redir *new);
+t_redir	*ft_lstlast(t_redir *lst);
 
 //parsing-tree
 t_tree	*build_tree(t_list	*tkn_list);
@@ -122,8 +135,7 @@ t_list	*hunt_last_pipe(t_list	*tkn_list);
 t_tree	*build_root(t_list	*tkn_list);
 void	build_branch(t_list *tkn_list, t_tree *pivot);
 void	*free_tree(t_tree **tree);
-t_list	*hunt_pipe_redir(t_list *tkn_list);
-t_list	*hunt_redir(t_list	*tkn_list);
+t_redir	*hunt_redir(t_list	*tkn_list);
 
 //validation.c
 int	valid_redirect(t_list *list);
