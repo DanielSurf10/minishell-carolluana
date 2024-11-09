@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 18:32:45 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/08 18:53:05 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/09 15:49:22 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	echo(char **arg)
 	int	i;
 	int	has_flag;
 
-	i = 1;
+	i = 0;
 	has_flag = 0;
 	if (arg == NULL)
 	{
