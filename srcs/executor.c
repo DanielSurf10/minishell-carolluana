@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/11 22:56:30 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/11/11 23:18:02 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,12 @@ void	handle_redir(t_tree	*tree)
 		{
 			fd = open(node->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 			dup2(fd, STDOUT_FILENO);
+			close(fd);
+		}
+		else if (node->rd_type == REDIRECT_INPUT)
+		{
+			fd = open(node->file, O_RDONLY);
+			dup2(fd, STDIN_FILENO);
 			close(fd);
 		}
 		node = node->next;

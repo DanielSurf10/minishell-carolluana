@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/11 22:58:05 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/11/11 23:41:15 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ t_list	*hunt_last_pipe(t_list	*tkn_list);
 t_tree	*build_root(t_list	*tkn_list);
 void	build_branch(t_list *tkn_list, t_tree *pivot);
 void	*free_tree(t_tree **tree);
-t_redir	*hunt_redir(t_list	*tkn_list);
+t_redir	*hunt_redir(t_list	**tkn_list);
 
 //validation.c
 int	valid_redirect(t_list *list);
