@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:59:24 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/04 18:07:32 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/12 20:10:12 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,22 @@ int	export_new_var(char **new_var, t_envp **env_list)
 
 	status_command = 0;
 	new_env_var = env_create_node();
-	new_env_var->key = new_var[0];
-	new_env_var->value = new_var[1];
+	if (!new_env_var)
+		return (1);
+	new_env_var->key = ft_strdup(new_var[0]);
+	if (new_var[1])
+		new_env_var->value = ft_strdup(new_var[1]);
+	else
+		new_env_var->value = NULL;
 	if (check_key_name(new_env_var->key))
 		add_node_to_list(env_list, new_env_var);
 	else
+	{
 		status_command = 1;
+		free(new_env_var->key);
+		free(new_env_var->value);
+		free(new_env_var);
+	}
 	return (status_command);
 }
 
@@ -129,7 +139,6 @@ void	order_env_list(t_envp **env_list)
 
 int	export(char *arg, t_envp **env_list)
 {
-	//limpar new_var;
 	char	*var;
 	char	**new_var;
 	int		status_command;

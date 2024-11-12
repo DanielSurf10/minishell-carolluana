@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/08 18:45:35 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/12 19:22:21 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,26 +53,25 @@ int	main(int argc __attribute__((unused)), \
 	t_minishell	shell;
 
 	init_shell(&shell);
+	shell.envp_list = creat_env_list(envp);
+	shell.envp = list_to_str(shell.envp_list);
 	while (1)
 	{
 		shell.prompt = readline("minihell: ");
 		if (shell.prompt == NULL)
 			break ;
-		shell.envp_list = creat_env_list(envp);
-		shell.envp = list_to_str(shell.envp_list);
 		shell.token_list = tokenizer(shell.prompt);
 		shell.tree = build_root(shell.token_list);
 
 		//teste
-		// print_tree(shell.tree);
 		execute_builtin(&shell);
-		// printf("exec_buitin: %d\n", execute_builtin(&shell));
-		// ft_exit(&shell, "5");
+		// export("PWD=oi", &shell.envp_list);
+		// env(shell.envp_list);
 
 		add_history(shell.prompt);
 		free_tree(&shell.tree);
 		shell.token_list = NULL;
-		free_env_list(shell.envp_list);
-		free_envp_str(shell.envp);
 	}
+	free_env_list(shell.envp_list);
+	free_envp_str(shell.envp);
 }

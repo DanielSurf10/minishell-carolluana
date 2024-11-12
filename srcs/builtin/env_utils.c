@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 19:36:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/05 20:40:09 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/12 17:07:26 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ void	print_env_list(t_envp *env_list)
 	temp = env_list;
 	while (temp != NULL)
 	{
-		printf("%s=%s\n", temp->key, temp->value);
-		temp = temp->next;
+		if (env_list->key)
+		{
+			printf("%s=%s\n", temp->key, temp->value);
+			temp = temp->next;
+		}
 	}
 }
 
