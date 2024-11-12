@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/08 19:07:24 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/11/11 22:56:30 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 void	executor(t_tree *tree, t_minishell *shell)
 {
 	if (tree->tkn_type == COMMAND)
-		exec_cmd(tree, shell);
+		exec_single_cmd(tree, shell);
 	else if (tree->tkn_type == PIPE && tree->left->tkn_type == PIPE)
 	{
 		tree->left->parent = tree;
@@ -130,6 +130,7 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 		}
 		close(tree->fd[0]);
 		close(tree->fd[1]);
+		handle_redir(tree->right);
 		exec_cmd(tree->right, shell);
 	}
 	close(tree->fd[1]);
@@ -142,18 +143,39 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 	return (0);
 }
 
-void	handle_redir(t_tree	tree)
+void	handle_redir(t_tree	*tree)
 {
 	t_redir	*node;
+	int		fd;
 
-	node = tree.redir;
+	node = tree->redir;
 	while (node)
 	{
-		if (node->rd_type == REDIRECT_INPUT)
+		if (node->rd_type == REDIRECT_OUTPUT)
 		{
-			
+			fd = open(node->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+			dup2(fd, STDOUT_FILENO);
+			close(fd);
 		}
+		else if (node->rd_type == REDIRECT_OUTPUT_APPEND)
+		{
+			fd = open(node->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+			dup2(fd, STDOUT_FILENO);
+			close(fd);
+		}
+		node = node->next;
 	}
+}
 
-	
+void	exec_single_cmd(t_tree *tree, t_minishell *shell)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		handle_redir(tree);
+		exec_cmd(tree, shell);
+	}
+	waitpid(pid, NULL, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/08 18:54:04 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/11/11 22:58:05 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include "../libs/libft/libft.h"
 # include "./parsing.h"
 #include <sys/wait.h>
+#include <fcntl.h>
+
 
 //****************************************************************************//
 //                               TOKENIZER                                    //
@@ -148,6 +150,8 @@ void	get_args(t_list *sub_list, t_execve *exec);
 void	executor(t_tree	*tree, t_minishell *shell);
 int		handle_pipe(t_tree *tree, t_minishell *shell, int left);
 void	exec_cmd(t_tree	*tree, t_minishell *shell);
+void	handle_redir(t_tree	*tree);
+void	exec_single_cmd(t_tree *tree, t_minishell *shell);
 
 //utils.c
 void	*free_split(char **str);

@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/26 17:17:52 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/11/11 21:57:58 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,21 @@
 
 // static void	print_tree(t_tree *tree)
 // {
+// 	t_list	*node;
+	
 // 	if (tree)
 // 	{
-// 		printf("arvore: %s type: %d\n", tree->sub_list->token.lexeme, tree->sub_list->token.type);
+// 		printf("type: %d\n", tree->sub_list->token.type);
+// 		if (tree->tkn_type == COMMAND)
+// 		{
+// 			node = tree->sub_list;
+// 			printf("sub list: ");
+// 			while (node)
+// 			{
+// 				printf("%s ", node->token.lexeme);
+// 				node = node->next;
+// 			}
+// 		}
 // 		print_tree(tree->right);
 // 		print_tree(tree->left);
 // 	}
@@ -58,7 +70,7 @@ int	main(int argc __attribute__((unused)), \
 		shell.tree = NULL;
 		shell.token_list = tokenizer(prompt);
 		shell.tree = build_root(shell.token_list);
-		// print_tree(base.tree);
+		// print_tree(shell.tree);
 		executor(shell.tree, &shell);
 		if (strcmp(prompt, "exit") == 0)
 		{
