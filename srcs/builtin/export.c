@@ -6,19 +6,16 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:59:24 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/12 20:10:12 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:16:55 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// verificar se a variavel existe no env
-// Criar variável jogar no env
-// pegar a varival e jogar na lista
 int	export_new_var(char **new_var, t_envp **env_list)
 {
 	t_envp	*new_env_var;
-	int	status_command;
+	int		status_command;
 
 	status_command = 0;
 	new_env_var = env_create_node();
@@ -41,45 +38,10 @@ int	export_new_var(char **new_var, t_envp **env_list)
 	return (status_command);
 }
 
-
-int	check_key_name(char *key)
-{
-	int	i;
-
-	i = 0;
-	if (key[0] != '_' && !ft_isalpha(key[0]))
-	{
-		printf("export: not an intentifier: %s\n", key);
-		return(0);
-	}
-	while (key[i])
-	{
-		if (!ft_isalnum(key[i]) && key[i] != '_')
-		{
-			printf("export: not valid in this context: %s\n", key);
-			return(0);
-		}
-		i++;
-	}
-	return (1);
-}
-
-char	*ft_getenv(char *arg, t_envp *env_list)
-{
-	t_envp	*temp;
-	temp = env_list;
-	while (temp)
-	{
-		if (ft_strcmp(arg, temp->key) == 0)
-			return (temp->value);
-		temp = temp->next;
-	}
-	return (NULL);
-}
-
 char	**new_var_split(char *arg)
 {
-	char **new_var;
+	char	**new_var;
+
 	if (!arg)
 		return (NULL);
 	else
@@ -96,22 +58,6 @@ void	change_env_value(char *key, char *value, t_envp **env_list)
 			temp = temp->next;
 	free(temp->value);
 	temp->value = ft_strdup(value);
-}
-
-int	check_arg(char	*arg)
-{
-	int	i;
-
-	i = 0;
-	if (arg == NULL)
-		return (0);
-	while (arg[i])
-	{
-		if (!ft_is_space(arg[i]))
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 void	order_env_list(t_envp **env_list)

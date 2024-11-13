@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/12 21:09:01 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:58:50 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int argc __attribute__((unused)), \
 	t_minishell	shell;
 
 	init_shell(&shell);
-	shell.envp_list = creat_env_list(envp);
+	shell.envp_list = create_env_list(envp);
 	shell.envp = list_to_str(shell.envp_list);
 	while (1)
 	{

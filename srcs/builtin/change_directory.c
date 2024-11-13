@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:47:17 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/09 15:57:06 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:01:19 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,13 @@ int	check_path(char *path)
 	int	i;
 
 	i = 0;
-	while(path[i])
+	while (path[i])
 	{
-		if ((ft_isascii(path[i]) && !ft_is_space(path[i])) && ft_is_space(path[i + 1]))
+		if ((ft_isascii(path[i]) && !ft_is_space(path[i]))
+			&& ft_is_space(path[i + 1]))
 		{
 			i++;
-			while(ft_is_space(path[i]))
+			while (ft_is_space(path[i]))
 				i++;
 			if (!ft_is_space(path[i]))
 				return (1);

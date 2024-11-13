@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:56:04 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/12 21:29:05 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:27:57 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,8 @@ int	is_builtin(t_tree *tree)
 		return (0);
 }
 
-
 int	execute_builtin(t_minishell *shell)
 {
-	// t_builtin	builtin;
 	int	status;
 	int	i;
 
@@ -61,10 +59,11 @@ int	execute_builtin(t_minishell *shell)
 	i = 0;
 	if (shell->tree->tkn_type == 0)
 	{
-		if(is_builtin(shell->tree))
+		if (is_builtin(shell->tree))
 		{
 			get_args_builtin(shell->token_list, &shell->builtin);
-			status = aux_exec_builting(shell->builtin.command, shell->builtin.argv, shell);
+			status = aux_exec_builting(shell->builtin.command,
+					shell->builtin.argv, shell);
 		}
 		else
 			return (0);
@@ -112,6 +111,9 @@ void	clear_args(char **args)
 
 	i = 0;
 	while (args[i])
+	{
 		free(args[i]);
+		i++;
+	}
 	free(args);
 }
