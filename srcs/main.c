@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/12 19:22:21 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/12 21:09:01 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	main(int argc __attribute__((unused)), \
 		free_tree(&shell.tree);
 		shell.token_list = NULL;
 	}
+	rl_clear_history();
 	free_env_list(shell.envp_list);
 	free_envp_str(shell.envp);
 }

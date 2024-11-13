@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:56:04 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/09 15:49:03 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/12 21:29:05 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,28 +51,28 @@ int	is_builtin(t_tree *tree)
 
 int	execute_builtin(t_minishell *shell)
 {
-	t_builtin	builtin;
+	// t_builtin	builtin;
 	int	status;
 	int	i;
 
-	builtin.command = NULL;
-	builtin.argv = NULL;
+	shell->builtin.command = NULL;
+	shell->builtin.argv = NULL;
 	status = 0;
 	i = 0;
 	if (shell->tree->tkn_type == 0)
 	{
 		if(is_builtin(shell->tree))
 		{
-			get_args_builtin(shell->token_list, &builtin);
-			status = aux_exec_builting(builtin.command, builtin.argv, shell);
+			get_args_builtin(shell->token_list, &shell->builtin);
+			status = aux_exec_builting(shell->builtin.command, shell->builtin.argv, shell);
 		}
 		else
 			return (0);
 	}
-	while (builtin.argv[i])
-		free(builtin.argv[i++]);
-	free(builtin.argv);
-	free(builtin.command);
+	while (shell->builtin.argv[i])
+		free(shell->builtin.argv[i++]);
+	free(shell->builtin.argv);
+	free(shell->builtin.command);
 	return (status);
 }
 
@@ -104,4 +104,14 @@ void	get_args_builtin(t_list *sub_list, t_builtin *builtin)
 	}
 	args[i] = NULL;
 	builtin->argv = args;
+}
+
+void	clear_args(char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args[i])
+		free(args[i]);
+	free(args);
 }

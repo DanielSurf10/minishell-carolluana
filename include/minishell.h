@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/08 19:07:32 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/12 21:27:22 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_minishell
 	t_list	*token_list;
 	t_tree	*tree;
 	t_envp	*envp_list;
+	t_builtin	builtin;
 	char	**envp;
 	char	**path;
 	char	*prompt;
@@ -152,6 +153,7 @@ int	is_builtin(t_tree *tree);
 int	execute_builtin(t_minishell *shell);
 void	get_args_builtin(t_list *sub_list, t_builtin *builtin);
 void	init_builtin(t_builtin *builtin);
+void	clear_args(char **args);
 //env_list.c
 t_envp	*env_create_node(void);
 void	print_env_list(t_envp *env_list);
