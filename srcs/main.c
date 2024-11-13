@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/10/24 17:32:28 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:55:45 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,37 +43,36 @@
 // 	}
 // }
 
+
+
+
 int	main(int argc __attribute__((unused)), \
 		char **argv __attribute__((unused)), char **envp)
 {
-	char	*prompt;
+	// char	*prompt;
 	t_minishell	shell;
-	extern char **environ;
 
-	// shell.envp = envp;
+	init_shell(&shell);
+	shell.envp_list = create_env_list(envp);
+	shell.envp = list_to_str(shell.envp_list);
 	while (1)
 	{
-		prompt = readline("minihell: ");
-		if (prompt == NULL)
-			break;
-		shell.token_list = NULL;
-		shell.tree = NULL;
-		shell.token_list = tokenizer(prompt);
+		shell.prompt = readline("minihell: ");
+		if (shell.prompt == NULL)
+			break ;
+		shell.token_list = tokenizer(shell.prompt);
 		shell.tree = build_root(shell.token_list);
-		shell.envp = creat_env_list(envp);
-		//envp
-		unset("LESS=-R", &shell.envp);
-		// env(shell.envp);
-		// print_env_list(shell.envp);
-		// print_tree(base.tree);
-		if (ft_strcmp(prompt, "exit") == 0)
-		{
-			free(prompt);
-			shell.token_list = NULL;
-			exit(1);
-		}
-		add_history(prompt);
+
+		//teste
+		execute_builtin(&shell);
+		// export("PWD=oi", &shell.envp_list);
+		// env(shell.envp_list);
+
+		add_history(shell.prompt);
 		free_tree(&shell.tree);
 		shell.token_list = NULL;
 	}
+	rl_clear_history();
+	free_env_list(shell.envp_list);
+	free_envp_str(shell.envp);
 }
