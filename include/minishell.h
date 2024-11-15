@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/13 17:58:50 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/15 16:15:50 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_minishell
 	char	**envp;
 	char	**path;
 	char	*prompt;
+	int		status;
 }	t_minishell ;
 
 
@@ -110,19 +111,19 @@ typedef struct s_minishell
 // char *send_word(char *cpy_prompt);
 t_list	*tokenizer(char *str);
 void	init_token_data(t_tkn_data *tkn_data, char *str);
-int	is_final_state(t_tkn_data tkn_data);
+int		is_final_state(t_tkn_data tkn_data);
 void	put_token_on_list(t_tkn_data *tkn_data, char *str, t_list **token_list, int i);
-int	get_token_type(int	state);
-int	token_get_next_state(int state, char c);
-int	token_get_state_30(char c);
-int	token_get_state_40(char c);
+int		get_token_type(int	state);
+int		token_get_next_state(int state, char c);
+int		token_get_state_30(char c);
+int		token_get_state_40(char c);
 void	state_requires_backtrack(t_tkn_data *tkn_data, int	*i);
-int	token_get_state_1(char c);
-int	ft_is_space(char c);
-int	is_metachar(char c);
-int	token_get_state_50(char c);
-int	token_get_state_51(char c);
-int	token_get_state_52(char c);
+int		token_get_state_1(char c);
+int		ft_is_space(char c);
+int		is_metachar(char c);
+int		token_get_state_50(char c);
+int		token_get_state_51(char c);
+int		token_get_state_52(char c);
 
 //utils.c
 void	ft_strcpy(char *prompt, char *copy);
@@ -147,6 +148,20 @@ int		valid_pipe(t_list *token_list);
 int		valid_list(t_list *list);
 
 //builtin
+// pwd.c
+int		pwd(void);
+//echo.c
+int		echo(char **arg);
+//change_directory.c
+int		change_directory(t_envp **env_list, char *path);
+void	update_pwd(t_envp **env_list, char *old_pwd, char *pwd);
+int		check_path(char *path);
+int		ft_exit(t_minishell *shell, char *arg);
+int		check_exit_arg(char *arg);
+//unset.c
+int		unset(char *arg, t_envp **env_list);
+void	remove_node_from_list(char *arg, t_envp **env_list);
+
 //exec_builtin.c
 int		aux_exec_builting(char *command, char **argv, t_minishell *shell);
 int		is_builtin(t_tree *tree);
@@ -160,12 +175,8 @@ t_envp	*env_create_node(void);
 void	add_node_to_list(t_envp **head, t_envp *node);
 t_envp	*node_from_environ(char *environ);
 t_envp	*create_env_list(char **environ);
-
-//env_print.c
 void	print_env_list(t_envp *env_list);
 int		env(t_envp *env_list);
-
-//env_utils.c
 char	*envp_str(t_envp *env_list);
 char	**list_to_str(t_envp *env_list);
 int		count_nodes(t_envp *env_list);
@@ -176,30 +187,14 @@ void	free_envp_str(char	**envp);
 int		export_new_var(char **new_var, t_envp **env_list);
 char	**new_var_split(char *arg);
 char	*ft_getenv(char *arg, t_envp *env_list);
-void	change_env_value(char *key, char *value,t_envp **env_list);
+void	change_env_value(char *key, char *value, t_envp **env_list);
 void	order_env_list(t_envp **env_list);
 int		export(char *arg, t_envp **env_list);
 int		check_arg(char	*arg);
 int		check_key_name(char *key);
 
-//unset.c
-int		unset(char *arg, t_envp **env_list);
-void	remove_node_from_list(char *arg, t_envp **env_list);
-
-// pwd.c
-int		pwd(void);
-
-//echo.c
-int		echo(char **arg);
-
-//change_directory.c
-int		change_directory(t_envp **env_list, char *path);
-void	update_pwd(t_envp **env_list, char *old_pwd, char *pwd);
-int		check_path(char *path);
-
-//exit.c
-int	ft_exit(t_minishell *shell, char *arg);
-int	check_exit_arg(char *arg);
-
+//signal.c
+void	sig_handler_sigint(int signal);
+int		control_sign(int new_signal);
 
 #endif
