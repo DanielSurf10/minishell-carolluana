@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/15 16:15:50 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:44:37 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ int		check_key_name(char *key);
 
 //signal.c
 void	sig_handler_sigint(int signal);
+void	sig_handler_sigquit(int signal __attribute__((unused)));
 int		control_sign(int new_signal);
 
 #endif
