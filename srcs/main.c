@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/19 17:54:43 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:46:54 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,18 @@ int	main(int argc __attribute__((unused)), \
 	init_shell(&shell);
 	shell.envp_list = create_env_list(envp);
 	shell.envp = list_to_str(shell.envp_list);
-	signal(SIGINT, sig_handler_sigint);
-	signal(SIGQUIT, SIG_IGN);
+	init_signals();
 	while (1)
 	{
 		shell.prompt = readline("minihell: ");
 		if (shell.prompt == NULL)
 			break ;
 		shell.token_list = tokenizer(shell.prompt);
-		shell.tree = build_root(shell.token_list);
-		//teste
+		// if (valid_list(shell.token_list))
+		// 	shell.tree = build_root(shell.token_list);
+		// else
+		// 	ft_exit(&shell, "1");
+		// //teste
 		execute_builtin(&shell);
 		add_history(shell.prompt);
 		free_tree(&shell.tree);

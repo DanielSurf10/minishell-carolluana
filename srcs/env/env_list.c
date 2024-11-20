@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 19:36:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/13 18:09:11 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:26:41 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,37 +77,3 @@ t_envp	*create_env_list(char **environ)
 	}
 	return (head);
 }
-
-// char	**list_to_str(t_envp *env_list)
-// {
-// 	int		size;
-// 	int		i;
-// 	char	**envp;
-// 	char	*temp;
-
-// 	i = 0;
-// 	size = count_nodes(env_list);
-// 	envp = malloc(sizeof(char *) * (size + 1));
-// 	if (!envp)
-// 		return (NULL);
-// 	while (env_list)
-// 	{
-// 		if (!env_list->key)
-// 			envp[i] = NULL;
-// 		else
-// 		{
-// 			temp = ft_strjoin(env_list->key, "=");
-// 			if (env_list->value)
-// 			{
-// 				envp[i] = ft_strjoin(temp, env_list->value);
-// 				free(temp);
-// 			}
-// 			else
-// 				envp[i] = temp;
-// 		}
-// 		env_list = env_list->next;
-// 		i++;
-// 	}
-// 	envp[i] = NULL;
-// 	return (envp);
-// }
