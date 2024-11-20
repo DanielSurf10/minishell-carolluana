@@ -6,7 +6,7 @@
 #    By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 17:34:18 by cshingai          #+#    #+#              #
-#    Updated: 2024/11/20 20:23:09 by cshingai         ###   ########.fr        #
+#    Updated: 2024/11/20 20:31:09 by cshingai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS = $(addprefix srcs/, \
 			env/env_list.c \
 			env/env_utils.c \
 			env/env_print.c \
+			executor.c\
 			builtin/export.c \
 			builtin/export_utils.c \
 			builtin/exit.c\

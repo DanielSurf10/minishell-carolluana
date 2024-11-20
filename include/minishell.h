@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/20 20:25:34 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/20 20:30:00 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,8 @@ void	exec_single_cmd(t_tree *tree, t_minishell *shell);
 //signal.c
 void	sig_handler_sigint(int signal);
 void	signals_for_command(void);
+void	init_signals(void);
+int	control_sign(int new_signal);
 //void	sig_handler_sigquit(int signal __attribute__((unused)));
 
 //utils.c
