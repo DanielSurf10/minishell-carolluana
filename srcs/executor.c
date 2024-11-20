@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/11 23:18:02 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/11/20 19:52:32 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 		free(full_path);
 		i++;
 	}
-	free_split(shell->path);
-	free_split(exec->args);
+	ft_free_split(shell->path);
+	ft_free_split(exec->args);
 	free(exec->cmd);
 	free(exec);
 }
@@ -115,6 +115,11 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 			close(tree->fd[0]);
 			close(tree->fd[1]);
 			handle_redir(tree->left);
+			if (is_builtin(tree->left))
+			{
+				execute_builtin(shell, tree->left);
+				exit(1);
+			}
 			exec_cmd(tree->left, shell);
 		}
 	}
@@ -131,6 +136,11 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 		close(tree->fd[0]);
 		close(tree->fd[1]);
 		handle_redir(tree->right);
+		if (is_builtin(tree->right))
+		{
+			execute_builtin(shell, tree->right);
+			exit(1);
+		}
 		exec_cmd(tree->right, shell);
 	}
 	close(tree->fd[1]);
@@ -177,6 +187,12 @@ void	exec_single_cmd(t_tree *tree, t_minishell *shell)
 {
 	int	pid;
 
+	if (is_builtin(tree) == 1)
+	{
+		handle_redir(tree);
+		execute_builtin(shell, tree);
+		return ;
+	}
 	pid = fork();
 	if (pid == 0)
 	{

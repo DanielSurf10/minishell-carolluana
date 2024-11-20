@@ -6,7 +6,7 @@
 #    By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 17:34:18 by cshingai          #+#    #+#              #
-#    Updated: 2024/11/20 18:08:22 by cshingai         ###   ########.fr        #
+#    Updated: 2024/11/20 18:35:55 by cshingai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ obj/%.o: srcs/%.c ./include/minishell.h
 # cleanning up objects files
 clean:
 			@echo "removing objects"
-			@rm -rf $(OBJ)
+			@rm -rf obj
 			@make clean -C $(LIBFT)
 			@make clean -C $(FT_PRINTF)
 

@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:56:04 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/13 18:27:57 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/20 19:32:38 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,19 @@ int	aux_exec_builting(char *command, char **argv, t_minishell *shell)
 
 int	is_builtin(t_tree *tree)
 {
-	if (ft_strcmp(tree->sub_list->token.lexeme, "pwd")
-		|| ft_strcmp(tree->sub_list->token.lexeme, "cd")
-		|| ft_strcmp(tree->sub_list->token.lexeme, "echo")
-		|| ft_strcmp(tree->sub_list->token.lexeme, "env")
-		|| ft_strcmp(tree->sub_list->token.lexeme, "exit")
-		|| ft_strcmp(tree->sub_list->token.lexeme, "export")
-		|| ft_strcmp(tree->sub_list->token.lexeme, "unset"))
+	if (!ft_strcmp(tree->sub_list->token.lexeme, "pwd")
+		|| !ft_strcmp(tree->sub_list->token.lexeme, "cd")
+		|| !ft_strcmp(tree->sub_list->token.lexeme, "echo")
+		|| !ft_strcmp(tree->sub_list->token.lexeme, "env")
+		|| !ft_strcmp(tree->sub_list->token.lexeme, "exit")
+		|| !ft_strcmp(tree->sub_list->token.lexeme, "export")
+		|| !ft_strcmp(tree->sub_list->token.lexeme, "unset"))
 		return (1);
 	else
 		return (0);
 }
 
-int	execute_builtin(t_minishell *shell)
+int	execute_builtin(t_minishell *shell, t_tree *tree)
 {
 	int	status;
 	int	i;
@@ -57,18 +57,18 @@ int	execute_builtin(t_minishell *shell)
 	shell->builtin.argv = NULL;
 	status = 0;
 	i = 0;
-	if (shell->tree->tkn_type == 0)
+	if (tree->tkn_type == COMMAND)
 	{
-		if (is_builtin(shell->tree))
+		if (is_builtin(tree))
 		{
-			get_args_builtin(shell->token_list, &shell->builtin);
+			get_args_builtin(tree->sub_list, &shell->builtin);
 			status = aux_exec_builting(shell->builtin.command,
 					shell->builtin.argv, shell);
 		}
 		else
 			return (0);
 	}
-	while (shell->builtin.argv[i])
+	while (shell->builtin.argv && shell->builtin.argv[i])
 		free(shell->builtin.argv[i++]);
 	free(shell->builtin.argv);
 	free(shell->builtin.command);

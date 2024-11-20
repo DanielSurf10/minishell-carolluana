@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:47:38 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/13 18:08:17 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:57:04 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*envp_str(t_envp *env_list)
 	char	*temp;
 
 	temp = NULL;
-	if (env_list->key)
+	if (!env_list->key)
 		envp_str = NULL;
 	else
 	{
