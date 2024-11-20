@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:53:50 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/11 23:40:51 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:43:37 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,13 @@ t_list	*hunt_last_pipe(t_list	*tkn_list)
 t_redir	*hunt_redir(t_list	**tkn_list)
 {
 	t_list	*node;
+	t_list	*free_token;
 	t_redir	*redir;
 	
 	node = NULL;
 	redir = NULL;
 	node = *tkn_list;
+	free_token = NULL;
 	while (node)
 	{
 		if (node->token.type >= REDIRECT_INPUT && node->token.type <= REDIRECT_OUTPUT_APPEND)
@@ -86,8 +88,18 @@ t_redir	*hunt_redir(t_list	**tkn_list)
 				node->next->next->prev = NULL;
 				*tkn_list = node->next->next;
 			}
+			// free_token = node;
 			node = node->next;
+			// free(free_token->token.lexeme);
+			// free(free_token);
+			// free_token = NULL;
+			// free_token = node;
+			// node = node->next;
+			// free(free_token->token.lexeme);
+			// free(free_token);
+			// free_token = NULL;
 		}
+		// else
 		node = node->next;
 	}
 	return (redir);
