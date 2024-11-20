@@ -6,7 +6,7 @@
 #    By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 17:34:18 by cshingai          #+#    #+#              #
-#    Updated: 2024/11/13 18:28:36 by cshingai         ###   ########.fr        #
+#    Updated: 2024/11/20 18:08:22 by cshingai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRCS = $(addprefix srcs/, \
 			tokens2.c \
 			validation.c \
 			parsing-tree.c \
+			executor.c \
 			builtin/env_list.c \
 			builtin/env_utils.c \
 			builtin/env_print.c \

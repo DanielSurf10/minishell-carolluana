@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/13 17:58:50 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:15:44 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <readline/history.h>
 # include "../libs/libft/libft.h"
 # include "./parsing.h"
+#include <sys/wait.h>
+#include <fcntl.h>
 
 
 //****************************************************************************//
@@ -66,12 +68,22 @@ typedef struct s_tkn_data
 	int		tkn_type;
 }	t_tkn_data ;
 
+typedef struct s_redir
+{
+	int	rd_type;
+	char	*file;
+	struct s_redir	*next;
+}	t_redir;
+
 typedef struct s_tree
 {
 	int				tkn_type;
 	t_list			*sub_list;
+	t_redir			*redir;
+	int				fd[2];
 	struct s_tree	*left;
 	struct s_tree	*right;
+	struct s_tree	*parent;
 }	t_tree ;
 
 typedef struct s_envp
@@ -98,6 +110,15 @@ typedef struct s_minishell
 	char	**path;
 	char	*prompt;
 }	t_minishell ;
+
+typedef struct s_execve
+{
+	char	**args;
+	char	*cmd;/* data */
+}	t_execve;
+
+
+
 
 
 // main.c
@@ -130,6 +151,9 @@ void	token_add_to_list(t_list **token_list, char *lexeme, int token_type);
 void	free_list(t_list **t_tree);
 void	*ft_free_split(char **split);
 void	init_shell(t_minishell *shell);
+t_redir	*ft_lstnew(char *file, int rd_type);
+void	ft_lstadd_back(t_redir **lst, t_redir *new);
+t_redir	*ft_lstlast(t_redir *lst);
 
 //parsing-tree
 t_tree	*build_tree(t_list	*tkn_list);
@@ -138,8 +162,7 @@ t_list	*hunt_last_pipe(t_list	*tkn_list);
 t_tree	*build_root(t_list	*tkn_list);
 void	build_branch(t_list *tkn_list, t_tree *pivot);
 void	*free_tree(t_tree **tree);
-t_list	*hunt_pipe_redir(t_list *tkn_list);
-t_list	*hunt_redir(t_list	*tkn_list);
+t_redir	*hunt_redir(t_list	**tkn_list);
 
 //validation.c
 int		valid_redirect(t_list *list);
@@ -202,4 +225,15 @@ int	ft_exit(t_minishell *shell, char *arg);
 int	check_exit_arg(char *arg);
 
 
+//executor.c
+void	get_path(t_minishell *shell);
+void	get_args(t_list *sub_list, t_execve *exec);
+void	executor(t_tree	*tree, t_minishell *shell);
+int		handle_pipe(t_tree *tree, t_minishell *shell, int left);
+void	exec_cmd(t_tree	*tree, t_minishell *shell);
+void	handle_redir(t_tree	*tree);
+void	exec_single_cmd(t_tree *tree, t_minishell *shell);
+
+//utils.c
+void	*free_split(char **str);
 #endif
