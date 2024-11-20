@@ -6,7 +6,7 @@
 #    By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 17:34:18 by cshingai          #+#    #+#              #
-#    Updated: 2024/11/20 18:35:55 by cshingai         ###   ########.fr        #
+#    Updated: 2024/11/20 20:23:09 by cshingai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,9 @@ SRCS = $(addprefix srcs/, \
 			tokens2.c \
 			validation.c \
 			parsing-tree.c \
-			executor.c \
-			builtin/env_list.c \
-			builtin/env_utils.c \
-			builtin/env_print.c \
+			env/env_list.c \
+			env/env_utils.c \
+			env/env_print.c \
 			builtin/export.c \
 			builtin/export_utils.c \
 			builtin/exit.c\
@@ -39,6 +38,7 @@ SRCS = $(addprefix srcs/, \
 			builtin/echo.c \
 			builtin/change_directory.c\
 			builtin/exec_builtin.c\
+			signal.c\
 		)
 
 OBJ = $(SRCS:srcs/%.c=obj/%.o)

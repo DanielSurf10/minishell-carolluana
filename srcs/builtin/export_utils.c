@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:15:45 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/13 18:16:52 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/20 15:29:05 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_key_name(char *key)
 	i = 0;
 	if (key[0] != '_' && !ft_isalpha(key[0]))
 	{
-		printf("export: not an intentifier: %s\n", key);
+		printf("export: not an identifier: %s\n", key);
 		return (0);
 	}
 	while (key[i])

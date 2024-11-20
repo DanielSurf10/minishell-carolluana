@@ -1,5 +1,8 @@
 {
 	"files.associations": {
 		"minishell.h": "c"
-	}
+	},
+	"cSpell.words": [
+		"minishell"
+	]
 }

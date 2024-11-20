@@ -6,11 +6,13 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/20 19:05:37 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/20 20:22:33 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+volatile int	g_signal;
 
 /*
 	In this first part of the main I have created the prompt. The prompt is
@@ -49,13 +51,13 @@
 int	main(int argc __attribute__((unused)), \
 		char **argv __attribute__((unused)), char **envp)
 {
-	// char	*prompt;
 	t_minishell	shell;
 
 	init_shell(&shell);
 	shell.envp_list = create_env_list(envp);
 	shell.envp = list_to_str(shell.envp_list);
 	// shell.envp = envp;
+	init_signals();
 	while (1)
 	{
 		shell.prompt = readline("minihell: ");
