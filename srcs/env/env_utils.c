@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:47:38 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/20 18:57:04 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/26 19:16:09 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	free_envp_str(char	**envp)
 		return ;
 	while (envp[i])
 	{
-		free(envp[i]);
+		if (envp[i])
+			free(envp[i]);
 		i++;
 	}
 	free(envp);
@@ -89,10 +90,12 @@ char	*envp_str(t_envp *env_list)
 	{
 		temp = ft_strjoin(env_list->key, "=");
 		if (env_list->value)
+		{
 			envp_str = ft_strjoin(temp, env_list->value);
+			free(temp);
+		}
 		else
 			envp_str = temp;
 	}
-	free(temp);
 	return (envp_str);
 }
