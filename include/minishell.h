@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/20 20:30:00 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:53:59 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include "./parsing.h"
 #include <sys/wait.h>
 #include <fcntl.h>
+
+int extern volatile	g_signal;
 
 
 //****************************************************************************//
@@ -219,6 +221,7 @@ int		check_key_name(char *key);
 //unset.c
 int		unset(char *arg, t_envp **env_list);
 void	remove_node_from_list(char *arg, t_envp **env_list);
+int		ft_check_key(char *arg, t_envp *env_list);
 
 // pwd.c
 int		pwd(void);
@@ -253,4 +256,7 @@ int	control_sign(int new_signal);
 
 //utils.c
 void	*free_split(char **str);
+
+
+void	add_status_signal(int s, t_minishell *shell);
 #endif

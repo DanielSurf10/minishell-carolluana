@@ -1,7 +1,0 @@
-NAME = minishell$
-all: $(NAME)$
-$(NAME): libft ft_printf ${OBJ}$
-			@echo "compiling $(NAME)"$
-			@rm -rf $(NAME)$
-			@cc $(FLAGS) $(OBJ) $(LIBS) -lreadline -o $@$
-			@cc $(FLAGS) $(HEADERS) -c $< -o $@$

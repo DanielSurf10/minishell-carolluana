@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:59:24 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/13 18:57:03 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/27 19:41:40 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int	export_new_var(char **new_var, t_envp **env_list)
 {
 	t_envp	*new_env_var;
-	int		status_command;
+	// int		status_command;
 
-	status_command = 0;
+	// status_command = 0;
 	new_env_var = env_create_node();
 	if (!new_env_var)
 		return (1);
@@ -25,17 +25,13 @@ int	export_new_var(char **new_var, t_envp **env_list)
 	if (new_var[1])
 		new_env_var->value = ft_strdup(new_var[1]);
 	else
-		new_env_var->value = NULL;
+		new_env_var->value = ft_strdup("");
 	if (check_key_name(new_env_var->key))
 		add_node_to_list(env_list, new_env_var);
-	else
-	{
-		status_command = 1;
-		free(new_env_var->key);
-		free(new_env_var->value);
-		free(new_env_var);
-	}
-	return (status_command);
+	free(new_env_var->key);
+	free(new_env_var);
+	free(new_env_var->value);
+	return (0);
 }
 
 char	**new_var_split(char *arg)
@@ -57,6 +53,8 @@ void	change_env_value(char *key, char *value, t_envp **env_list)
 	while (temp && ft_strcmp(temp->key, key) != 0)
 			temp = temp->next;
 	free(temp->value);
+	if (value == NULL)
+		value = "";
 	temp->value = ft_strdup(value);
 }
 
@@ -100,8 +98,7 @@ int	export(char *arg, t_envp **env_list)
 	else
 	{
 		new_var = new_var_split(arg);
-		var = ft_getenv(new_var[0], *env_list);
-		if (var != NULL)
+		if (ft_check_key(new_var[0], *env_list) == 1)
 			change_env_value(new_var[0], new_var[1], env_list);
 		else
 			status_command = export_new_var(new_var, env_list);

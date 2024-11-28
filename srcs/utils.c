@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 18:06:08 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/20 18:22:45 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:10:29 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,6 @@ void	init_shell(t_minishell *shell)
 	shell->tree = NULL;
 	shell->envp_list = NULL;
 	shell->envp = NULL;
+	shell->status = 0;
+	g_signal = 0;
 }
