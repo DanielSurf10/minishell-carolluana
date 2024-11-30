@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:59:24 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/27 19:41:40 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/29 20:41:40 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@ int	export_new_var(char **new_var, t_envp **env_list)
 		new_env_var->value = ft_strdup("");
 	if (check_key_name(new_env_var->key))
 		add_node_to_list(env_list, new_env_var);
-	free(new_env_var->key);
-	free(new_env_var);
-	free(new_env_var->value);
 	return (0);
 }
 
@@ -81,23 +78,25 @@ void	order_env_list(t_envp **env_list)
 	}
 }
 
-int	export(char *arg, t_envp **env_list)
+int	export(char **arg, t_envp **env_list)
 {
 	char	*var;
 	char	**new_var;
 	int		status_command;
+	int		i;
 
 	status_command = 0;
 	var = NULL;
-	if (check_arg(arg) == 0)
+	i = -1;
+	if (*arg == NULL)
 	{
 		order_env_list(env_list);
 		print_env_list(*env_list);
 		return (status_command);
 	}
-	else
+	while (arg[++i])
 	{
-		new_var = new_var_split(arg);
+		new_var = new_var_split(arg[i]);
 		if (ft_check_key(new_var[0], *env_list) == 1)
 			change_env_value(new_var[0], new_var[1], env_list);
 		else

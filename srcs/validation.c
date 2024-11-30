@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:09:36 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/20 17:36:38 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/29 21:30:53 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	valid_list(t_list *list)
 
 	pipe_valid = valid_pipe(list);
 	redirect_valid = valid_redirect(list);
-	return(pipe_valid * redirect_valid);
+	return (pipe_valid * redirect_valid);
 }
 
 int	valid_pipe(t_list *list)
@@ -32,12 +32,12 @@ int	valid_pipe(t_list *list)
 		if ((aux->token.type == 1 && aux->next == NULL)
 			|| (aux->token.type == 1 && aux->prev == NULL))
 		{
-			ft_putstr_fd("Minihell: syntax error near unexpected token `|'\n", STDOUT_FILENO);
+			ft_putstr_fd("Minihell: syntax error near unexpected token `|'\n", STDERR_FILENO);
 				return (0);
 		}
 		else if (aux->token.type == 1 && aux->next->token.type == 1)
 		{
-			ft_putstr_fd("This shell doesn't treat this case.\n", STDOUT_FILENO);
+			ft_putstr_fd("This shell doesn't treat this case\n", STDERR_FILENO);
 			return (0);
 		}
 		aux = aux->next;
@@ -52,16 +52,32 @@ int	valid_redirect(t_list *list)
 	aux = list;
 	while (aux)
 	{
-		if ((aux->token.type >= 2 && aux->token.type <= 5)
-			&& (aux->next == NULL))
-			return (0);
-		else if (aux->token.type == 5 && aux->next->token.type != 0)
-			return (0);
-		else if (aux->token.type == 3 && aux->next->token.type != 0)
-			return (0);
-		else if ((aux->token.type == 2 || aux->token.type == 4) && aux->next->token.type != 0)
+		if (!check_syntax_error(aux))
 			return (0);
 		aux = aux->next;
 	}
+	return (1);
+}
+
+int	check_syntax_error(t_list *aux)
+{
+	if ((aux->token.type >= 2 && aux->token.type <= 5)
+		&& (aux->next == NULL))
+	{
+		ft_putstr_fd("Minihell: syntax error near unexpected token `newline'\n", STDERR_FILENO);
+		return (0);
+	}
+	else if (aux->token.type == 5 && aux->next->token.type != 0)
+	{
+		ft_putstr_fd("Minihell: syntax error near unexpected token `>'\n", STDERR_FILENO);
+		return (0);
+	}
+	else if (aux->token.type == 3 && aux->next->token.type != 0)
+	{
+		ft_putstr_fd("Minihell: syntax error near unexpected token `<'\n", STDERR_FILENO);
+		return (0);
+	}
+	else if ((aux->token.type == 2 || aux->token.type == 4) && aux->next->token.type != 0)
+		return (0);
 	return (1);
 }

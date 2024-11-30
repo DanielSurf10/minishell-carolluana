@@ -6,26 +6,36 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:40:29 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/27 16:55:49 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/29 20:34:33 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	unset(char *arg, t_envp **env_list)
+int	unset(char **arg, t_envp **env_list)
 {
 	char	**new_var;
 	int		status_command;
+	int		i;
 
-	new_var = ft_split(arg, '=');
-	status_command = check_key_name(new_var[0]);
-	(void)env_list;
-	if (status_command)
+	i = 0;
+	if (*arg == NULL)
 	{
-		if (ft_check_key(new_var[0], *env_list) == 1)
-			remove_node_from_list(new_var[0], env_list);
+		ft_putendl_fd("unset: not enough arguments", STDERR_FILENO);
+		return (1);
 	}
-	ft_free_split(new_var);
+	while (arg[i])
+	{
+		new_var = ft_split(arg[i], '=');
+		status_command = check_key_name(new_var[0]);
+		if (status_command)
+		{
+			if (ft_check_key(new_var[0], *env_list) == 1)
+				remove_node_from_list(new_var[0], env_list);
+		}
+		ft_free_split(new_var);
+		i++;
+	}
 	return (status_command);
 }
 

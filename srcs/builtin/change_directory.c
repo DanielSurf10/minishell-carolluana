@@ -6,24 +6,26 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:47:17 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/27 20:59:17 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:56:52 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	change_directory(t_envp **env_list, char *path)
+int	change_directory(t_envp **env_list, char **path)
 {
 	char	*old_pwd;
 	char	*pwd;
 
 	old_pwd = NULL;
 	pwd = NULL;
-	if (path == NULL || ft_strcmp(path, "~") == 0)
-		path = ft_getenv("HOME", *env_list);
+	if (*path == NULL)
+		*path = ft_getenv("HOME", *env_list);
+	else if (ft_strcmp(path[0], "~") == 0)
+		*path = ft_getenv("HOME", *env_list);
 	if (path == NULL)
 	{
-		printf("cd: %s: Missing file or directory\n", path);
+		printf("cd: %s: Missing file or directory\n", *path);
 		return (1);
 	}
 	if (check_path(path) == 1)
@@ -32,7 +34,7 @@ int	change_directory(t_envp **env_list, char *path)
 		return (1);
 	}
 	old_pwd = getcwd(old_pwd, PATH_MAX);
-	chdir(path);
+	chdir(*path);
 	pwd = getcwd(pwd, PATH_MAX);
 	update_pwd(env_list, old_pwd, pwd);
 	return (0);
@@ -52,23 +54,14 @@ void	update_pwd(t_envp **env_list, char *old_pwd, char *pwd)
 	}
 }
 
-int	check_path(char *path)
+int	check_path(char **path)
 {
-	int	i;
+	int	idx1;
 
-	i = 0;
-	while (path[i])
-	{
-		if ((ft_isascii(path[i]) && !ft_is_space(path[i]))
-			&& ft_is_space(path[i + 1]))
-		{
-			i++;
-			while (ft_is_space(path[i]))
-				i++;
-			if (!ft_is_space(path[i]))
-				return (1);
-		}
-		i++;
-	}
+	idx1 = 0;
+	while (path[idx1])
+		idx1++;
+	if (idx1 > 1)
+		return (1);
 	return (0);
 }

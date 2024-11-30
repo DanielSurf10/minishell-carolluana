@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/27 20:53:59 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/29 21:30:34 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ t_redir	*hunt_redir(t_list	**tkn_list);
 int		valid_redirect(t_list *list);
 int		valid_pipe(t_list *token_list);
 int		valid_list(t_list *list);
+int		check_syntax_error(t_list *aux);
 
 //builtin
 // pwd.c
@@ -178,15 +179,9 @@ int		pwd(void);
 //echo.c
 int		echo(char **arg);
 //change_directory.c
-int		change_directory(t_envp **env_list, char *path);
+int		change_directory(t_envp **env_list, char **path);
 void	update_pwd(t_envp **env_list, char *old_pwd, char *pwd);
-int		check_path(char *path);
-int		ft_exit(t_minishell *shell, char *arg);
-int		check_exit_arg(char *arg);
-//unset.c
-int		unset(char *arg, t_envp **env_list);
-void	remove_node_from_list(char *arg, t_envp **env_list);
-
+int		check_path(char **path);
 //exec_builtin.c
 int		aux_exec_builting(char *command, char **argv, t_minishell *shell);
 int		is_builtin(t_tree *tree);
@@ -214,12 +209,12 @@ char	**new_var_split(char *arg);
 char	*ft_getenv(char *arg, t_envp *env_list);
 void	change_env_value(char *key, char *value, t_envp **env_list);
 void	order_env_list(t_envp **env_list);
-int		export(char *arg, t_envp **env_list);
+int	export(char **arg, t_envp **env_list);
 int		check_arg(char	*arg);
 int		check_key_name(char *key);
 
 //unset.c
-int		unset(char *arg, t_envp **env_list);
+int		unset(char **arg, t_envp **env_list);
 void	remove_node_from_list(char *arg, t_envp **env_list);
 int		ft_check_key(char *arg, t_envp *env_list);
 
@@ -229,14 +224,9 @@ int		pwd(void);
 //echo.c
 int		echo(char **arg);
 
-//change_directory.c
-int		change_directory(t_envp **env_list, char *path);
-void	update_pwd(t_envp **env_list, char *old_pwd, char *pwd);
-int		check_path(char *path);
-
 //exit.c
-int	ft_exit(t_minishell *shell, char *arg);
-int	check_exit_arg(char *arg);
+int	ft_exit(t_minishell *shell, char **arg);
+int	check_exit_arg(char **arg);
 
 //executor.c
 void	get_path(t_minishell *shell);
@@ -251,7 +241,8 @@ void	exec_single_cmd(t_tree *tree, t_minishell *shell);
 void	sig_handler_sigint(int signal);
 void	signals_for_command(void);
 void	init_signals(void);
-int	control_sign(int new_signal);
+int		control_sign(int new_signal);
+void	prompt_newline(void);
 //void	sig_handler_sigquit(int signal __attribute__((unused)));
 
 //utils.c

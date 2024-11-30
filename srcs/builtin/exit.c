@@ -6,22 +6,22 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 17:07:56 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/12 21:30:47 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/29 20:47:06 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_exit(t_minishell *shell, char *arg)
+int	ft_exit(t_minishell *shell, char **arg)
 {
 	int	exit_status;
 
 	exit_status = 0;
-	if (arg)
+	if (*arg)
 	{
 		if (!check_exit_arg(arg))
 			return (1);
-		exit_status = ft_atoi(arg);
+		exit_status = ft_atoi(*arg);
 	}
 	clear_args(shell->builtin.argv);
 	free(shell->builtin.command);
@@ -33,24 +33,27 @@ int	ft_exit(t_minishell *shell, char *arg)
 	exit(exit_status);
 }
 
-int	check_exit_arg(char *arg)
+int	check_exit_arg(char **arg)
 {
-	int	i;
+	int	idx1;
 
-	i = 0;
-	while (arg[i])
+	idx1 = 0;
+	while (arg[idx1])
+		idx1++;
+	if (idx1 > 1)
 	{
-		if (ft_isalpha(arg[i]))
+		ft_putstr_fd("minihell: exit: too many arguments\n", STDERR_FILENO);
+		return (0);
+	}
+	idx1 = 0;
+	while (*arg)
+	{
+		if (ft_isalpha(*arg[idx1]))
 		{
-			printf("minihell: exit: %s: numeric argument required\n", arg);
+			printf("minihell: exit: %s: numeric argument required\n", *arg);
 			return (0);
 		}
-		if (arg[i] && ft_is_space(arg[i + 1]) && arg[i + 2] != '\0')
-		{
-			printf("minihell: exit: too many arguments\n");
-			return (0);
-		}
-		i++;
+		idx1++;
 	}
 	return (1);
 }
