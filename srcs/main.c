@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/29 21:37:37 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/05 18:23:09 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	main(int argc __attribute__((unused)), \
 		shell.token_list = tokenizer(shell.prompt);
 		shell.tree = build_root(shell.token_list);
 		//teste
-		executor(shell.tree, &shell);
+		// executor(shell.tree, &shell);
 		// execute_builtin(&shell);
 		// export("PWD=oi", &shell.envp_list);
 		// env(shell.envp_list);

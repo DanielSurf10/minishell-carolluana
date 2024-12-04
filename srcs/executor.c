@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/20 19:52:32 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/23 17:23:07 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+/**
+ * get_path - Retrieves the PATH environment variable and splits it into an array.
+ * @shell: Pointer to the minishell structure containing environment variables.
+ */
 void	get_path(t_minishell *shell)
 {
 	int	i;
@@ -25,6 +29,11 @@ void	get_path(t_minishell *shell)
 	}
 	shell->path = ft_split(shell->envp[i] + 5, ':');
 }
+/**
+ * get_args - Extracts command arguments from a linked list and stores them in exec structure.
+ * @sub_list: Pointer to the linked list containing command tokens.
+ * @exec: Pointer to the execve structure to store command and arguments.
+ */
 void	get_args(t_list *sub_list, t_execve *exec)
 {
 	t_list	*node;
@@ -53,7 +62,11 @@ void	get_args(t_list *sub_list, t_execve *exec)
 	args[i] = NULL;
 	exec->args = args;
 }
-
+/**
+ * exec_cmd - Executes a command by searching for it in the PATH and using execve.
+ * @tree: Pointer to the syntax tree node containing the command.
+ * @shell: Pointer to the minishell structure containing environment variables.
+ */
 void	exec_cmd(t_tree	*tree, t_minishell *shell)
 {
 	t_execve	*exec;
@@ -83,7 +96,11 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 	free(exec->cmd);
 	free(exec);
 }
-
+/**
+ * executor - Executes commands or pipelines based on the syntax tree.
+ * @tree: Pointer to the syntax tree node.
+ * @shell: Pointer to the minishell structure containing environment variables.
+ */
 void	executor(t_tree *tree, t_minishell *shell)
 {
 	if (tree->tkn_type == COMMAND)
@@ -101,7 +118,14 @@ void	executor(t_tree *tree, t_minishell *shell)
 		handle_pipe(tree, shell, 1);
 	}
 }
-
+/**
+ * handle_pipe - Handles the execution of commands connected by pipes.
+ * @tree: Pointer to the syntax tree node.
+ * @shell: Pointer to the minishell structure containing environment variables.
+ * @left: Integer indicating if the left command should be executed first.
+ * 
+ * Return: Always returns 0.
+ */
 int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 {
 	pid_t pid[2];
@@ -152,7 +176,10 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 	waitpid(pid[1], NULL, 0);
 	return (0);
 }
-
+/**
+ * handle_redir - Handles input and output redirections for a command.
+ * @tree: Pointer to the syntax tree node containing redirection information.
+ */
 void	handle_redir(t_tree	*tree)
 {
 	t_redir	*node;
@@ -182,7 +209,11 @@ void	handle_redir(t_tree	*tree)
 		node = node->next;
 	}
 }
-
+/**
+ * exec_single_cmd - Executes a single command, handling redirections and built-ins.
+ * @tree: Pointer to the syntax tree node containing the command.
+ * @shell: Pointer to the minishell structure containing environment variables.
+ */
 void	exec_single_cmd(t_tree *tree, t_minishell *shell)
 {
 	int	pid;
