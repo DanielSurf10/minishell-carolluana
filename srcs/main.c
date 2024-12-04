@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/20 20:22:33 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/11/23 17:36:45 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ int	main(int argc __attribute__((unused)), \
 		shell.token_list = NULL;
 		shell.tree = NULL;
 		shell.token_list = tokenizer(shell.prompt);
-		shell.tree = build_root(shell.token_list);
-
+		printf("%s", shell.token_list->token.lexeme);
+		// shell.tree = build_root(shell.token_list);
 		//teste
-		executor(shell.tree, &shell);
+		// executor(shell.tree, &shell);
 		// execute_builtin(&shell);
 		// export("PWD=oi", &shell.envp_list);
 		// env(shell.envp_list);

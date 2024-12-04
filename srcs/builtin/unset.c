@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:40:29 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/13 16:59:42 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/03 21:34:27 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,3 +53,4 @@ void	remove_node_from_list(char *arg, t_envp **env_list)
 		temp = temp->next;
 	}
 }
+

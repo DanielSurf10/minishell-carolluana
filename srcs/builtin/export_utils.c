@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:15:45 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/20 15:29:05 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/03 21:34:33 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,20 @@ int	check_arg(char	*arg)
 		if (!ft_is_space(arg[i]))
 			return (1);
 		i++;
+	}
+	return (0);
+}
+
+int	ft_check_key(char *arg, t_envp *env_list)
+{
+	t_envp	*temp;
+
+	temp = env_list;
+	while (temp)
+	{
+		if (ft_strcmp(arg, temp->key) == 0)
+			return (1);
+		temp = temp->next;
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/20 20:30:00 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/03 21:35:14 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,6 +215,7 @@ void	order_env_list(t_envp **env_list);
 int		export(char *arg, t_envp **env_list);
 int		check_arg(char	*arg);
 int		check_key_name(char *key);
+int	ft_check_key(char *arg, t_envp *env_list);
 
 //unset.c
 int		unset(char *arg, t_envp **env_list);
