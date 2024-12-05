@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:59:24 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/29 20:41:40 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/05 18:08:09 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	export_new_var(char **new_var, t_envp **env_list)
 		new_env_var->value = ft_strdup(new_var[1]);
 	else
 		new_env_var->value = ft_strdup("");
-	if (check_key_name(new_env_var->key))
+	if (check_key_name(new_env_var->key, "export"))
 		add_node_to_list(env_list, new_env_var);
 	return (0);
 }

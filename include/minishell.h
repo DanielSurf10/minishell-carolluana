@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/11/29 21:30:34 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/05 18:10:49 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,9 +209,9 @@ char	**new_var_split(char *arg);
 char	*ft_getenv(char *arg, t_envp *env_list);
 void	change_env_value(char *key, char *value, t_envp **env_list);
 void	order_env_list(t_envp **env_list);
-int	export(char **arg, t_envp **env_list);
+int		export(char **arg, t_envp **env_list);
 int		check_arg(char	*arg);
-int		check_key_name(char *key);
+int		check_key_name(char *key, char *origin);
 
 //unset.c
 int		unset(char **arg, t_envp **env_list);

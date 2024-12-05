@@ -6,27 +6,27 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:15:45 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/29 18:25:42 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/05 18:07:03 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	check_key_name(char *key)
+int	check_key_name(char *key, char *origin)
 {
 	int	i;
 
 	i = 0;
 	if (key[0] != '_' && !ft_isalpha(key[0]))
 	{
-		printf("export: not an identifier: %s\n", key);
+		printf("%s: not an identifier: %s\n", origin, key);
 		return (0);
 	}
 	while (key[i])
 	{
 		if (!ft_isalnum(key[i]) && key[i] != '_')
 		{
-			printf("export: not valid in this context: %s\n", key);
+			printf("%s: not valid in this context: %s\n", origin, key);
 			return (0);
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:40:29 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/29 20:34:33 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/05 18:09:26 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	unset(char **arg, t_envp **env_list)
 	while (arg[i])
 	{
 		new_var = ft_split(arg[i], '=');
-		status_command = check_key_name(new_var[0]);
+		status_command = check_key_name(new_var[0], "unset");
 		if (status_command)
 		{
 			if (ft_check_key(new_var[0], *env_list) == 1)
