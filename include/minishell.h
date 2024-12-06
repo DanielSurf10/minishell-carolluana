@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/05 21:33:14 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/06 18:47:09 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,9 @@ void	add_status_signal(int s, t_minishell *shell);
 
 //expander
 void	expander(t_list *sub_list, t_envp *envp_list);
-void	check_lexeme(char *str, t_envp *envp_list);
+char	*check_lexeme(char *str, t_envp *envp_list);
 int	expander_var(char *str, int i, t_envp *envp_list, char **result);
-char	*expander_word(char c, char *result);
+void	expander_word(char c, char **result);
+void	handle_quotes(char c, int *quotes, char **result);
+
 #endif
