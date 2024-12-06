@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+         #
+#    By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 17:34:18 by cshingai          #+#    #+#              #
-#    Updated: 2024/11/27 17:28:56 by cshingai         ###   ########.fr        #
+#    Updated: 2024/12/05 21:16:24 by lsouza-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,8 @@ SRCS = $(addprefix srcs/, \
 			builtin/echo.c \
 			builtin/change_directory.c\
 			builtin/exec_builtin.c\
-			signal.c\
+			signal.c \
+			expander.c \
 		)
 
 OBJ = $(SRCS:srcs/%.c=obj/%.o)

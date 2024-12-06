@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/05 18:36:31 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/05 21:17:47 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,18 @@ int	main(int argc __attribute__((unused)), \
 		shell.tree = NULL;
 		shell.token_list = tokenizer(shell.prompt);
 		shell.tree = build_root(shell.token_list);
+		check_lexeme(shell.tree->sub_list->token.lexeme, shell.envp_list);
 		//teste
 		// executor(shell.tree, &shell);
 		// execute_builtin(&shell);
 		// export("PWD=oi", &shell.envp_list);
 		// env(shell.envp_list);
-		if (g_signal)
-		{
-			shell.status = g_signal;
+		// if (g_signal)
+		// {
+		// 	shell.status = g_signal;
 
-			g_signal = 0;
-		}
+		// 	g_signal = 0;
+		// }
 
 		add_history(shell.prompt);
 		free_tree(&shell.tree);
