@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+         #
+#    By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 17:34:18 by cshingai          #+#    #+#              #
-#    Updated: 2024/12/05 21:16:24 by lsouza-r         ###   ########.fr        #
+#    Updated: 2024/12/09 17:46:35 by cshingai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,10 @@ SRCS = $(addprefix srcs/, \
 			list.c \
 			utils.c \
 			list_utils.c \
-			tokenizer.c \
-			tokens2.c \
+			tokenizer/tokenizer.c \
+			tokenizer/token_states.c \
+			tokenizer/token_states_quotes.c \
+			tokenizer/token_utils.c \
 			validation.c \
 			parsing-tree.c \
 			env/env_list.c \

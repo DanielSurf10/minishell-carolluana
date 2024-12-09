@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:59:24 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/05 18:08:09 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:50:00 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 int	export_new_var(char **new_var, t_envp **env_list)
 {
 	t_envp	*new_env_var;
-	// int		status_command;
 
-	// status_command = 0;
 	new_env_var = env_create_node();
 	if (!new_env_var)
 		return (1);

@@ -6,24 +6,19 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 21:01:39 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/06 18:48:54 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:53:36 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
-//func expander_coutes;
-//func exapander_double_coutes;
-//func expander_word;
-//func expander_var;
 void	expander(t_list *sub_list, t_envp *envp_list)
 {
 	t_list	*node;
 	char	*temp;
 
 	node = sub_list;
-	while(node)
+	while (node)
 	{
 		temp = node->token.lexeme;
 		node->token.lexeme = check_lexeme(node->token.lexeme, envp_list);
@@ -41,9 +36,10 @@ char	*check_lexeme(char *str, t_envp *envp_list)
 	i = 0;
 	result = NULL;
 	quotes = 0;
-	while(str[i] != '\0')
+	while (str[i] != '\0')
 	{
-		if (str[i] == '$' && str[i + 1] != '\0' && (ft_isalpha(str[i + 1]) || str[i + 1] == '_'))
+		if (str[i] == '$' && str[i + 1] != '\0'
+			&& (ft_isalpha(str[i + 1]) || str[i + 1] == '_'))
 		{
 			if (quotes == 0 || quotes == 1)
 				i = expander_var(str, i, envp_list, &result);
