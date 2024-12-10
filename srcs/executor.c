@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/06 18:45:16 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/09 21:04:45 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 			close(tree->fd[0]);
 			close(tree->fd[1]);
 			handle_redir(tree->left);
-			expander(tree->left->sub_list, shell->envp_list);
+			expander(tree->left->sub_list, shell);
 			if (is_builtin(tree->left))
 			{
 				execute_builtin(shell, tree->left);
@@ -161,7 +161,7 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 		close(tree->fd[0]);
 		close(tree->fd[1]);
 		handle_redir(tree->right);
-		expander(tree->right->sub_list, shell->envp_list);
+		expander(tree->right->sub_list, shell);
 		if (is_builtin(tree->right))
 		{
 			execute_builtin(shell, tree->right);
@@ -223,7 +223,7 @@ void	exec_single_cmd(t_tree *tree, t_minishell *shell)
 	if (is_builtin(tree) == 1)
 	{
 		handle_redir(tree);
-		expander(tree->sub_list, shell->envp_list);
+		expander(tree->sub_list, shell);
 		execute_builtin(shell, tree);
 		return ;
 	}
@@ -231,7 +231,7 @@ void	exec_single_cmd(t_tree *tree, t_minishell *shell)
 	if (pid == 0)
 	{
 		handle_redir(tree);
-		expander(tree->sub_list, shell->envp_list);
+		expander(tree->sub_list, shell);
 		exec_cmd(tree, shell);
 	}
 	waitpid(pid, NULL, 0);

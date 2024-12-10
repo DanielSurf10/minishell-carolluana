@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 21:05:54 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/10/08 17:47:46 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/09 21:25:59 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	init_token_data(t_tkn_data *tkn_data, char *str)
 
 int	is_final_state(t_tkn_data tkn_data)
 {
-	if (tkn_data.state == 20 || tkn_data.state == 31 || tkn_data.state == 32 ||
-	 tkn_data.state == 41 || tkn_data.state == 42 || tkn_data.state == 53)
+	if (tkn_data.state == 20 || tkn_data.state == 31 || tkn_data.state == 32
+		|| tkn_data.state == 41 || tkn_data.state == 42 || tkn_data.state == 53)
 		return (1);
 	return (0);
 }
@@ -67,3 +67,4 @@ void	put_token_on_list(t_tkn_data *tkn_data, char *str, t_list **token_list, int
 	tkn_data->lex_len = 0;
 	tkn_data->state = 1;
 }
+

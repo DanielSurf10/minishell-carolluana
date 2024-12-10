@@ -6,13 +6,13 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 19:57:53 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/09 17:52:19 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/09 21:24:58 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	get_token_type(int	state)
+int	get_token_type(int state)
 {
 	if (state == 20)
 		return (PIPE);

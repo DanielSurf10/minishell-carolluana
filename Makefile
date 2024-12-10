@@ -6,7 +6,7 @@
 #    By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 17:34:18 by cshingai          #+#    #+#              #
-#    Updated: 2024/12/09 17:46:35 by cshingai         ###   ########.fr        #
+#    Updated: 2024/12/09 21:03:13 by cshingai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@ HEADERS = -I $(LIBFT) -I ./include
 # source files
 SRCS = $(addprefix srcs/, \
 			main.c \
-			list.c \
 			utils.c \
 			list_utils.c \
 			tokenizer/tokenizer.c \

@@ -6,13 +6,13 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 21:01:39 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/09 17:53:36 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/09 21:24:29 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	expander(t_list *sub_list, t_envp *envp_list)
+void	expander(t_list *sub_list, t_minishell *shell)
 {
 	t_list	*node;
 	char	*temp;
@@ -21,13 +21,13 @@ void	expander(t_list *sub_list, t_envp *envp_list)
 	while (node)
 	{
 		temp = node->token.lexeme;
-		node->token.lexeme = check_lexeme(node->token.lexeme, envp_list);
+		node->token.lexeme = check_lexeme(node->token.lexeme, shell);
 		free(temp);
 		node = node->next;
 	}
 }
 
-char	*check_lexeme(char *str, t_envp *envp_list)
+char	*check_lexeme(char *str, t_minishell *shell)
 {
 	int		i;
 	int		quotes;
@@ -38,11 +38,11 @@ char	*check_lexeme(char *str, t_envp *envp_list)
 	quotes = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '$' && str[i + 1] != '\0'
-			&& (ft_isalpha(str[i + 1]) || str[i + 1] == '_'))
+		if (str[i] == '$' && str[i + 1] != '\0' && (ft_isalpha(str[i + 1])
+				|| str[i + 1] == '_' || str[i + 1] == '?'))
 		{
 			if (quotes == 0 || quotes == 1)
-				i = expander_var(str, i, envp_list, &result);
+				i = expander_var(str, i, shell, &result);
 			else
 				expander_word(str[i], &result);
 		}
@@ -55,7 +55,7 @@ char	*check_lexeme(char *str, t_envp *envp_list)
 	return (result);
 }
 
-int	expander_var(char *str, int i, t_envp *envp_list, char **result)
+int	expander_var(char *str, int i, t_minishell *shell, char **result)
 {
 	int		start;
 	int		end;
@@ -69,17 +69,20 @@ int	expander_var(char *str, int i, t_envp *envp_list, char **result)
 		*result = ft_calloc(1, sizeof (char));
 		(*result)[0] = '\0';
 	}
-	while ((ft_isalnum(str[i]) || str[i] == '_') && str[i] != '\0')
+	while ((ft_isalnum(str[i]) || str[i] == '_'
+			|| str[i] == '?') && str[i] != '\0')
 		i = i + 1;
 	end = i - 1;
 	var = ft_substr(str, start, end - start + 1);
-	if (ft_check_key(var, envp_list) == 1)
+	if (ft_check_key(var, shell->envp_list) == 1)
 	{
-		value = ft_strdup(ft_getenv(var, envp_list));
+		value = ft_strdup(ft_getenv(var, shell->envp_list));
 		temp = *result;
 		*result = ft_strjoin(*result, value);
 		free(temp);
 	}
+	else if (ft_strcmp(var, "?") == 0)
+		handle_state(var, shell, result);
 	free(var);
 	return (i - 1);
 }
@@ -120,4 +123,16 @@ void	handle_quotes(char c, int *quotes, char **result)
 		(*quotes) = 0;
 	else if ((*quotes == 1 && c == '\'') || (*quotes == 2 && c == '\"'))
 		expander_word(c, result);
+}
+
+char	**handle_state(char *str, t_minishell *shell, char **result)
+{
+	if (*result == NULL)
+	{
+		*result = ft_calloc(1, sizeof (char));
+		(*result)[0] = '\0';
+	}
+	if (*str == '?')
+		*result = ft_strjoin(*result, ft_itoa(shell->status));
+	return (result);
 }

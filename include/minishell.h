@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/06 18:47:09 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/09 21:06:08 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,10 +252,11 @@ void	*free_split(char **str);
 void	add_status_signal(int s, t_minishell *shell);
 
 //expander
-void	expander(t_list *sub_list, t_envp *envp_list);
-char	*check_lexeme(char *str, t_envp *envp_list);
-int	expander_var(char *str, int i, t_envp *envp_list, char **result);
+void	expander(t_list *sub_list, t_minishell *shell);
+char	*check_lexeme(char *str, t_minishell *shell);
+int		expander_var(char *str, int i, t_minishell *shell, char **result);
 void	expander_word(char c, char **result);
 void	handle_quotes(char c, int *quotes, char **result);
+char	**handle_state(char *str, t_minishell *shell, char **result);
 
 #endif
