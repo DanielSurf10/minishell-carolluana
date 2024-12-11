@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 21:01:39 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/09 21:24:29 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/11 19:46:09 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	expander_var(char *str, int i, t_minishell *shell, char **result)
 		i = i + 1;
 	end = i - 1;
 	var = ft_substr(str, start, end - start + 1);
-	if (ft_check_key(var, shell->envp_list) == 1)
+	if (key_exist(var, shell->envp_list) == 1)
 	{
 		value = ft_strdup(ft_getenv(var, shell->envp_list));
 		temp = *result;

@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/09 21:04:45 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:38:51 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ void	exec_single_cmd(t_tree *tree, t_minishell *shell)
 	{
 		handle_redir(tree);
 		expander(tree->sub_list, shell);
-		execute_builtin(shell, tree);
+		shell->status = execute_builtin(shell, tree);
 		return ;
 	}
 	pid = fork();

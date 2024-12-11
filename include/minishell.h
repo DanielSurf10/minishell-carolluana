@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/09 21:06:08 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/11 20:18:58 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,11 +212,14 @@ void	order_env_list(t_envp **env_list);
 int		export(char **arg, t_envp **env_list);
 int		check_arg(char	*arg);
 int		check_key_name(char *key, char *origin);
+int		is_equal(char *arg, char *origin);
+int		key_exist(char *arg, t_envp *env_list);
+int		export_no_args(t_envp **env_list);
 
 //unset.c
 int		unset(char **arg, t_envp **env_list);
+int		unset_no_args(void);
 void	remove_node_from_list(char *arg, t_envp **env_list);
-int		ft_check_key(char *arg, t_envp *env_list);
 
 // pwd.c
 int		pwd(void);
@@ -258,5 +261,10 @@ int		expander_var(char *str, int i, t_minishell *shell, char **result);
 void	expander_word(char c, char **result);
 void	handle_quotes(char c, int *quotes, char **result);
 char	**handle_state(char *str, t_minishell *shell, char **result);
+
+
+int	new_export(char **arg, t_envp **env_list);
+int	insert_var(char *arg, t_envp **env_list);
+char **get_key_value(char *arg);
 
 #endif

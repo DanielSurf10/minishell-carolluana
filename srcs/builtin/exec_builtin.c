@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:56:04 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/29 20:35:11 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:45:19 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	aux_exec_builting(char *command, char **argv, t_minishell *shell)
 	if (ft_strcmp(command, "pwd") == 0)
 		status_command = pwd();
 	else if (ft_strcmp(command, "cd") == 0)
-		change_directory(&shell->envp_list, argv);
+		status_command = change_directory(&shell->envp_list, argv);
 	else if (ft_strcmp(command, "echo") == 0)
 		status_command = echo(argv);
 	else if (ft_strcmp(command, "env") == 0)

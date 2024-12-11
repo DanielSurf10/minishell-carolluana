@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:40:29 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/05 18:36:38 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/11 19:46:09 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,31 @@ int	unset(char **arg, t_envp **env_list)
 
 	i = 0;
 	if (*arg == NULL)
-	{
-		ft_putendl_fd("unset: not enough arguments", STDERR_FILENO);
-		return (1);
-	}
+		unset_no_args();
 	while (arg[i])
 	{
+		if (is_equal(arg[i], "unset") == 1)
+		{
+			status_command = 1;
+			i++;
+		}
 		new_var = ft_split(arg[i], '=');
 		status_command = check_key_name(new_var[0], "unset");
 		if (status_command)
 		{
-			if (ft_check_key(new_var[0], *env_list) == 1)
+			if (key_exist(new_var[0], *env_list) == 1)
 				remove_node_from_list(new_var[0], env_list);
 		}
 		ft_free_split(new_var);
 		i++;
 	}
 	return (status_command);
+}
+
+int	unset_no_args(void)
+{
+	ft_putendl_fd("unset: not enough arguments", STDERR_FILENO);
+	return (1);
 }
 
 void	remove_node_from_list(char *arg, t_envp **env_list)

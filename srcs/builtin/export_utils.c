@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:15:45 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/09 17:51:38 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/11 19:46:09 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,15 @@ int	check_key_name(char *key, char *origin)
 	i = 0;
 	if (key[0] != '_' && !ft_isalpha(key[0]))
 	{
-		printf("%s: not an identifier: %s\n", origin, key);
+		printf("minishell:%s: not a valid identifier: `%s'\n", origin, key);
 		return (0);
 	}
 	while (key[i])
 	{
 		if (!ft_isalnum(key[i]) && key[i] != '_')
 		{
-			printf("%s: not valid in this context: %s\n", origin, key);
+			printf("minishell:%s: not a valid identifier: `%s'\n",
+				origin, key);
 			return (0);
 		}
 		i++;
@@ -48,11 +49,13 @@ char	*ft_getenv(char *arg, t_envp *env_list)
 	return (NULL);
 }
 
-int	ft_check_key(char *arg, t_envp *env_list)
+int	key_exist(char *arg, t_envp *env_list)
 {
 	t_envp	*temp;
 
 	temp = env_list;
+	if (!arg)
+		return (0);
 	while (temp)
 	{
 		if (ft_strcmp(arg, temp->key) == 0)
@@ -62,7 +65,7 @@ int	ft_check_key(char *arg, t_envp *env_list)
 	return (0);
 }
 
-int	check_arg(char	*arg)
+int	check_arg(char *arg)
 {
 	int	i;
 
@@ -76,4 +79,15 @@ int	check_arg(char	*arg)
 		i++;
 	}
 	return (0);
+}
+
+int	is_equal(char *arg, char *origin)
+{
+	if (*arg == '=')
+	{
+		printf("minishell:%s: not a valid identifier: `%s'\n", origin, arg);
+		return (1);
+	}
+	else
+		return (0);
 }

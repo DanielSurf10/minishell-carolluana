@@ -6,7 +6,7 @@
 #    By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 17:34:18 by cshingai          #+#    #+#              #
-#    Updated: 2024/12/09 21:03:13 by cshingai         ###   ########.fr        #
+#    Updated: 2024/12/11 18:45:04 by cshingai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRCS = $(addprefix srcs/, \
 			executor.c\
 			builtin/export.c \
 			builtin/export_utils.c \
+			builtin/export_utils2.c \
 			builtin/exit.c\
 			builtin/unset.c \
 			builtin/pwd.c \
