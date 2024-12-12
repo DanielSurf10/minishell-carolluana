@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:15:45 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/11 19:46:09 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/11 21:18:57 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,6 @@ int	key_exist(char *arg, t_envp *env_list)
 		if (ft_strcmp(arg, temp->key) == 0)
 			return (1);
 		temp = temp->next;
-	}
-	return (0);
-}
-
-int	check_arg(char *arg)
-{
-	int	i;
-
-	i = 0;
-	if (arg == NULL)
-		return (0);
-	while (arg[i])
-	{
-		if (!ft_is_space(arg[i]))
-			return (1);
-		i++;
 	}
 	return (0);
 }
