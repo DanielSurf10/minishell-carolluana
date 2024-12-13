@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 21:05:54 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/09 21:25:59 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/13 17:21:44 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,16 @@ int	is_final_state(t_tkn_data tkn_data)
 	return (0);
 }
 
-void	put_token_on_list(t_tkn_data *tkn_data, char *str, t_list **token_list, int i)
+void	put_token_on_list(t_tkn_data *tkn_data, char *str,
+	t_list **token_list, int i)
 {
 	tkn_data->tkn_type = get_token_type(tkn_data->state);
 	if (tkn_data->tkn_type == WORD)
-		tkn_data->lexema = ft_substr(str, i - (tkn_data->lex_len - 1), tkn_data->lex_len);
+		tkn_data->lexema
+			= ft_substr(str, i - (tkn_data->lex_len - 1), tkn_data->lex_len);
 	else
 		tkn_data->lexema = NULL;
 	token_add_to_list(token_list, tkn_data->lexema, tkn_data->tkn_type);
 	tkn_data->lex_len = 0;
 	tkn_data->state = 1;
 }
-

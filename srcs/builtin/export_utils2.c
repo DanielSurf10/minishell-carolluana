@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 18:41:19 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/13 16:41:47 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/13 17:19:11 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ int	insert_var(char *arg, t_envp **env_list)
 	return (status_command);
 }
 
-char **get_key_value(char *arg, char **dest)
+char	**get_key_value(char *arg, char **dest)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	if (!arg)
 		return (NULL);
-	dest = calloc(2 , sizeof(char *));
+	dest = calloc(3, sizeof(char *));
 	i = 0;
 	j = 0;
 	while (arg[i] && arg[i] != '=')
@@ -63,6 +63,7 @@ char **get_key_value(char *arg, char **dest)
 	while (arg[i])
 		dest[1][j++] = arg[i++];
 	dest[1][j] = '\0';
+	dest[2] = NULL;
 	return (dest);
 }
 

@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 17:27:57 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/12 21:53:55 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/13 17:22:32 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	prompt_newline(void)
 
 int	control_sign(int new_signal)
 {
-	return(new_signal);
+	return (new_signal);
 }
 
 // void	update_status(int sign, t_minishell *shell)

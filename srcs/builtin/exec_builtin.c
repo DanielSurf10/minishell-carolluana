@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:56:04 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/11 21:15:10 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/13 17:28:48 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,7 @@ void	get_args_builtin(t_list *sub_list, t_builtin *builtin)
 	node = node->next;
 	while (node)
 	{
-		args[i] = ft_strdup(node->token.lexeme);
-		i++;
+		args[i++] = ft_strdup(node->token.lexeme);
 		node = node->next;
 	}
 	args[i] = NULL;
