@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/13 04:36:43 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:19:18 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,11 +127,6 @@ typedef struct s_execve
 // main.c
 
 // lexing.c
-// void	push_prompt_to_list(char **prompt);
-// void	print_list(t_token_list **list);
-// void	create_node(t_token_list **list, char *tolken);
-// void	*strcpy_space(char *prompt, char *dest);
-// char *send_word(char *cpy_prompt);
 t_list	*tokenizer(char *str);
 void	init_token_data(t_tkn_data *tkn_data, char *str);
 int		is_final_state(t_tkn_data tkn_data);

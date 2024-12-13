@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/12 22:34:13 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/13 17:55:19 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 			expander(tree->left->sub_list, shell);
 			if (is_builtin(tree->left))
 			{
-				execute_builtin(shell, tree->left);
+				shell->status = execute_builtin(shell, tree->left);
 				exit(1);
 			}
 			exec_cmd(tree->left, shell);
