@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 17:07:56 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/29 20:47:06 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/13 03:49:27 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,15 @@ int	ft_exit(t_minishell *shell, char **arg)
 
 int	check_exit_arg(char **arg)
 {
+	if (!check_too_many_args(arg))
+		return (0);
+	if (!is_numeric_arg(*arg))
+		return (0);
+	return (1);
+}
+
+int	check_too_many_args(char **arg)
+{
 	int	idx1;
 
 	idx1 = 0;
@@ -45,15 +54,22 @@ int	check_exit_arg(char **arg)
 		ft_putstr_fd("minihell: exit: too many arguments\n", STDERR_FILENO);
 		return (0);
 	}
-	idx1 = 0;
-	while (*arg)
+	return (1);
+}
+
+int	is_numeric_arg(char *arg)
+{
+	int	idx;
+
+	idx = 0;
+	while (arg[idx])
 	{
-		if (ft_isalpha(*arg[idx1]))
+		if (ft_isalpha(*arg))
 		{
-			printf("minihell: exit: %s: numeric argument required\n", *arg);
+			printf("minihell: exit: %s: numeric argument required\n", arg);
 			return (0);
 		}
-		idx1++;
+		idx++;
 	}
 	return (1);
 }

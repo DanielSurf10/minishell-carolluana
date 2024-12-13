@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:15:45 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/11 21:18:57 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/12 21:49:24 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_key_name(char *key, char *origin)
 	if (key[0] != '_' && !ft_isalpha(key[0]))
 	{
 		printf("minishell:%s: not a valid identifier: `%s'\n", origin, key);
-		return (0);
+		return (1);
 	}
 	while (key[i])
 	{
@@ -28,11 +28,11 @@ int	check_key_name(char *key, char *origin)
 		{
 			printf("minishell:%s: not a valid identifier: `%s'\n",
 				origin, key);
-			return (0);
+			return (1);
 		}
 		i++;
 	}
-	return (1);
+	return (0);
 }
 
 char	*ft_getenv(char *arg, t_envp *env_list)

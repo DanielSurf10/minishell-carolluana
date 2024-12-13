@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:40:29 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/11 19:46:09 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/13 04:30:32 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	unset(char **arg, t_envp **env_list)
 		}
 		new_var = ft_split(arg[i], '=');
 		status_command = check_key_name(new_var[0], "unset");
-		if (status_command)
+		if (!status_command)
 		{
 			if (key_exist(new_var[0], *env_list) == 1)
 				remove_node_from_list(new_var[0], env_list);
