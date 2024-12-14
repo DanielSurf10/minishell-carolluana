@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/13 17:55:19 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:33:59 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,11 +173,13 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 	if (left)
 	{
 		close(tree->fd[0]);
-		waitpid(pid[0], NULL, 0);
+		waitpid(pid[0], &shell->status, 0);
 	}
-	waitpid(pid[1], NULL, 0);
+	waitpid(pid[1], &shell->status, 0);
+	shell->status = WEXITSTATUS(shell->status);
 	return (0);
 }
+
 /**
  * handle_redir - Handles input and output redirections for a command.
  * @tree: Pointer to the syntax tree node containing redirection information.
