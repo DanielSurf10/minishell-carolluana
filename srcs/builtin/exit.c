@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 17:07:56 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/17 11:41:33 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:30:42 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ int	ft_exit(t_minishell *shell, char **arg)
 	{
 		if (!check_exit_arg(arg))
 			return (1);
-		exit_status = ft_atoi(*arg);
+		else if (valide_arg_length(*arg) == 1)
+			exit_status = ft_atoi(*arg);
+		else
+			exit_status = 2;
 	}
 	clear_args(shell->builtin.argv);
 	free(shell->builtin.command);
@@ -67,10 +70,20 @@ int	is_numeric_arg(char *arg)
 	{
 		if (ft_isalpha(arg[idx]))
 		{
-			printf("minihell: exit: %s: numeric argument required\n", arg);
+			ft_putstr_fd("minihell: exit: numeric argument required\n", STDERR_FILENO);
 			return (0);
 		}
 		idx++;
+	}
+	return (1);
+}
+
+int	valide_arg_length(char *arg)
+{
+	if (ft_atol(arg) <= INT_MAX)
+	{
+		ft_putstr_fd("minihell: exit: numeric argument required\n", STDERR_FILENO);
+		return (0);
 	}
 	return (1);
 }

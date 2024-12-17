@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/13 18:19:18 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:07:19 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <signal.h>
 # include <unistd.h>
+# include <limits.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libs/libft/libft.h"
@@ -222,6 +223,7 @@ int		ft_exit(t_minishell *shell, char **arg);
 int		check_exit_arg(char **arg);
 int		check_too_many_args(char **arg);
 int		is_numeric_arg(char *arg);
+int		valide_arg_length(char *arg);
 
 //executor.c
 void	get_path(t_minishell *shell);
