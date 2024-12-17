@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 17:07:56 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/13 18:02:53 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:41:33 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	ft_exit(t_minishell *shell, char **arg)
 	free_envp_str(shell->envp);
 	rl_clear_history();
 	free(shell->prompt);
+	exit_status = exit_status % 256;
 	exit(exit_status);
 }
 
