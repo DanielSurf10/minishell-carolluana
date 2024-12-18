@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 17:07:56 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/17 17:30:42 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:46:53 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int	check_too_many_args(char **arg)
 		idx1++;
 	if (idx1 > 1)
 	{
-		ft_putstr_fd("minihell: exit: too many arguments\n", STDERR_FILENO);
+		ft_putstr_fd(
+			"minihell: exit: too many arguments\n", STDERR_FILENO);
 		return (0);
 	}
 	return (1);
@@ -70,7 +71,8 @@ int	is_numeric_arg(char *arg)
 	{
 		if (ft_isalpha(arg[idx]))
 		{
-			ft_putstr_fd("minihell: exit: numeric argument required\n", STDERR_FILENO);
+			ft_putstr_fd(
+				"minihell: exit: numeric argument required\n", STDERR_FILENO);
 			return (0);
 		}
 		idx++;
@@ -80,9 +82,10 @@ int	is_numeric_arg(char *arg)
 
 int	valide_arg_length(char *arg)
 {
-	if (ft_atol(arg) <= INT_MAX)
+	if (ft_atol(arg) > INT_MAX)
 	{
-		ft_putstr_fd("minihell: exit: numeric argument required\n", STDERR_FILENO);
+		ft_putstr_fd(
+			"minihell: exit: numeric argument required\n", STDERR_FILENO);
 		return (0);
 	}
 	return (1);
