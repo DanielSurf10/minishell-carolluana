@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing-tree.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:53:50 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/19 17:14:21 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/19 18:25:07 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ t_redir	*hunt_redir(t_list	**tkn_list)
 	t_list	*node;
 	t_redir	*redir;
 
-	// node = *tkn_list;
-	node = NULL;
+	node = *tkn_list;
+	// node = NULL;
 	redir = NULL;
 	while (node)
 	{
