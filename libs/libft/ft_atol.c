@@ -6,16 +6,16 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 17:10:30 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/17 17:28:11 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/19 18:08:45 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-long long ft_atol(char *str)
+long long	ft_atol(char *str)
 {
-    int	    index;
-	int	    sign;
+	int			index;
+	int			sign;
 	long long	number;
 
 	index = 0;
