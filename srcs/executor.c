@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/13 19:33:59 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/19 18:56:18 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,8 @@ void	handle_redir(t_tree	*tree)
 			dup2(fd, STDIN_FILENO);
 			close(fd);
 		}
+		else
+			hunt_heredoc(tree->sub_list);
 		node = node->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 16:21:54 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/14 21:18:29 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/19 18:19:59 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	hunt_heredoc(t_list *tkn_list)
 			create_heredoc(current, tag);
 			tag++;
 		}
-		current->next;
+		current = current->next;
 	}
 }
 
@@ -36,7 +36,6 @@ void	create_heredoc(t_list *delimiter, int tag)
 	char	*file_path;
 	char	*curr;
 	int		fd;
-	int		fd_stdin;
 	char	*line;
 
 	curr = ft_itoa(tag);
@@ -49,11 +48,12 @@ void	create_heredoc(t_list *delimiter, int tag)
 		if (ft_strncmp(line, delimiter->token.lexeme, ft_strlen(delimiter->token.lexeme) - 1) != 0)
 			ft_putstr_fd(line, fd);
 		else
+		{
+			free(line);
 			break ;
+		}
 		free(line);
 	}
-	
-	
-
-	
+	close(fd);
+	free(file_path);
 }
