@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/17 17:07:19 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/18 19:13:43 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libs/libft/libft.h"
-# include "./parsing.h"
 #include <sys/wait.h>
 #include <fcntl.h>
 
@@ -121,10 +120,6 @@ typedef struct s_execve
 	char	*cmd;/* data */
 }	t_execve;
 
-
-
-
-
 // main.c
 
 // lexing.c
@@ -170,14 +165,12 @@ int		valid_list(t_list *list);
 int		check_syntax_error(t_list *aux);
 
 //builtin
-// pwd.c
 int		pwd(void);
-//echo.c
 int		echo(char **arg);
-//change_directory.c
 int		change_directory(t_envp **env_list, char **path);
 void	update_pwd(t_envp **env_list, char *old_pwd, char *pwd);
 int		check_path(char **path);
+
 //exec_builtin.c
 int		aux_exec_builting(char *command, char **argv, t_minishell *shell);
 int		is_builtin(t_tree *tree);
@@ -255,5 +248,8 @@ void	expander_word(char c, char **result);
 void	handle_quotes(char c, int *quotes, char **result);
 char	**handle_state(char *str, t_minishell *shell, char **result);
 
+//heredoc.c
+void	hunt_heredoc(t_list *tkn_list);
+void	create_heredoc(t_list *delimiter, int tag);
 
 #endif

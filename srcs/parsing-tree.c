@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing-tree.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:53:50 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/14 16:22:19 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/18 21:02:52 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	build_branch(t_list *tkn_list, t_tree *pivot)
 {
 	pivot->sub_list = hunt_last_pipe(tkn_list);
 	if (pivot->sub_list)
-	{	
+	{
 		pivot->tkn_type = pivot->sub_list->token.type;
 		pivot->sub_list->next->prev = NULL;
 		pivot->right = build_root(pivot->sub_list->next);
@@ -47,7 +47,7 @@ t_tree	*build_root(t_list	*tkn_list)
 t_list	*hunt_last_pipe(t_list	*tkn_list)
 {
 	t_list	*node;
-	
+
 	node = NULL;
 	node = get_last_token(tkn_list);
 	if (node && !node->prev && node->token.type == PIPE)
@@ -68,8 +68,9 @@ t_redir	*hunt_redir(t_list	**tkn_list)
 {
 	t_list	*node;
 	t_redir	*redir;
-	
-	node = NULL;
+
+	// node = *tkn_list;
+	// node = NULL;
 	redir = NULL;
 	while (node)
 	{
