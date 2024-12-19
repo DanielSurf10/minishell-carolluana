@@ -6,7 +6,7 @@
 #    By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 17:34:18 by cshingai          #+#    #+#              #
-#    Updated: 2024/12/18 18:01:57 by cshingai         ###   ########.fr        #
+#    Updated: 2024/12/19 17:13:25 by cshingai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,6 @@ SRCS = $(addprefix srcs/, \
 			signal.c \
 			expander.c \
 			expander2.c \
-			heredoc.c \
 		)
 
 OBJ = $(SRCS:srcs/%.c=obj/%.o)

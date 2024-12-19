@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/18 19:13:43 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:13:15 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,6 @@ void	signals_for_command(void);
 void	init_signals(void);
 int		control_sign(int new_signal);
 void	prompt_newline(void);
-//void	sig_handler_sigquit(int signal __attribute__((unused)));
 
 //utils.c
 void	*free_split(char **str);
@@ -247,9 +246,5 @@ int		expander_var(char *str, int i, t_minishell *shell, char **result);
 void	expander_word(char c, char **result);
 void	handle_quotes(char c, int *quotes, char **result);
 char	**handle_state(char *str, t_minishell *shell, char **result);
-
-//heredoc.c
-void	hunt_heredoc(t_list *tkn_list);
-void	create_heredoc(t_list *delimiter, int tag);
 
 #endif
