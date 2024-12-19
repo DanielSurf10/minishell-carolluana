@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/14 20:50:54 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/19 19:48:41 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	main(int argc __attribute__((unused)), \
 		shell.token_list = NULL;
 		shell.tree = NULL;
 		shell.token_list = tokenizer(shell.prompt);
+		hunt_heredoc(shell.token_list, &shell);
 		shell.tree = build_root(shell.token_list);
 		executor(shell.tree, &shell);
 		// execute_builtin(&shell);

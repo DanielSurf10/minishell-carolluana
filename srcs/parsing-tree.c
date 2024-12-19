@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:53:50 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/14 16:22:19 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/19 19:31:54 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_redir	*hunt_redir(t_list	**tkn_list)
 	t_list	*node;
 	t_redir	*redir;
 	
-	node = NULL;
+	node = *tkn_list;
 	redir = NULL;
 	while (node)
 	{
