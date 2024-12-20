@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 16:21:54 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/19 19:49:20 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/19 21:18:27 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,11 @@ void	create_heredoc(t_list *delimiter, int tag, t_minishell *shell)
 	while (1)
 	{
 		line = readline("> ");
+		if (line == NULL)
+			break;
 		if (ft_strcmp(line, delimiter->token.lexeme) != 0)
 		{
-			expander_heredoc(line, shell);
+			expander_heredoc(&line, shell);
 			ft_putendl_fd(line, fd);
 		}
 		else

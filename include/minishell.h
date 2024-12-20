@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/19 19:49:49 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/19 21:18:34 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,7 +252,7 @@ int		expander_var(char *str, int i, t_minishell *shell, char **result);
 void	expander_word(char c, char **result);
 void	handle_quotes(char c, int *quotes, char **result);
 char	**handle_state(char *str, t_minishell *shell, char **result);
-void	expander_heredoc(char *line, t_minishell *shell);
+void	expander_heredoc(char **line, t_minishell *shell);
 
 //heredoc.c
 void	hunt_heredoc(t_list *tkn_list, t_minishell *shell);
