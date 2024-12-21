@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/20 21:25:13 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/20 21:38:28 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libs/libft/libft.h"
+# include "../libs/ft_printf/src/ft_printf.h"
 #include <sys/wait.h>
 #include <fcntl.h>
 

@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:53:50 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/20 21:29:11 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/20 21:34:17 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_redir	*hunt_redir(t_list	**tkn_list)
 	t_list	*node;
 	t_redir	*redir;
 
-	node = NULL;
+	node = *tkn_list;
 	redir = NULL;
 	while (node)
 	{

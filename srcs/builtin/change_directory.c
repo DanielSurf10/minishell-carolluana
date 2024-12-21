@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:47:17 by cshingai          #+#    #+#             */
-/*   Updated: 2024/11/29 17:56:52 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/20 21:48:34 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ int	change_directory(t_envp **env_list, char **path)
 		*path = ft_getenv("HOME", *env_list);
 	if (path == NULL)
 	{
-		printf("cd: %s: Missing file or directory\n", *path);
+		ft_printf_fd(STDERR_FILENO, "cd: %s: Missing file or directory\n", *path);
 		return (1);
 	}
 	if (check_path(path) == 1)
 	{
-		printf("cd: Too many arguments\n");
+		ft_printf_fd(STDERR_FILENO, "cd: Too many arguments\n");
 		return (1);
 	}
 	old_pwd = getcwd(old_pwd, PATH_MAX);
