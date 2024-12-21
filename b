@@ -1,0 +1,10 @@
+a
+b
+include
+libs
+lista_ordenada.txt
+Makefile
+minishell
+obj
+readline.supp
+srcs

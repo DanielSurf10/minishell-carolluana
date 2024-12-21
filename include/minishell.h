@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/20 21:38:28 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/20 22:04:53 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ typedef struct s_minishell
 	char	**path;
 	char	*prompt;
 	int		status;
+	int		fd_stdin;
+	int		fd_stdout;
 }	t_minishell ;
 
 typedef struct s_execve
