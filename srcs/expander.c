@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 21:01:39 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/13 17:33:49 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/19 21:18:13 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@ void	expander(t_list *sub_list, t_minishell *shell)
 		node = node->next;
 	}
 }
+void	expander_heredoc(char **line, t_minishell *shell)
+{
+	char	*temp;
+
+	temp = *line;
+	*line = check_lexeme(*line, shell);
+	free(temp);
+}
+
 
 char	*check_lexeme(char *str, t_minishell *shell)
 {

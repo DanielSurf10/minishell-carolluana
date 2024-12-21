@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/19 17:14:40 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/20 21:27:45 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,12 @@ void	handle_redir(t_tree	*tree)
 			close(fd);
 		}
 		else if (node->rd_type == REDIRECT_INPUT)
+		{
+			fd = open(node->file, O_RDONLY);
+			dup2(fd, STDIN_FILENO);
+			close(fd);
+		}
+		else
 		{
 			fd = open(node->file, O_RDONLY);
 			dup2(fd, STDIN_FILENO);

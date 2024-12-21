@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/19 17:13:15 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/20 21:25:13 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,5 +246,10 @@ int		expander_var(char *str, int i, t_minishell *shell, char **result);
 void	expander_word(char c, char **result);
 void	handle_quotes(char c, int *quotes, char **result);
 char	**handle_state(char *str, t_minishell *shell, char **result);
+void	expander_heredoc(char **line, t_minishell *shell);
+
+//heredoc.c
+void	hunt_heredoc(t_list *tkn_list, t_minishell *shell);
+void	create_heredoc(t_list *delimiter, int tag, t_minishell *shell);
 
 #endif

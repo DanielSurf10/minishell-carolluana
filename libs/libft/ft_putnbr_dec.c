@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_putnbr_dec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/27 15:47:58 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/19 21:22:22 by lsouza-r         ###   ########.fr       */
+/*   Created: 2024/01/08 20:08:59 by cshingai          #+#    #+#             */
+/*   Updated: 2024/12/20 19:22:16 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putendl_fd(char *s, int fd)
+int	ft_putnbr_dec(unsigned int n)
 {
-	while (s && *s)
-		ft_putchar_fd(*s++, fd);
-	ft_putchar_fd('\n', fd);
+	char	str;
+	int		x;
+
+	x = 0;
+	if (n > 9)
+	{
+		x += ft_putnbr(n / 10);
+		x += ft_putnbr(n % 10);
+	}
+	else
+	{
+		str = n + '0';
+		x += write(1, &str, 1);
+	}
+	return (x);
 }

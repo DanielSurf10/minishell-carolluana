@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/18 18:45:40 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/20 21:28:54 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	main(int argc __attribute__((unused)), \
 		{
 			if (valid_list(shell.token_list))
 			{
+				hunt_heredoc(shell.token_list, &shell);
 				shell.tree = build_root(shell.token_list);
 				executor(shell.tree, &shell);
 				// execute_builtin(&shell);
