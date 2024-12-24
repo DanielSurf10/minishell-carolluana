@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:53:50 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/24 17:08:10 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/24 18:50:25 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ t_redir	*hunt_redir(t_list	**tkn_list)
 				node->next->next->prev = NULL;
 				*tkn_list = node->next->next;
 			}
+			else if (node->prev == NULL && node->next->next == NULL)
+				*tkn_list = NULL;
 			// free_token = node;
 			node = node->next;
 			// free(free_token->token.lexeme);

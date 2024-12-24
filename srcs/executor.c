@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/24 17:05:52 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/24 19:04:00 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,18 +103,22 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
  */
 void	executor(t_tree *tree, t_minishell *shell)
 {
-	if (tree->tkn_type == COMMAND)
+	if (tree->tkn_type == COMMAND && tree->sub_list)
 		exec_single_cmd(tree, shell);
 	else if (tree->tkn_type == PIPE && tree->left->tkn_type == PIPE)
 	{
 		tree->left->parent = tree;
 		pipe(tree->fd);
+		ft_lstadd_back(&(shell->fd_list), ft_lstnew((void *)((long)tree->fd[0])));
+		ft_lstadd_back(&(shell->fd_list), ft_lstnew((void *)((long)tree->fd[1])));
 		executor(tree->left, shell);
 		handle_pipe(tree, shell, 0);
 	}
 	else if (tree->tkn_type == PIPE && tree->left->tkn_type == COMMAND)
 	{
 		pipe(tree->fd);
+		ft_lstadd_back(&(shell->fd_list), ft_lstnew((void *)((long)tree->fd[0])));
+		ft_lstadd_back(&(shell->fd_list), ft_lstnew((void *)((long)tree->fd[1])));
 		handle_pipe(tree, shell, 1);
 	}
 }
@@ -138,6 +142,7 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 			dup2(tree->fd[1], STDOUT_FILENO);
 			close(tree->fd[0]);
 			close(tree->fd[1]);
+			close_fd(shell);
 			handle_redir(tree->left);
 			expander(tree->left->sub_list, shell);
 			if (is_builtin(tree->left))
@@ -161,6 +166,7 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 		}
 		close(tree->fd[0]);
 		close(tree->fd[1]);
+		close_fd(shell);
 		handle_redir(tree->right);
 		expander(tree->right->sub_list, shell);
 		if (is_builtin(tree->right))
@@ -172,11 +178,17 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 	}
 	ft_lstadd_back(&(shell->pid), ft_lstnew((void *)((long)pid[1])));
 	close(tree->fd[1]);
+	if (tree->parent)
+	{
+		close(tree->parent->fd[1]);
+		close(tree->parent->fd[0]);
+	}
 	if (left)
 	{
 		close(tree->fd[0]);
 		// waitpid(pid[0], &shell->status, 0);
 	}
+	
 	// waitpid(pid[1], &shell->status, 0);
 	// shell->status = WEXITSTATUS(shell->status);
 	return (0);
@@ -207,6 +219,17 @@ void	handle_redir(t_tree	*tree)
 			close(fd);
 		}
 		else if (node->rd_type == REDIRECT_INPUT)
+		{
+			fd = open(node->file, O_RDONLY);
+			if (fd < 0)
+			{
+				perror(node->file);
+				exit(1);
+			}
+			dup2(fd, STDIN_FILENO);
+			close(fd);
+		}
+		else if (node->rd_type == REDIRECT_HEREDOC)
 		{
 			fd = open(node->file, O_RDONLY);
 			dup2(fd, STDIN_FILENO);
@@ -254,6 +277,18 @@ void	wait_pid(t_minishell *shell)
 	{
 		waitpid((pid_t)((long)(curr->content)), &shell->status, 0);
 		shell->status = WEXITSTATUS(shell->status);
+		curr = curr->next;
+	}
+}
+
+void	close_fd(t_minishell *shell)
+{
+	t_lst	*curr;
+
+	curr = shell->fd_list;
+	while (curr)
+	{
+		close((long)curr->content);
 		curr = curr->next;
 	}
 }

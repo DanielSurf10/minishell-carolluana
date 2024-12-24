@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/24 17:03:53 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/24 18:14:44 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_minishell
 	t_envp		*envp_list;
 	t_builtin	builtin;
 	t_lst		*pid;
+	t_lst		*fd_list;
 	char		**envp;
 	char		**path;
 	char		*prompt;
@@ -232,6 +233,8 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell);
 void	handle_redir(t_tree	*tree);
 void	exec_single_cmd(t_tree *tree, t_minishell *shell);
 void	wait_pid(t_minishell *shell);
+void	close_fd(t_minishell *shell);
+
 //signal.c
 void	sig_handler_sigint(int signal);
 void	signals_for_command(void);
