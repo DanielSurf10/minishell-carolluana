@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/24 16:39:27 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/24 16:43:58 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,15 +231,18 @@ void	exec_single_cmd(t_tree *tree, t_minishell *shell)
 		shell->status = execute_builtin(shell, tree);
 		return ;
 	}
-	pid = fork();
-	if (pid == 0)
+	else
 	{
-		handle_redir(tree);
-		expander(tree->sub_list, shell);
-		exec_cmd(tree, shell);
+		pid = fork();
+		if (pid == 0)
+		{
+			handle_redir(tree);
+			expander(tree->sub_list, shell);
+			exec_cmd(tree, shell);
+		}
+		waitpid(pid, &shell->status, 0);
+		shell->status = WEXITSTATUS(shell->status);
 	}
-	waitpid(pid, &shell->status, 0);
-	shell->status = WEXITSTATUS(shell->status);
 }
 
 void	wait_pid(t_minishell *shell)
