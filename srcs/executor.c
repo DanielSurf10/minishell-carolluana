@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/20 22:05:02 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/24 17:05:52 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 			}
 			exec_cmd(tree->left, shell);
 		}
+		ft_lstadd_back(&(shell->pid), ft_lstnew((void *)((long)pid[0])));
 	}
 	pid[1] = fork();
 	if (pid[1] == 0)
@@ -169,14 +170,15 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 		}
 		exec_cmd(tree->right, shell);
 	}
+	ft_lstadd_back(&(shell->pid), ft_lstnew((void *)((long)pid[1])));
 	close(tree->fd[1]);
 	if (left)
 	{
 		close(tree->fd[0]);
-		waitpid(pid[0], &shell->status, 0);
+		// waitpid(pid[0], &shell->status, 0);
 	}
-	waitpid(pid[1], &shell->status, 0);
-	shell->status = WEXITSTATUS(shell->status);
+	// waitpid(pid[1], &shell->status, 0);
+	// shell->status = WEXITSTATUS(shell->status);
 	return (0);
 }
 
@@ -210,12 +212,6 @@ void	handle_redir(t_tree	*tree)
 			dup2(fd, STDIN_FILENO);
 			close(fd);
 		}
-		else
-		{
-			fd = open(node->file, O_RDONLY);
-			dup2(fd, STDIN_FILENO);
-			close(fd);
-		}
 		node = node->next;
 	}
 }
@@ -235,12 +231,29 @@ void	exec_single_cmd(t_tree *tree, t_minishell *shell)
 		shell->status = execute_builtin(shell, tree);
 		return ;
 	}
-	pid = fork();
-	if (pid == 0)
+	else
 	{
-		handle_redir(tree);
-		expander(tree->sub_list, shell);
-		exec_cmd(tree, shell);
+		pid = fork();
+		if (pid == 0)
+		{
+			handle_redir(tree);
+			expander(tree->sub_list, shell);
+			exec_cmd(tree, shell);
+		}
+		waitpid(pid, &shell->status, 0);
+		shell->status = WEXITSTATUS(shell->status);
 	}
-	waitpid(pid, NULL, 0);
+}
+
+void	wait_pid(t_minishell *shell)
+{
+	t_lst	*curr;
+
+	curr = shell->pid;
+	while (curr)
+	{
+		waitpid((pid_t)((long)(curr->content)), &shell->status, 0);
+		shell->status = WEXITSTATUS(shell->status);
+		curr = curr->next;
+	}
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 a
 b
 include
@@ -8,3 +9,7 @@ minishell
 obj
 readline.supp
 srcs
+=======
+oi
+minihell: [Kminihell: [Kminihell: [Kminihell: [Kminihell: [Kminihell: [Kminihell: [Kminihell: [Kminihell: [Kminihell: [Kminihell: [Kminihell: [Kminihell: [Kminihell: [Kminihell: [Kminihell: [Kminihell: 
+>>>>>>> bugfix/waitpid
