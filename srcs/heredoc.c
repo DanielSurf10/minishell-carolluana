@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 16:21:54 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/19 21:18:27 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/24 18:09:15 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	create_heredoc(t_list *delimiter, int tag, t_minishell *shell)
 	fd = open(file_path, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	while (1)
 	{
+		signals_for_heredoc();
 		line = readline("> ");
 		if (line == NULL)
 			break;
@@ -64,5 +65,3 @@ void	create_heredoc(t_list *delimiter, int tag, t_minishell *shell)
 	close(fd);
 	free(file_path);
 }
-
-

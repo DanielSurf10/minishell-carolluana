@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:47:17 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/20 21:48:34 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/24 19:36:28 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ int	change_directory(t_envp **env_list, char **path)
 		return (1);
 	}
 	old_pwd = getcwd(old_pwd, PATH_MAX);
+	if (chdir(*path) == -1)
+	{
+		perror(*path);
+		return (1);
+	}
 	chdir(*path);
 	pwd = getcwd(pwd, PATH_MAX);
 	update_pwd(env_list, old_pwd, pwd);

@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/20 22:05:02 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/24 19:28:14 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 	exec = ft_calloc(1, sizeof(t_execve));
 	get_path(shell);
 	get_args(tree->sub_list, exec);
+	signals_for_command();
 	while (shell->path[i])
 	{
 		path_slash = ft_strjoin(shell->path[i], "/");
@@ -143,7 +144,7 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 			if (is_builtin(tree->left))
 			{
 				shell->status = execute_builtin(shell, tree->left);
-				exit(1);
+				exit(shell->status);
 			}
 			exec_cmd(tree->left, shell);
 		}
@@ -165,7 +166,7 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 		if (is_builtin(tree->right))
 		{
 			shell->status = execute_builtin(shell, tree->right);
-			exit(1);
+			exit(shell->status);
 		}
 		exec_cmd(tree->right, shell);
 	}
@@ -177,6 +178,7 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 	}
 	waitpid(pid[1], &shell->status, 0);
 	shell->status = WEXITSTATUS(shell->status);
+	ft_printf_fd(2, "status: %d\n", shell->status);
 	return (0);
 }
 
@@ -242,5 +244,5 @@ void	exec_single_cmd(t_tree *tree, t_minishell *shell)
 		expander(tree->sub_list, shell);
 		exec_cmd(tree, shell);
 	}
-	waitpid(pid, NULL, 0);
+	waitpid(pid, &shell->status, 0);
 }
