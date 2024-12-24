@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/24 14:34:24 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/24 16:39:27 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ void	executor(t_tree *tree, t_minishell *shell)
 		handle_pipe(tree, shell, 1);
 	}
 }
-
 /**
  * handle_pipe - Handles the execution of commands connected by pipes.
  * @tree: Pointer to the syntax tree node.
@@ -133,7 +132,6 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 
 	if (left == 1)
 	{
-		
 		pid[0] = fork();
 		if (pid[0] == 0)
 		{
@@ -149,7 +147,7 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 			}
 			exec_cmd(tree->left, shell);
 		}
-		ft_lstadd_back(&shell->pid, ft_lstnew((void *)((long)pid[0])));
+		ft_lstadd_back(&(shell->pid), ft_lstnew((void *)((long)pid[0])));
 	}
 	pid[1] = fork();
 	if (pid[1] == 0)
@@ -172,7 +170,7 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 		}
 		exec_cmd(tree->right, shell);
 	}
-	ft_lstadd_back(&shell->pid, ft_lstnew((void *)((long)pid[1])));
+	ft_lstadd_back(&(shell->pid), ft_lstnew((void *)((long)pid[1])));
 	close(tree->fd[1]);
 	if (left)
 	{
@@ -214,12 +212,6 @@ void	handle_redir(t_tree	*tree)
 			dup2(fd, STDIN_FILENO);
 			close(fd);
 		}
-		else
-		{
-			fd = open(node->file, O_RDONLY);
-			dup2(fd, STDIN_FILENO);
-			close(fd);
-		}	
 		node = node->next;
 	}
 }
@@ -252,12 +244,12 @@ void	exec_single_cmd(t_tree *tree, t_minishell *shell)
 
 void	wait_pid(t_minishell *shell)
 {
-	t_lst *curr;
-	
+	t_lst	*curr;
+
 	curr = shell->pid;
 	while (curr)
 	{
-		waitpid((pid_t)((long)curr->content), &shell->status, 0);
+		waitpid((pid_t)((long)(curr->content)), &shell->status, 0);
 		shell->status = WEXITSTATUS(shell->status);
 		curr = curr->next;
 	}

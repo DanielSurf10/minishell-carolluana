@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/24 14:53:59 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/24 16:39:53 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,6 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell);
 void	handle_redir(t_tree	*tree);
 void	exec_single_cmd(t_tree *tree, t_minishell *shell);
 void	wait_pid(t_minishell *shell);
-
 //signal.c
 void	sig_handler_sigint(int signal);
 void	signals_for_command(void);
