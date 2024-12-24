@@ -1,40 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/23 18:06:08 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/24 14:15:20 by lsouza-r         ###   ########.fr       */
+/*   Created: 2023/12/26 19:24:19 by lsouza-r          #+#    #+#             */
+/*   Updated: 2024/12/24 14:01:32 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "libft.h"
 
-void	*ft_free_split(char **split)
+t_lst	*ft_lstlast(t_lst *lst)
 {
-	int	i;
-
-	if (!split)
-		return (NULL);
-	i = 0;
-	while (split[i])
-	{
-		free(split[i]);
-		i++;
-	}
-	free(split);
-	return (NULL);
-}
-
-void	init_shell(t_minishell *shell)
-{
-	shell->token_list = NULL;
-	shell->tree = NULL;
-	shell->envp_list = NULL;
-	shell->envp = NULL;
-	shell->status = 0;
-	shell->pid = NULL;
-	g_signal = 0;
+	while (lst && lst->next)
+		lst = lst->next;
+	return (lst);
 }

@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:53:50 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/19 19:31:54 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/24 14:09:14 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_redir	*hunt_redir(t_list	**tkn_list)
 	{
 		if (node->token.type >= REDIRECT_INPUT && node->token.type <= REDIRECT_OUTPUT_APPEND)
 		{
-			ft_lstadd_back(&redir, ft_lstnew(node->next->token.lexeme, node->token.type));
+			ft_lst_add_back(&redir, ft_lst_new(node->next->token.lexeme, node->token.type));
 			if (node->prev)
 				node->prev->next = node->next->next;
 			if (node->next->next && node->prev)
