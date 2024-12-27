@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 16:21:54 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/27 19:55:41 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:28:03 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ char	*create_file_path(int tag)
 	curr = ft_itoa(tag);
 	file_path = ft_strjoin("/tmp/heredoc", curr);
 	free(curr);
-	return(file_path);
+	return (file_path);
 }
 
-
-void	process_heredoc_input(t_list *delimiter, t_minishell *shell, int fd, char *file_path)
+void	process_heredoc_input(t_list *delimiter,
+	t_minishell *shell, int fd, char *file_path)
 {
 	char	*line;
 

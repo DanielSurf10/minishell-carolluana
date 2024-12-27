@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 21:01:39 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/24 18:25:53 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:25:45 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	expander(t_list *sub_list, t_minishell *shell)
 		node = node->next;
 	}
 }
+
 void	expander_heredoc(char **line, t_minishell *shell)
 {
 	char	*temp;
@@ -34,7 +35,6 @@ void	expander_heredoc(char **line, t_minishell *shell)
 	*line = check_lexeme(*line, shell);
 	free(temp);
 }
-
 
 char	*check_lexeme(char *str, t_minishell *shell)
 {
@@ -117,19 +117,4 @@ void	expander_word(char c, char **result)
 		free(temp1);
 		free(temp2);
 	}
-}
-
-void	handle_quotes(char c, int *quotes, char **result)
-{
-	if (*quotes == 0)
-	{
-		if (c == '\"')
-			(*quotes) = 1;
-		else if (c == '\'')
-			(*quotes) = 2;
-	}
-	else if ((*quotes == 1 && c == '\"') || (*quotes == 2 && c == '\''))
-		(*quotes) = 0;
-	else if ((*quotes == 1 && c == '\'') || (*quotes == 2 && c == '\"'))
-		expander_word(c, result);
 }
