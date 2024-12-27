@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/26 20:53:38 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/27 18:38:18 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,8 @@ void	executor(t_tree *tree, t_minishell *shell)
 		ft_lstadd_back(&(shell->fd_list), ft_lstnew((void *)((long)tree->fd[1])));
 		executor(tree->left, shell);
 		handle_pipe(tree, shell, 0);
+		close(tree->fd[0]);
+		close(tree->fd[1]);
 	}
 	else if (tree->tkn_type == PIPE && tree->left->tkn_type == COMMAND)
 	{
@@ -148,6 +150,8 @@ void	executor(t_tree *tree, t_minishell *shell)
 		ft_lstadd_back(&(shell->fd_list), ft_lstnew((void *)((long)tree->fd[0])));
 		ft_lstadd_back(&(shell->fd_list), ft_lstnew((void *)((long)tree->fd[1])));
 		handle_pipe(tree, shell, 1);
+		close(tree->fd[0]);
+		close(tree->fd[1]);
 	}
 }
 
@@ -206,17 +210,7 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 		exec_cmd(tree->right, shell);
 	}
 	ft_lstadd_back(&(shell->pid), ft_lstnew((void *)((long)pid[1])));
-	close(tree->fd[1]);
-	if (tree->parent)
-	{
-		close(tree->parent->fd[1]);
-		close(tree->parent->fd[0]);
-	}
-	if (left)
-	{
-		close(tree->fd[0]);
 		// waitpid(pid[0], &shell->status, 0);
-	}
 	
 	// waitpid(pid[1], &shell->status, 0);
 	// shell->status = WEXITSTATUS(shell->status);
