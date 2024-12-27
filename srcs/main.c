@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/20 22:05:27 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/26 20:21:10 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,12 @@ int	main(int argc __attribute__((unused)), \
 			if (valid_list(shell.token_list))
 			{
 				hunt_heredoc(shell.token_list, &shell);
-				shell.tree = build_root(shell.token_list);
-				executor(shell.tree, &shell);
-				// execute_builtin(&shell);
+				if (shell.token_list)
+					shell.tree = build_root(shell.token_list);
+				if (shell.tree)
+					executor(shell.tree, &shell);
+				wait_pid(&shell);
+				close_fd(&shell);
 				if (g_signal)
 				{
 					g_signal = 0;
@@ -83,6 +86,7 @@ int	main(int argc __attribute__((unused)), \
 				}
 				add_history(shell.prompt);
 				free_tree(&shell.tree);
+				free_pid_list(&shell.pid);
 				shell.token_list = NULL;
 			}
 		}

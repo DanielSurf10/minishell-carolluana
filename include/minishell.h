@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/20 22:04:53 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/24 18:14:44 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,16 @@ typedef struct s_builtin
 
 typedef struct s_minishell
 {
-	t_list	*token_list;
-	t_tree	*tree;
-	t_envp	*envp_list;
+	t_list		*token_list;
+	t_tree		*tree;
+	t_envp		*envp_list;
 	t_builtin	builtin;
-	char	**envp;
-	char	**path;
-	char	*prompt;
-	int		status;
+	t_lst		*pid;
+	t_lst		*fd_list;
+	char		**envp;
+	char		**path;
+	char		*prompt;
+	int			status;
 	int		fd_stdin;
 	int		fd_stdout;
 }	t_minishell ;
@@ -148,9 +150,10 @@ void	token_add_to_list(t_list **token_list, char *lexeme, int token_type);
 void	free_list(t_list **t_tree);
 void	*ft_free_split(char **split);
 void	init_shell(t_minishell *shell);
-t_redir	*ft_lstnew(char *file, int rd_type);
-void	ft_lstadd_back(t_redir **lst, t_redir *new);
-t_redir	*ft_lstlast(t_redir *lst);
+t_redir	*ft_lst_new(char *file, int rd_type);
+void	ft_lst_add_back(t_redir **lst, t_redir *new);
+t_redir	*ft_lst_last(t_redir *lst);
+void	free_pid_list(t_lst **pid);
 
 //parsing-tree
 t_tree	*build_tree(t_list	*tkn_list);
@@ -229,6 +232,8 @@ int		handle_pipe(t_tree *tree, t_minishell *shell, int left);
 void	exec_cmd(t_tree	*tree, t_minishell *shell);
 void	handle_redir(t_tree	*tree);
 void	exec_single_cmd(t_tree *tree, t_minishell *shell);
+void	wait_pid(t_minishell *shell);
+void	close_fd(t_minishell *shell);
 
 //signal.c
 void	sig_handler_sigint(int signal);
