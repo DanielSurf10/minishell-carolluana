@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/27 18:57:20 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:19:14 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 	exec = ft_calloc(1, sizeof(t_execve));
 	get_path(shell);
 	get_args(tree->sub_list, exec);
-	signals_for_command();
 	if (ft_strchr(exec->cmd, '/') == NULL && exec->cmd[0])
 	{
 		while (shell->path[i])
@@ -132,6 +131,7 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
  */
 void	executor(t_tree *tree, t_minishell *shell)
 {
+	signals_for_command();
 	if (tree->tkn_type == COMMAND && tree->sub_list)
 		exec_single_cmd(tree, shell);
 	else if (tree->tkn_type == PIPE && tree->left->tkn_type == PIPE)

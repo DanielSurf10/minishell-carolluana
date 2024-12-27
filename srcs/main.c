@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/27 18:52:45 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/27 19:38:50 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,17 @@ int	main(int argc __attribute__((unused)), \
 	init_shell(&shell);
 	shell.envp_list = create_env_list(envp);
 	shell.envp = list_to_str(shell.envp_list);
-	// shell.envp = envp;
 	while (1)
 	{
 		init_signals();
 		dup2(shell.fd_stdin, STDIN_FILENO); // lembrar de colocar se der erro dup2 < 0
 		dup2(shell.fd_stdout, STDOUT_FILENO); // lembrar de colocar se der erro dup2 < 0
 		shell.prompt = readline("minihell: ");
+		if (g_signal)
+		{
+			shell.status = g_signal;
+			g_signal = 0;
+		}
 		if (shell.prompt == NULL)
 			break ;
 		shell.token_list = NULL;
@@ -73,17 +77,13 @@ int	main(int argc __attribute__((unused)), \
 			if (valid_list(shell.token_list))
 			{
 				hunt_heredoc(shell.token_list, &shell);
-				if (shell.token_list)
+				if (shell.token_list && g_signal == 0)
 					shell.tree = build_root(shell.token_list);
 				if (shell.tree)
 					executor(shell.tree, &shell);
 				wait_pid(&shell);
 				close_fd(&shell);
-				if (g_signal)
-				{
-					g_signal = 0;
-					shell.status = g_signal;
-				}
+
 				add_history(shell.prompt);
 				free_tree(&shell.tree);
 				free_pid_list(&shell.pid);

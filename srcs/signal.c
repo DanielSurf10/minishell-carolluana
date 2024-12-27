@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 17:27:57 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/24 19:13:33 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:13:28 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,19 @@ void	init_signals(void)
 
 void	signals_for_command(void)
 {
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, sig_handler_execute);
+	signal(SIGINT, sig_handler_execute);
+}
+
+void	sig_handler_execute(int signal)
+{
+	if (signal == SIGQUIT || signal == SIGINT)
+	{
+		if (signal == SIGQUIT)
+			ft_putstr_fd("Quit", STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		g_signal = 128 + signal;
+	}
 }
 
 void	sig_handler_sigint(int signal)
@@ -38,17 +49,8 @@ void	sig_handler_heredoc(int signal)
 	if (signal == SIGINT)
 	{
 		ft_putstr_fd("\n", STDOUT_FILENO);
+		rl_replace_line("", STDIN_FILENO);
 		close(STDIN_FILENO);
-		g_signal = signal + 130;
+		g_signal = signal + 128;
 	}
 }
-
-void	signals_for_heredoc(void)
-{
-	signal(SIGINT, sig_handler_heredoc);
-}
-
-// int	control_sign(int new_signal)
-// {
-// 	return (new_signal);
-// }

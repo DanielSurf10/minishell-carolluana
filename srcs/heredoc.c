@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 16:21:54 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/26 18:56:30 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/27 19:55:41 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,25 @@ void	hunt_heredoc(t_list *tkn_list, t_minishell *shell)
 			create_heredoc(current, tag, shell);
 			tag++;
 		}
+		if (g_signal)
+		{
+			shell->status = g_signal;
+			break ;
+		}
 		current = current->next;
 	}
+}
+
+void	create_heredoc(t_list *delimiter, int tag, t_minishell *shell)
+{
+	char	*file_path;
+	int		fd;
+
+	file_path = create_file_path(tag);
+	fd = open(file_path, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	process_heredoc_input(delimiter, shell, fd, file_path);
+	close(fd);
+	free(file_path);
 }
 
 char	*create_file_path(int tag)
@@ -43,46 +60,13 @@ char	*create_file_path(int tag)
 }
 
 
-void	create_heredoc(t_list *delimiter, int tag, t_minishell *shell)
-{
-	char	*file_path;
-	int		fd;
-	// char	*line;
-
-	file_path = create_file_path(tag);
-	fd = open(file_path, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	process_heredoc_input(delimiter, shell, fd, file_path);
-	// while (1)
-	// {
-	// 	signals_for_heredoc();
-	// 	line = readline("> ");
-	// 	if (line == NULL)
-	// 		break ;
-	// 	if (ft_strcmp(line, delimiter->token.lexeme) != 0)
-	// 	{
-	// 		expander_heredoc(&line, shell);
-	// 		ft_putendl_fd(line, fd);
-	// 	}
-	// 	else
-	// 	{
-	// 		free(delimiter->token.lexeme);
-	// 		delimiter->token.lexeme = ft_strdup(file_path);
-	// 		free(line);
-	// 		break ;
-	// 	}
-	// 	free(line);
-	// }
-	close(fd);
-	free(file_path);
-}
-
 void	process_heredoc_input(t_list *delimiter, t_minishell *shell, int fd, char *file_path)
 {
 	char	*line;
 
 	while (1)
 	{
-		signals_for_heredoc();
+		signal(SIGINT, sig_handler_heredoc);
 		line = readline("> ");
 		if (line == NULL)
 			break ;
