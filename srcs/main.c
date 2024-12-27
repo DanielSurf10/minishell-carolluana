@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/26 20:21:10 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/27 18:52:45 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ int	main(int argc __attribute__((unused)), \
 	shell.envp_list = create_env_list(envp);
 	shell.envp = list_to_str(shell.envp_list);
 	// shell.envp = envp;
-	init_signals();
 	while (1)
 	{
+		init_signals();
 		dup2(shell.fd_stdin, STDIN_FILENO); // lembrar de colocar se der erro dup2 < 0
 		dup2(shell.fd_stdout, STDOUT_FILENO); // lembrar de colocar se der erro dup2 < 0
 		shell.prompt = readline("minihell: ");

@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 17:07:56 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/20 21:36:54 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/26 18:28:24 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	is_numeric_arg(char *arg)
 		if (ft_isalpha(arg[idx]))
 		{
 			ft_printf_fd(STDERR_FILENO,
-			"minihell: exit: %d: numeric argument required\n", arg);
+				"minihell: exit: %d: numeric argument required\n", arg);
 			return (0);
 		}
 		idx++;

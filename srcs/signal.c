@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 17:27:57 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/13 18:18:02 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/24 19:13:33 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,25 @@ void	sig_handler_sigint(int signal)
 	rl_on_new_line();
 	rl_replace_line("", STDIN_FILENO);
 	rl_redisplay();
-	control_sign(signal + 128);
+	g_signal = signal + 128;
 }
 
-// void	sig_handler_heredoc(int signal)
-// {}
-
-int	control_sign(int new_signal)
+void	sig_handler_heredoc(int signal)
 {
-	return (new_signal);
+	if (signal == SIGINT)
+	{
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		close(STDIN_FILENO);
+		g_signal = signal + 130;
+	}
 }
 
-// void	update_status(int sign, t_minishell *shell)
+void	signals_for_heredoc(void)
+{
+	signal(SIGINT, sig_handler_heredoc);
+}
+
+// int	control_sign(int new_signal)
 // {
-// 	shell->status = g_signal;
+// 	return (new_signal);
 // }

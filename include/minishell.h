@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/24 18:14:44 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/27 18:58:46 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ int		echo(char **arg);
 int		change_directory(t_envp **env_list, char **path);
 void	update_pwd(t_envp **env_list, char *old_pwd, char *pwd);
 int		check_path(char **path);
+int		check_num_path(char **path);
 
 //exec_builtin.c
 int		aux_exec_builting(char *command, char **argv, t_minishell *shell);
@@ -239,7 +240,9 @@ void	close_fd(t_minishell *shell);
 void	sig_handler_sigint(int signal);
 void	signals_for_command(void);
 void	init_signals(void);
-int		control_sign(int new_signal);
+void	signals_for_heredoc(void);
+//int		control_sign(int new_signal);
+void	sig_handler_heredoc(int signal);
 void	prompt_newline(void);
 
 //utils.c
@@ -259,5 +262,7 @@ void	expander_heredoc(char **line, t_minishell *shell);
 //heredoc.c
 void	hunt_heredoc(t_list *tkn_list, t_minishell *shell);
 void	create_heredoc(t_list *delimiter, int tag, t_minishell *shell);
+char	*create_file_path(int tag);
+void	process_heredoc_input(t_list *delimiter, t_minishell *shell, int fd, char *file_path);
 
 #endif

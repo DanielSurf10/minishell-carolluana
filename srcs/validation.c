@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:09:36 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/13 18:42:53 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/26 18:33:10 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	valid_list(t_list *list)
 {
-	int pipe_valid;
-	int redirect_valid;
+	int	pipe_valid;
+	int	redirect_valid;
 
 	pipe_valid = valid_pipe(list);
 	redirect_valid = valid_redirect(list);
@@ -32,9 +32,9 @@ int	valid_pipe(t_list *list)
 		if ((aux->token.type == 1 && aux->next == NULL)
 			|| (aux->token.type == 1 && aux->prev == NULL))
 		{
-			ft_putstr_fd("Minihell: syntax error near unexpected token `|'\n"
-				, STDERR_FILENO);
-				return (0);
+			ft_putstr_fd("Minihell: syntax error near unexpected token `|'\n",
+				STDERR_FILENO);
+			return (0);
 		}
 		else if (aux->token.type == 1 && aux->next->token.type == 1)
 		{
@@ -65,22 +65,24 @@ int	check_syntax_error(t_list *aux)
 	if ((aux->token.type >= 2 && aux->token.type <= 5)
 		&& (aux->next == NULL))
 	{
-		ft_putstr_fd("Minihell: syntax error near unexpected token `newline'\n"
-			, STDERR_FILENO);
+		ft_putstr_fd("Minihell: syntax error near unexpected token `newline'\n",
+			STDERR_FILENO);
 		return (0);
 	}
 	else if (aux->token.type == 5 && aux->next->token.type != 0)
 	{
-		ft_putstr_fd("Minihell: syntax error near unexpected token `>'\n"
-			, STDERR_FILENO);
+		ft_putstr_fd("Minihell: syntax error near unexpected token `>'\n",
+			STDERR_FILENO);
 		return (0);
 	}
 	else if (aux->token.type == 3 && aux->next->token.type != 0)
 	{
-		ft_putstr_fd("Minihell: syntax error near unexpected token `<'\n", STDERR_FILENO);
+		ft_putstr_fd("Minihell: syntax error near unexpected token `<'\n",
+			STDERR_FILENO);
 		return (0);
 	}
-	else if ((aux->token.type == 2 || aux->token.type == 4) && aux->next->token.type != 0)
+	else if ((aux->token.type == 2 || aux->token.type == 4)
+		&& aux->next->token.type != 0)
 		return (0);
 	return (1);
 }

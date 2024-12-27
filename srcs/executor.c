@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/27 18:38:18 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/27 18:57:20 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 	exec = ft_calloc(1, sizeof(t_execve));
 	get_path(shell);
 	get_args(tree->sub_list, exec);
+	signals_for_command();
 	if (ft_strchr(exec->cmd, '/') == NULL && exec->cmd[0])
 	{
 		while (shell->path[i])
@@ -181,7 +182,7 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 			if (is_builtin(tree->left))
 			{
 				shell->status = execute_builtin(shell, tree->left);
-				exit(1);
+				exit(shell->status);
 			}
 			exec_cmd(tree->left, shell);
 		}
@@ -205,13 +206,13 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 		if (is_builtin(tree->right))
 		{
 			shell->status = execute_builtin(shell, tree->right);
-			exit(1);
+			exit(shell->status);
 		}
 		exec_cmd(tree->right, shell);
 	}
 	ft_lstadd_back(&(shell->pid), ft_lstnew((void *)((long)pid[1])));
 		// waitpid(pid[0], &shell->status, 0);
-	
+
 	// waitpid(pid[1], &shell->status, 0);
 	// shell->status = WEXITSTATUS(shell->status);
 	return (0);
