@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/24 19:04:00 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/26 20:53:38 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,32 +69,60 @@ void	get_args(t_list *sub_list, t_execve *exec)
  */
 void	exec_cmd(t_tree	*tree, t_minishell *shell)
 {
+	int			ret_code;
 	t_execve	*exec;
 	int			i;
 	char		*path_slash;
 	char		*full_path;
 
 	i = 0;
+	ret_code = 0;
 	exec = ft_calloc(1, sizeof(t_execve));
 	get_path(shell);
 	get_args(tree->sub_list, exec);
-	while (shell->path[i])
+	if (ft_strchr(exec->cmd, '/') == NULL && exec->cmd[0])
 	{
-		path_slash = ft_strjoin(shell->path[i], "/");
-		full_path = ft_strjoin(path_slash, exec->cmd);
-		free(path_slash);
-		if (access(full_path, F_OK | X_OK) == 0)
+		while (shell->path[i])
 		{
-			execve(full_path, exec->args, shell->envp);
-			break;
+			path_slash = ft_strjoin(shell->path[i], "/");
+			full_path = ft_strjoin(path_slash, exec->cmd);
+			free(path_slash);
+			if (access(full_path, F_OK | X_OK) == 0)
+				break;
+			free(full_path);
+			full_path = NULL;
+			i++;
 		}
-		free(full_path);
-		i++;
 	}
+	else
+		full_path = ft_strdup(exec->cmd);
+	if (ft_strchr(exec->cmd, '/') != NULL || full_path)
+		execve(full_path, exec->args, shell->envp);
+	if (!full_path || !full_path[0])
+	{
+		printf("oi1\n");
+		perror(exec->cmd);
+		ret_code = 127;
+	}
+	else if (full_path && access(full_path, F_OK | X_OK) != 0)
+	{
+		printf("oi2\n");
+		perror(full_path);
+		ret_code = 126;
+	}
+	else
+	{
+		printf("oi3\n");
+		perror(full_path);
+		ret_code = 1;
+	}
+	// free(full_path);
 	ft_free_split(shell->path);
 	ft_free_split(exec->args);
 	free(exec->cmd);
 	free(exec);
+	shell->status = ret_code;
+	exit(ret_code);
 }
 /**
  * executor - Executes commands or pipelines based on the syntax tree.
@@ -122,6 +150,7 @@ void	executor(t_tree *tree, t_minishell *shell)
 		handle_pipe(tree, shell, 1);
 	}
 }
+
 /**
  * handle_pipe - Handles the execution of commands connected by pipes.
  * @tree: Pointer to the syntax tree node.
@@ -162,7 +191,7 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 		{
 			dup2(tree->parent->fd[1], STDOUT_FILENO);
 			close(tree->parent->fd[1]);
-			close(tree->parent->fd[0]);
+			// close(tree->parent->fd[0]);
 		}
 		close(tree->fd[0]);
 		close(tree->fd[1]);
