@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:47:17 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/24 19:36:28 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/26 18:29:18 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,8 @@ int	change_directory(t_envp **env_list, char **path)
 		*path = ft_getenv("HOME", *env_list);
 	else if (ft_strcmp(path[0], "~") == 0)
 		*path = ft_getenv("HOME", *env_list);
-	if (path == NULL)
-	{
-		ft_printf_fd(STDERR_FILENO, "cd: %s: Missing file or directory\n", *path);
-		return (1);
-	}
 	if (check_path(path) == 1)
-	{
-		ft_printf_fd(STDERR_FILENO, "cd: Too many arguments\n");
 		return (1);
-	}
 	old_pwd = getcwd(old_pwd, PATH_MAX);
 	if (chdir(*path) == -1)
 	{
@@ -60,6 +52,22 @@ void	update_pwd(t_envp **env_list, char *old_pwd, char *pwd)
 }
 
 int	check_path(char **path)
+{
+	if (path == NULL)
+	{
+		ft_printf_fd(STDERR_FILENO,
+			"cd: %s: Missing file or directory\n", *path);
+		return (1);
+	}
+	if (check_num_path(path) == 1)
+	{
+		ft_printf_fd(STDERR_FILENO, "cd: Too many arguments\n");
+		return (1);
+	}
+	return (0);
+}
+
+int	check_num_path(char **path)
 {
 	int	idx1;
 

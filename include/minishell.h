@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/24 18:07:47 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/26 18:55:25 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ int		echo(char **arg);
 int		change_directory(t_envp **env_list, char **path);
 void	update_pwd(t_envp **env_list, char *old_pwd, char *pwd);
 int		check_path(char **path);
+int		check_num_path(char **path);
 
 //exec_builtin.c
 int		aux_exec_builting(char *command, char **argv, t_minishell *shell);
@@ -256,5 +257,7 @@ void	expander_heredoc(char **line, t_minishell *shell);
 //heredoc.c
 void	hunt_heredoc(t_list *tkn_list, t_minishell *shell);
 void	create_heredoc(t_list *delimiter, int tag, t_minishell *shell);
+char	*create_file_path(int tag);
+void	process_heredoc_input(t_list *delimiter, t_minishell *shell, int fd, char *file_path);
 
 #endif

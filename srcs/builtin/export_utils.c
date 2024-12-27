@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:15:45 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/20 21:49:54 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/26 18:30:06 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,16 @@ int	check_key_name(char *key, char *origin)
 	i = 0;
 	if (key[0] != '_' && !ft_isalpha(key[0]))
 	{
-		ft_printf_fd(STDERR_FILENO, "minishell:%s: not a valid identifier: `%s'\n", origin, key);
+		ft_printf_fd(STDERR_FILENO,
+			"minishell:%s: not a valid identifier: `%s'\n", origin, key);
 		return (1);
 	}
 	while (key[i])
 	{
 		if (!ft_isalnum(key[i]) && key[i] != '_')
 		{
-			ft_printf_fd(STDERR_FILENO, "minishell:%s: not a valid identifier: `%s'\n",
+			ft_printf_fd(STDERR_FILENO,
+				"minishell:%s: not a valid identifier: `%s'\n",
 				origin, key);
 			return (1);
 		}
@@ -69,7 +71,8 @@ int	is_equal(char *arg, char *origin)
 {
 	if (*arg == '=')
 	{
-		ft_printf_fd(STDERR_FILENO, "minishell:%s: not a valid identifier: `%s'\n", origin, arg);
+		ft_printf_fd(STDERR_FILENO,
+			"minishell:%s: not a valid identifier: `%s'\n", origin, arg);
 		return (1);
 	}
 	else
