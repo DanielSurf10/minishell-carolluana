@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/28 16:41:05 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/28 17:11:30 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ void	executor(t_tree *tree, t_minishell *shell)
 	signals_for_command();
 	if (tree->tkn_type == COMMAND && tree->sub_list)
 		exec_single_cmd(tree, shell);
+	else if (tree->tkn_type == COMMAND && tree->sub_list == NULL)
+		shell->status = handle_redir(tree, shell);
 	else if (tree->tkn_type == PIPE && tree->left->tkn_type == PIPE)
 	{
 		tree->left->parent = tree;
