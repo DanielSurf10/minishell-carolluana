@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/28 16:33:22 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/28 17:23:44 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,7 @@ void	sig_handler_heredoc(int signal);
 void	*free_split(char **str);
 
 void	add_status_signal(int s, t_minishell *shell);
+int		ft_is_space_str(char *str);
 
 //expander
 void	expander(t_list *sub_list, t_minishell *shell);
