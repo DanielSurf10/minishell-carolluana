@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/28 17:11:30 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/28 17:51:17 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,7 @@ int	handle_redir(t_tree	*tree, t_minishell *shell)
 	expanded_file = NULL;
 	while (node)
 	{
-		expanded_file = check_lexeme(node->file, shell);
+		expanded_file = check_lexeme(node->file, shell, 0);
 		if (node->rd_type == REDIRECT_OUTPUT)
 		{
 			fd = open(expanded_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);

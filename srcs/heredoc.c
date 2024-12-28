@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 16:21:54 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/27 20:28:03 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/28 17:54:44 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,19 @@ void	process_heredoc_input(t_list *delimiter,
 	t_minishell *shell, int fd, char *file_path)
 {
 	char	*line;
+	char	*expanded_delimiter;
 
+	expanded_delimiter = check_lexeme(delimiter->token.lexeme, shell, 1);
 	while (1)
 	{
 		signal(SIGINT, sig_handler_heredoc);
 		line = readline("> ");
 		if (line == NULL)
 			break ;
-		if (ft_strcmp(line, delimiter->token.lexeme) != 0)
+		if (ft_strcmp(line, expanded_delimiter) != 0)
 		{
-			expander_heredoc(&line, shell);
+			if (ft_strchr(expanded_delimiter, '\'') == NULL && ft_strchr(expanded_delimiter, '\"') == NULL)
+				expander_heredoc(&line, shell);
 			ft_putendl_fd(line, fd);
 		}
 		else
@@ -84,4 +87,5 @@ void	process_heredoc_input(t_list *delimiter,
 		}
 		free(line);
 	}
+	free(expanded_delimiter);
 }

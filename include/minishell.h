@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/28 17:23:44 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/28 17:51:11 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,7 +252,7 @@ int		ft_is_space_str(char *str);
 
 //expander
 void	expander(t_list *sub_list, t_minishell *shell);
-char	*check_lexeme(char *str, t_minishell *shell);
+char	*check_lexeme(char *str, t_minishell *shell, int is_delimit);
 int		expander_var(char *str, int i, t_minishell *shell, char **result);
 void	expander_word(char c, char **result);
 void	handle_quotes(char c, int *quotes, char **result);

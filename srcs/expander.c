@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 21:01:39 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/27 20:25:45 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/28 17:50:46 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	expander(t_list *sub_list, t_minishell *shell)
 	while (node)
 	{
 		temp = node->token.lexeme;
-		node->token.lexeme = check_lexeme(node->token.lexeme, shell);
+		node->token.lexeme = check_lexeme(node->token.lexeme, shell, 0);
 		free(temp);
 		node = node->next;
 	}
@@ -32,11 +32,11 @@ void	expander_heredoc(char **line, t_minishell *shell)
 	char	*temp;
 
 	temp = *line;
-	*line = check_lexeme(*line, shell);
+	*line = check_lexeme(*line, shell, 0);
 	free(temp);
 }
 
-char	*check_lexeme(char *str, t_minishell *shell)
+char	*check_lexeme(char *str, t_minishell *shell, int is_delimit)
 {
 	int		i;
 	int		quotes;
@@ -47,8 +47,8 @@ char	*check_lexeme(char *str, t_minishell *shell)
 	quotes = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '$' && str[i + 1] != '\0' && (ft_isalpha(str[i + 1])
-				|| str[i + 1] == '_' || str[i + 1] == '?'))
+		if ( is_delimit == 0 && (str[i] == '$' && str[i + 1] != '\0' && (ft_isalpha(str[i + 1])
+				|| str[i + 1] == '_' || str[i + 1] == '?')))
 		{
 			if (quotes == 0 || quotes == 1)
 				i = expander_var(str, i, shell, &result);
