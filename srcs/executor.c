@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/28 16:17:00 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/28 16:41:05 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,15 +176,18 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 			dup2(tree->fd[1], STDOUT_FILENO);
 			close(tree->fd[0]);
 			close(tree->fd[1]);
-			handle_redir(tree->left, shell);
-			expander(tree->left->sub_list, shell);
-			close_fd(shell);
-			if (is_builtin(tree->left))
+			if (handle_redir(tree->left, shell) == 0)
 			{
-				shell->status = execute_builtin(shell, tree->left);
-				exit(shell->status);
+				expander(tree->left->sub_list, shell);
+				close_fd(shell);
+				if (is_builtin(tree->left))
+				{
+					shell->status = execute_builtin(shell, tree->left);
+					exit(shell->status);
+				}
+				exec_cmd(tree->left, shell);
 			}
-			exec_cmd(tree->left, shell);
+			exit(1);
 		}
 		ft_lstadd_back(&(shell->pid), ft_lstnew((void *)((long)pid[0])));
 	}
@@ -200,15 +203,18 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 		}
 		close(tree->fd[0]);
 		close(tree->fd[1]);
-		handle_redir(tree->right, shell);
-		expander(tree->right->sub_list, shell);
-		close_fd(shell);
-		if (is_builtin(tree->right))
+		if (handle_redir(tree->right, shell) == 0)
 		{
-			shell->status = execute_builtin(shell, tree->right);
-			exit(shell->status);
+			expander(tree->right->sub_list, shell);
+			close_fd(shell);
+			if (is_builtin(tree->right))
+			{
+				shell->status = execute_builtin(shell, tree->right);
+				exit(shell->status);
+			}
+			exec_cmd(tree->right, shell);
 		}
-		exec_cmd(tree->right, shell);
+		exit(1);
 	}
 	ft_lstadd_back(&(shell->pid), ft_lstnew((void *)((long)pid[1])));
 		// waitpid(pid[0], &shell->status, 0);
@@ -222,7 +228,7 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
  * handle_redir - Handles input and output redirections for a command.
  * @tree: Pointer to the syntax tree node containing redirection information.
  */
-void	handle_redir(t_tree	*tree, t_minishell *shell)
+int	handle_redir(t_tree	*tree, t_minishell *shell)
 {
 	t_redir	*node;
 	int		fd;
@@ -239,7 +245,7 @@ void	handle_redir(t_tree	*tree, t_minishell *shell)
 			if (fd == -1)
 			{
 				perror(expanded_file);
-				exit(1);
+				return (1);
 			}
 			dup2(fd, STDOUT_FILENO);
 			close(fd);
@@ -247,12 +253,22 @@ void	handle_redir(t_tree	*tree, t_minishell *shell)
 		else if (node->rd_type == REDIRECT_OUTPUT_APPEND)
 		{
 			fd = open(expanded_file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+			if (fd == -1)
+			{
+				perror(expanded_file);
+				return (1);
+			}
 			dup2(fd, STDOUT_FILENO);
 			close(fd);
 		}
 		else if (node->rd_type == REDIRECT_INPUT)
 		{
 			fd = open(expanded_file, O_RDONLY);
+			if (fd == -1)
+			{
+				perror(expanded_file);
+				return (1);
+			}
 			dup2(fd, STDIN_FILENO);
 			close(fd);
 		}
@@ -268,6 +284,7 @@ void	handle_redir(t_tree	*tree, t_minishell *shell)
 	}
 	free(expanded_file);
 	expanded_file = NULL;
+	return (0);
 }
 /**
  * exec_single_cmd - Executes a single command, handling redirections and built-ins.
@@ -280,9 +297,13 @@ void	exec_single_cmd(t_tree *tree, t_minishell *shell)
 
 	if (is_builtin(tree) == 1)
 	{
-		handle_redir(tree, shell);
-		expander(tree->sub_list, shell);
-		shell->status = execute_builtin(shell, tree);
+		if (handle_redir(tree, shell) == 0)
+		{
+			expander(tree->sub_list, shell);
+			shell->status = execute_builtin(shell, tree);
+		}
+		else
+			shell->status = 1;
 		return ;
 	}
 	else
@@ -290,10 +311,13 @@ void	exec_single_cmd(t_tree *tree, t_minishell *shell)
 		pid = fork();
 		if (pid == 0)
 		{
-			handle_redir(tree, shell);
-			expander(tree->sub_list, shell);
-			close_fd(shell);
-			exec_cmd(tree, shell);
+			if (handle_redir(tree, shell) == 0)
+			{
+				expander(tree->sub_list, shell);
+				close_fd(shell);
+				exec_cmd(tree, shell);
+			}
+			exit(1);
 		}
 		waitpid(pid, &shell->status, 0);
 		shell->status = WEXITSTATUS(shell->status);
