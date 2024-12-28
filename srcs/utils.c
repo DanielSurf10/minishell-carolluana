@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 18:06:08 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/24 18:00:27 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/28 17:23:08 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,18 @@ void	init_shell(t_minishell *shell)
 	g_signal = 0;
 	shell->fd_stdin = dup(STDIN_FILENO);
 	shell->fd_stdout = dup(STDOUT_FILENO);
+}
+
+int	ft_is_space_str(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_is_space(str[i]) == 0)
+			return (0);
+		i++;
+	}
+	return (1);
 }

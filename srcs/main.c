@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/28 16:28:11 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/28 17:24:40 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	main(int argc __attribute__((unused)), \
 				shell.token_list = NULL;
 			}
 		}
-		else
+		else if (shell.prompt[0] != '\0' && ft_is_space_str(shell.prompt) == 0)
 			ft_printf_fd(STDERR_FILENO, "Syntax error\n");
 		add_history(shell.prompt);
 	}
