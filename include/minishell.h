@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/27 21:24:01 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/28 16:33:22 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,7 +232,7 @@ void	get_args(t_list *sub_list, t_execve *exec);
 void	executor(t_tree	*tree, t_minishell *shell);
 int		handle_pipe(t_tree *tree, t_minishell *shell, int left);
 void	exec_cmd(t_tree	*tree, t_minishell *shell);
-void	handle_redir(t_tree	*tree, t_minishell *shell);
+int		handle_redir(t_tree	*tree, t_minishell *shell);
 void	exec_single_cmd(t_tree *tree, t_minishell *shell);
 void	wait_pid(t_minishell *shell);
 void	close_fd(t_minishell *shell);

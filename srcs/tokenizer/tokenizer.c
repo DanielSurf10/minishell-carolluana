@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 21:05:54 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/13 17:21:44 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/28 16:20:45 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_list	*tokenizer(char *str)
 		tkn_data.state = token_get_next_state(tkn_data.state, str[i]);
 		if (tkn_data.state != 1)
 			tkn_data.lex_len++;
-		else if (tkn_data.state == -1)
+		if (tkn_data.state == -1)
 		{
 			free_list(&token_list);
 			break ;
