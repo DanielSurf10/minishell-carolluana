@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/20 22:04:53 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/27 21:03:34 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,7 @@ void	get_args(t_list *sub_list, t_execve *exec);
 void	executor(t_tree	*tree, t_minishell *shell);
 int		handle_pipe(t_tree *tree, t_minishell *shell, int left);
 void	exec_cmd(t_tree	*tree, t_minishell *shell);
-void	handle_redir(t_tree	*tree);
+void	handle_redir(t_tree	*tree, t_minishell *shell);
 void	exec_single_cmd(t_tree *tree, t_minishell *shell);
 
 //signal.c
