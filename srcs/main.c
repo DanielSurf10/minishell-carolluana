@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/27 19:38:50 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/28 16:28:11 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,14 @@ int	main(int argc __attribute__((unused)), \
 				wait_pid(&shell);
 				close_fd(&shell);
 
-				add_history(shell.prompt);
 				free_tree(&shell.tree);
 				free_pid_list(&shell.pid);
 				shell.token_list = NULL;
 			}
 		}
+		else
+			ft_printf_fd(STDERR_FILENO, "Syntax error\n");
+		add_history(shell.prompt);
 	}
 	rl_clear_history();
 	free_env_list(shell.envp_list);
