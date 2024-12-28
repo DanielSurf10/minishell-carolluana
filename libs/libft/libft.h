@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:48:10 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/19 17:56:48 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/24 17:04:45 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
+
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}	t_lst;
 
 int			ft_atoi(const char *str);
 long long	ft_atol(char *str);
@@ -53,5 +59,12 @@ char		*ft_strtrim(char const *s1, char const *set);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 int			ft_tolower(int c);
 int			ft_toupper(int c);
+t_lst	*ft_lstnew(void *content);
+void	ft_lstadd_front(t_lst **lst, t_lst *new);
+int		ft_lstsize(t_lst *lst);
+t_lst	*ft_lstlast(t_lst *lst);
+void	ft_lstadd_back(t_lst **lst, t_lst *new);
+void	ft_lstdelone(t_lst *lst, void (*del)(void *));
+void	ft_lstclear(t_lst **lst, void (*del)(void *));
 
 #endif

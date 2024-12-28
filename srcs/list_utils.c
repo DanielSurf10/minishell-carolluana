@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 19:26:31 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/13 17:50:43 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:32:51 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,19 @@ void	free_list(t_list **token_list)
 		*token_list = NULL;
 	}
 }
+
+void	free_pid_list(t_lst **pid)
+{
+	t_lst	*curr;
+
+	while (*pid)
+	{
+		curr = *pid;
+		*pid = (*pid)->next;
+		free(curr);
+	}
+}
+
 void	*free_tree(t_tree **tree)
 {
 	if (*tree == NULL)

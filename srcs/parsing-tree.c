@@ -6,7 +6,7 @@
 /*   By: cshingai <cshingai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:53:50 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/20 22:05:20 by cshingai         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:30:07 by cshingai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_list	*hunt_last_pipe(t_list	*tkn_list)
 		if (node->token.type == PIPE)
 		{
 			return (node);
-			break;
+			break ;
 		}
 		node = node->prev;
 	}
@@ -73,9 +73,11 @@ t_redir	*hunt_redir(t_list	**tkn_list)
 	redir = NULL;
 	while (node)
 	{
-		if (node->token.type >= REDIRECT_INPUT && node->token.type <= REDIRECT_OUTPUT_APPEND)
+		if (node->token.type >= REDIRECT_INPUT
+			&& node->token.type <= REDIRECT_OUTPUT_APPEND)
 		{
-			ft_lstadd_back(&redir, ft_lstnew(node->next->token.lexeme, node->token.type));
+			ft_lst_add_back(&redir,
+				ft_lst_new(node->next->token.lexeme, node->token.type));
 			if (node->prev)
 				node->prev->next = node->next->next;
 			if (node->next->next && node->prev)
@@ -85,6 +87,8 @@ t_redir	*hunt_redir(t_list	**tkn_list)
 				node->next->next->prev = NULL;
 				*tkn_list = node->next->next;
 			}
+			else if (node->prev == NULL && node->next->next == NULL)
+				*tkn_list = NULL;
 			// free_token = node;
 			node = node->next;
 			// free(free_token->token.lexeme);
