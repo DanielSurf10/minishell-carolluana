@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/27 21:27:21 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/28 16:17:00 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 		full_path = ft_strdup(exec->cmd);
 	if (ft_strchr(exec->cmd, '/') != NULL || full_path)
 		execve(full_path, exec->args, shell->envp);
-	if (!full_path || !full_path[0])
+	if (!full_path || !full_path[0] || access(full_path, F_OK) != 0)
 	{
 		printf("oi1\n");
 		perror(exec->cmd);
@@ -178,6 +178,7 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 			close(tree->fd[1]);
 			handle_redir(tree->left, shell);
 			expander(tree->left->sub_list, shell);
+			close_fd(shell);
 			if (is_builtin(tree->left))
 			{
 				shell->status = execute_builtin(shell, tree->left);
@@ -201,6 +202,7 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 		close(tree->fd[1]);
 		handle_redir(tree->right, shell);
 		expander(tree->right->sub_list, shell);
+		close_fd(shell);
 		if (is_builtin(tree->right))
 		{
 			shell->status = execute_builtin(shell, tree->right);
@@ -290,6 +292,7 @@ void	exec_single_cmd(t_tree *tree, t_minishell *shell)
 		{
 			handle_redir(tree, shell);
 			expander(tree->sub_list, shell);
+			close_fd(shell);
 			exec_cmd(tree, shell);
 		}
 		waitpid(pid, &shell->status, 0);
