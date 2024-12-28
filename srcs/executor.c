@@ -100,19 +100,19 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 		execve(full_path, exec->args, shell->envp);
 	if (!full_path || !full_path[0])
 	{
-		printf("oi1\n");
+		// printf("oi1\n");
 		perror(exec->cmd);
 		ret_code = 127;
 	}
 	else if (full_path && access(full_path, F_OK | X_OK) != 0)
 	{
-		printf("oi2\n");
+		// printf("oi2\n");
 		perror(full_path);
 		ret_code = 126;
 	}
 	else
 	{
-		printf("oi3\n");
+		// printf("oi3\n");
 		perror(full_path);
 		ret_code = 1;
 	}

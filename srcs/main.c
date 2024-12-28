@@ -61,7 +61,18 @@ int	main(int argc __attribute__((unused)), \
 		init_signals();
 		dup2(shell.fd_stdin, STDIN_FILENO); // lembrar de colocar se der erro dup2 < 0
 		dup2(shell.fd_stdout, STDOUT_FILENO); // lembrar de colocar se der erro dup2 < 0
+		// shell.prompt = readline("minihell: ");
+
+		if (isatty(0))
 		shell.prompt = readline("minihell: ");
+		else
+		{
+			char *line;
+			line = get_next_line(0);
+			shell.prompt = ft_strtrim(line, "\n");
+			free(line);
+		}
+
 		if (g_signal)
 		{
 			shell.status = g_signal;
@@ -89,9 +100,12 @@ int	main(int argc __attribute__((unused)), \
 				free_pid_list(&shell.pid);
 				shell.token_list = NULL;
 			}
+			else
+				shell.status = 2;
 		}
 	}
 	rl_clear_history();
 	free_env_list(shell.envp_list);
 	free_envp_str(shell.envp);
+	return (shell.status);
 }

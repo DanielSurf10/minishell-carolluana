@@ -46,6 +46,7 @@ SRCS = $(addprefix srcs/, \
 			expander.c \
 			expander2.c \
 			heredoc.c \
+			get_next_line.c \
 		)
 
 OBJ = $(SRCS:srcs/%.c=obj/%.o)
