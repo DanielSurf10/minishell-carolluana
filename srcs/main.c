@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/28 20:46:35 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/29 15:32:20 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	main(int argc __attribute__((unused)), \
 		shell.token_list = tokenizer(shell.prompt);
 		if (shell.token_list)
 		{
-			if (valid_list(shell.token_list))
+			if (valid_list(shell.token_list, &shell))
 			{
 				hunt_heredoc(shell.token_list, &shell);
 				if (shell.token_list && g_signal == 0)
@@ -90,7 +90,10 @@ int	main(int argc __attribute__((unused)), \
 			}
 		}
 		else if (shell.prompt[0] != '\0' && ft_is_space_str(shell.prompt) == 0)
+		{
 			ft_printf_fd(STDERR_FILENO, "Syntax error\n");
+			shell.status = 2;
+		}
 		add_history(shell.prompt);
 	}
 	rl_clear_history();

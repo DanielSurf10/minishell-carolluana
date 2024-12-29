@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/29 15:18:35 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/29 18:01:41 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	get_path(t_minishell *shell)
 			break;
 		i++;
 	}
-	shell->path = ft_split(shell->envp[i] + 5, ':');
+	if (shell->path[i] != NULL)
+		shell->path = ft_split(shell->envp[i] + 5, ':');
+	else
+		shell->path = NULL;
 }
 
 /**
@@ -82,9 +85,10 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 	exec = ft_calloc(1, sizeof(t_execve));
 	get_path(shell);
 	get_args(tree->sub_list, exec);
+	full_path = NULL;
 	if (ft_strchr(exec->cmd, '/') == NULL && exec->cmd[0])
 	{
-		while (shell->path[i])
+		while (shell->path && shell->path[i])
 		{
 			path_slash = ft_strjoin(shell->path[i], "/");
 			full_path = ft_strjoin(path_slash, exec->cmd);
@@ -98,7 +102,7 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 	}
 	else
 		full_path = ft_strdup(exec->cmd);
-	if ((ft_strchr(exec->cmd, '/') != NULL || full_path) && access(full_path, F_OK | X_OK) == 0)
+	if (ft_strchr(exec->cmd, '/') != NULL || full_path)
 		execve(full_path, exec->args, shell->envp);
 	if (!full_path || !full_path[0] || access(full_path, F_OK) != 0)
 	{
@@ -118,7 +122,8 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 		perror(full_path);
 		ret_code = 1;
 	}
-	// free(full_path);
+	// if (full_path)
+	// 	free(full_path);
 	ft_free_split(shell->path);
 	ft_free_split(exec->args);
 	free(exec->cmd);

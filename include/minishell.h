@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:44:30 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/28 17:51:11 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/29 15:31:40 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,10 +165,10 @@ void	*free_tree(t_tree **tree);
 t_redir	*hunt_redir(t_list	**tkn_list);
 
 //validation.c
-int		valid_redirect(t_list *list);
-int		valid_pipe(t_list *token_list);
-int		valid_list(t_list *list);
-int		check_syntax_error(t_list *aux);
+int		valid_redirect(t_list *list, t_minishell *shell);
+int		valid_pipe(t_list *token_list, t_minishell *shell);
+int		valid_list(t_list *list, t_minishell *shell);
+int		check_syntax_error(t_list *aux, t_minishell *shell);
 
 //builtin
 int		pwd(void);
