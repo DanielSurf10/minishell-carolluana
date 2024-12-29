@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/28 17:51:17 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/28 21:00:38 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	get_path(t_minishell *shell)
 	}
 	shell->path = ft_split(shell->envp[i] + 5, ':');
 }
+
 /**
  * get_args - Extracts command arguments from a linked list and stores them in exec structure.
  * @sub_list: Pointer to the linked list containing command tokens.
@@ -62,6 +63,7 @@ void	get_args(t_list *sub_list, t_execve *exec)
 	args[i] = NULL;
 	exec->args = args;
 }
+
 /**
  * exec_cmd - Executes a command by searching for it in the PATH and using execve.
  * @tree: Pointer to the syntax tree node containing the command.
@@ -100,19 +102,19 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 		execve(full_path, exec->args, shell->envp);
 	if (!full_path || !full_path[0] || access(full_path, F_OK) != 0)
 	{
-		printf("oi1\n");
-		perror(exec->cmd);
+		if (full_path)
+			perror(exec->cmd);
+		else
+			ft_printf_fd(STDERR_FILENO, "%s: No such file or directory\n", exec->cmd);
 		ret_code = 127;
 	}
 	else if (full_path && access(full_path, F_OK | X_OK) != 0)
 	{
-		printf("oi2\n");
 		perror(full_path);
 		ret_code = 126;
 	}
 	else
 	{
-		printf("oi3\n");
 		perror(full_path);
 		ret_code = 1;
 	}
@@ -124,6 +126,7 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 	shell->status = ret_code;
 	exit(ret_code);
 }
+
 /**
  * executor - Executes commands or pipelines based on the syntax tree.
  * @tree: Pointer to the syntax tree node.

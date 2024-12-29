@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 16:21:54 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/28 17:54:44 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/28 20:19:55 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	process_heredoc_input(t_list *delimiter,
 			break ;
 		if (ft_strcmp(line, expanded_delimiter) != 0)
 		{
-			if (ft_strchr(expanded_delimiter, '\'') == NULL && ft_strchr(expanded_delimiter, '\"') == NULL)
-				expander_heredoc(&line, shell);
+			// if (ft_strchr(expanded_delimiter, '\'') == NULL && ft_strchr(expanded_delimiter, '\"') == NULL)
+			expander_heredoc(&line, shell);
 			ft_putendl_fd(line, fd);
 		}
 		else
