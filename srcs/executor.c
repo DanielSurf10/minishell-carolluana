@@ -424,11 +424,15 @@ void	wait_pid(t_minishell *shell)
 void	close_fd(t_minishell *shell)
 {
 	t_lst	*curr;
+	t_lst	*temp;
 
 	curr = shell->fd_list;
 	while (curr)
 	{
 		close((long)curr->content);
+		temp = curr;
 		curr = curr->next;
+		free(temp);
 	}
+	shell->fd_list = NULL;
 }
