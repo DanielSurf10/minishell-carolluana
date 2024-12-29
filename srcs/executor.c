@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/28 21:00:38 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/29 15:18:35 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 	}
 	else
 		full_path = ft_strdup(exec->cmd);
-	if (ft_strchr(exec->cmd, '/') != NULL || full_path)
+	if ((ft_strchr(exec->cmd, '/') != NULL || full_path) && access(full_path, F_OK | X_OK) == 0)
 		execve(full_path, exec->args, shell->envp);
 	if (!full_path || !full_path[0] || access(full_path, F_OK) != 0)
 	{
