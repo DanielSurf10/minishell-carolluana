@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:49:25 by cshingai          #+#    #+#             */
-/*   Updated: 2024/12/28 17:35:16 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/28 20:46:35 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ int	main(int argc __attribute__((unused)), \
 
 	init_shell(&shell);
 	shell.envp_list = create_env_list(envp);
-	shell.envp = list_to_str(shell.envp_list);
 	while (1)
 	{
+		shell.envp = list_to_str(shell.envp_list);
 		init_signals();
 		dup2(shell.fd_stdin, STDIN_FILENO); // lembrar de colocar se der erro dup2 < 0
 		dup2(shell.fd_stdout, STDOUT_FILENO); // lembrar de colocar se der erro dup2 < 0

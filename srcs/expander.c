@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 21:01:39 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/28 17:50:46 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/29 15:05:50 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,13 @@ int	expander_var(char *str, int i, t_minishell *shell, char **result)
 		*result = ft_calloc(1, sizeof (char));
 		(*result)[0] = '\0';
 	}
-	while ((ft_isalnum(str[i]) || str[i] == '_'
-			|| str[i] == '?') && str[i] != '\0')
-		i = i + 1;
+	if (str[i - 1] == '$' && str[i] == '?')
+		i++;
+	else
+	{
+		while ((ft_isalnum(str[i]) || str[i] == '_') && str[i] != '\0')
+			i = i + 1;
+	}
 	end = i - 1;
 	var = ft_substr(str, start, end - start + 1);
 	if (key_exist(var, shell->envp_list) == 1)
