@@ -27,7 +27,10 @@ void	get_path(t_minishell *shell)
 			break;
 		i++;
 	}
-	shell->path = ft_split(shell->envp[i] + 5, ':');
+	if (shell->envp[i] != NULL)
+		shell->path = ft_split(shell->envp[i] + 5, ':');
+	else
+		shell->path = NULL;
 }
 
 /**
@@ -71,60 +74,136 @@ void	get_args(t_list *sub_list, t_execve *exec)
  */
 void	exec_cmd(t_tree	*tree, t_minishell *shell)
 {
-	int			ret_code;
 	t_execve	*exec;
 	int			i;
 	char		*path_slash;
 	char		*full_path;
 
+	//	1 - Pegar a variável PATH
+	//	2 - Verificar se o comando é pra expandir ou não
+	//	3 - Se sim, expandir usando a PATH
+	//		3.1 - Se a PATH não existir, comando não encontrado e dar exit 127
+	//		3.2 - Se não for entrado na PATH, comando não encontrado e dar exit 127
+	//	4 - Se não, usar o próprio exec->cmd
+	//	5 - colocar o comando no full_path
+	//	6 - verificar se o full_path existe
+	//		6.1 - Se não, comando não encontrado e dar exit 127
+	//	7 - Verificar se full_path tem permissão de execução
+	//		7.1 - Se não, permissão negada e dar exit 126
+	//	8 - Executar o comando
+	//		8.1 - Se falhar, perror(exec->cmd) e exit 1
+
 	i = 0;
-	ret_code = 0;
 	exec = ft_calloc(1, sizeof(t_execve));
+	full_path = NULL;
 	get_path(shell);
 	get_args(tree->sub_list, exec);
-	if (ft_strchr(exec->cmd, '/') == NULL && exec->cmd[0])
+
+	if (ft_strchr(exec->cmd, '/') == NULL) // Comando para expandir
 	{
-		while (shell->path[i])
+		while (shell->path && shell->path[i])
 		{
 			path_slash = ft_strjoin(shell->path[i], "/");
 			full_path = ft_strjoin(path_slash, exec->cmd);
 			free(path_slash);
 			if (access(full_path, F_OK | X_OK) == 0)
-				break;
+				break ;
 			free(full_path);
 			full_path = NULL;
 			i++;
 		}
+
+		if (shell->path == NULL || full_path == NULL)
+		{
+			ft_printf_fd(STDERR_FILENO, "%s: No such file or directory\n", exec->cmd);
+			free(exec);
+			exit(127);
+		}
 	}
 	else
 		full_path = ft_strdup(exec->cmd);
-	if ((ft_strchr(exec->cmd, '/') != NULL || full_path) && access(full_path, F_OK | X_OK) == 0)
-		execve(full_path, exec->args, shell->envp);
-	if (!full_path || !full_path[0] || access(full_path, F_OK) != 0)
+
+	if (full_path == NULL)
 	{
-		if (full_path)
-			perror(exec->cmd);
-		else
-			ft_printf_fd(STDERR_FILENO, "%s: No such file or directory\n", exec->cmd);
-		ret_code = 127;
+		ft_printf_fd(STDERR_FILENO, "%s: No such file or directory\n", exec->cmd);
+		free(exec);
+		exit(127);
 	}
-	else if (full_path && access(full_path, F_OK | X_OK) != 0)
+
+	if (access(full_path, F_OK) != 0)
 	{
-		perror(full_path);
-		ret_code = 126;
+		perror(exec->cmd);
+		// dar free nas coisas
+		exit(127);
 	}
-	else
+	if (access(full_path, X_OK) != 0)
 	{
-		perror(full_path);
-		ret_code = 1;
+		perror(exec->cmd);
+		// dar free nas coisas
+		exit(126);
 	}
-	// free(full_path);
-	ft_free_split(shell->path);
-	ft_free_split(exec->args);
-	free(exec->cmd);
-	free(exec);
-	shell->status = ret_code;
-	exit(ret_code);
+
+	execve(full_path, exec->args, shell->envp);
+
+	// A patir daqui deu ruim
+
+	perror(full_path);
+
+	// dar free nas coisas
+
+	exit(1);
+
+
+	// i = 0;
+	// // ret_code = 0;
+	// exec = ft_calloc(1, sizeof(t_execve));
+	// get_path(shell);
+	// get_args(tree->sub_list, exec);
+	// full_path = NULL;
+	// if (ft_strchr(exec->cmd, '/') == NULL && exec->cmd[0])
+	// {
+	// 	while (shell->path && shell->path[i])
+	// 	{
+	// 		path_slash = ft_strjoin(shell->path[i], "/");
+	// 		full_path = ft_strjoin(path_slash, exec->cmd);
+	// 		free(path_slash);
+	// 		if (access(full_path, F_OK | X_OK) == 0)
+	// 			break;
+	// 		free(full_path);
+	// 		full_path = NULL;
+	// 		i++;
+	// 	}
+	// }
+	// else
+	// 	full_path = ft_strdup(exec->cmd);
+	// if ((ft_strchr(exec->cmd, '/') != NULL || full_path)
+	// 		&& (full_path && access(full_path, F_OK | X_OK) == 0))
+	// 	execve(full_path, exec->args, shell->envp);
+	// if (!full_path || !full_path[0] || access(full_path, F_OK) != 0)
+	// {
+	// 	if (full_path)
+	// 		perror(exec->cmd);
+	// 	else
+	// 		ft_printf_fd(STDERR_FILENO, "%s: No such file or directory\n", exec->cmd);
+	// 	ret_code = 127;
+	// }
+	// else if (full_path && access(full_path, F_OK | X_OK) != 0)
+	// {
+	// 	perror(full_path);
+	// 	ret_code = 126;
+	// }
+	// else
+	// {
+	// 	perror(full_path);
+	// 	ret_code = 1;
+	// }
+	// // free(full_path);
+	// ft_free_split(shell->path);
+	// ft_free_split(exec->args);
+	// free(exec->cmd);
+	// free(exec);
+	// shell->status = ret_code;
+	// exit(ret_code);
 }
 
 /**
