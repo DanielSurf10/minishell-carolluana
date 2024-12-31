@@ -69,8 +69,12 @@ void	order_env_list(t_envp **env_list)
 
 int	export_no_args(t_envp **env_list)
 {
-	order_env_list(env_list);
-	print_env_list(*env_list);
+	t_envp	*temp_env_list;
+
+	temp_env_list = env_list_copy(*env_list);
+	order_env_list(&temp_env_list);
+	print_env_list(temp_env_list);
+	free_env_list(temp_env_list);
 	return (0);
 }
 
