@@ -213,6 +213,7 @@ int		key_exist(char *arg, t_envp *env_list);
 int		export_no_args(t_envp **env_list);
 int		insert_var(char *arg, t_envp **env_list);
 char	**get_key_value(char *arg, char **dest);
+t_envp	*env_list_copy(t_envp *env_list);
 
 //unset.c
 int		unset(char **arg, t_envp **env_list);
