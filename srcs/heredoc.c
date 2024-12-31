@@ -80,12 +80,12 @@ void	process_heredoc_input(t_list *delimiter,
 		}
 		else
 		{
-			free(delimiter->token.lexeme);
-			delimiter->token.lexeme = ft_strdup(file_path);
 			free(line);
 			break ;
 		}
 		free(line);
 	}
+	free(delimiter->token.lexeme);
+	delimiter->token.lexeme = ft_strdup(file_path);
 	free(expanded_delimiter);
 }
