@@ -42,6 +42,7 @@ int	ft_exit(t_minishell *shell, char **arg)
 	rl_clear_history();
 	free(shell->prompt);
 	exit_status = exit_status % 256;
+	ft_printf_fd(STDERR_FILENO, "exit\n");
 	exit(exit_status);
 }
 
@@ -75,6 +76,12 @@ int	is_numeric_arg(char *arg)
 	int	idx;
 
 	idx = 0;
+	if (arg[0] == '\0')
+	{
+		ft_printf_fd(STDERR_FILENO,
+				"minihell: exit: %s: numeric argument required\n", arg);
+		return (0);
+	}
 	while (arg[idx])
 	{
 		if (ft_isalpha(arg[idx]))
