@@ -23,9 +23,10 @@
 # include <readline/history.h>
 # include "../libs/libft/libft.h"
 # include "../libs/ft_printf/src/ft_printf.h"
-#include <sys/wait.h>
-#include <fcntl.h>
-#include "get_next_line.h"
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include "get_next_line.h"
 
 extern int volatile	g_signal;
 

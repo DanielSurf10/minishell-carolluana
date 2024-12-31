@@ -67,6 +67,15 @@ void	get_args(t_list *sub_list, t_execve *exec)
 	exec->args = args;
 }
 
+int	is_a_dir(char *path)
+{
+	struct stat	buf;
+
+	if (stat(path, &buf) == 0 && S_ISDIR(buf.st_mode))
+		return (1);
+	return (0);
+}
+
 /**
  * exec_cmd - Executes a command by searching for it in the PATH and using execve.
  * @tree: Pointer to the syntax tree node containing the command.
@@ -139,6 +148,12 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 	if (access(full_path, X_OK) != 0)
 	{
 		perror(exec->cmd);
+		// dar free nas coisas
+		exit(126);
+	}
+	if (is_a_dir(full_path))
+	{
+		ft_printf_fd(STDERR_FILENO, "%s: is a directory\n", exec->cmd);
 		// dar free nas coisas
 		exit(126);
 	}
