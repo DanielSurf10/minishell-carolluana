@@ -77,20 +77,24 @@ int	export_no_args(t_envp **env_list)
 int	export(char **arg, t_envp **env_list)
 {
 	int		status_command;
+	int		status_tmp;
 	int		i;
 
+	i = 0;
 	status_command = 0;
-	i = -1;
 	if (*arg == NULL)
 		export_no_args(env_list);
-	while (arg[++i])
+	while (arg[i])
 	{
-		if (is_equal(arg[i], "export") == 1)
-		{
+		// if (is_equal(arg[i], "export") == 1)
+		// {
+		// 	status_command = 1;
+		// 	i++;
+		// }
+		status_tmp = insert_var(arg[i], env_list);
+		if (status_tmp != 0)
 			status_command = 1;
-			i++;
-		}
-		status_command = insert_var(arg[i], env_list);
+		i++;
 	}
 	return (status_command);
 }

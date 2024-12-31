@@ -18,7 +18,6 @@ int	insert_var(char *arg, t_envp **env_list)
 	int		status_command;
 
 	new_env = NULL;
-	status_command = 0;
 	if (!arg || !env_list)
 		return (0);
 	new_env = get_key_value(arg, new_env);
