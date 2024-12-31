@@ -177,7 +177,7 @@ int		pwd(void);
 int		echo(char **arg);
 int		change_directory(t_envp **env_list, char **path);
 void	update_pwd(t_envp **env_list, char *old_pwd, char *pwd);
-int		check_path(char **path);
+int		check_path(char *new_path, char **path);
 int		check_num_path(char **path);
 
 //exec_builtin.c
