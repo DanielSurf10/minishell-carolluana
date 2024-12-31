@@ -24,7 +24,7 @@ int	echo(char **arg)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		return (0);
 	}
-	if (arg[i] && ft_strcmp(arg[i], "-n") == 0)
+	while (arg[i] && ft_strncmp(arg[i], "-n", 2) == 0)
 	{
 		has_flag = 1;
 		i++;
