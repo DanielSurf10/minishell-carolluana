@@ -12,7 +12,7 @@
 
 NAME = libft.a
 
-FLAGS = -Wall -Werror -Wextra -c
+FLAGS = -Wall -Werror -Wextra -c -g3
 
 FILES = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
  ft_isdigit.c ft_isprint.c ft_itoa.c ft_memchr.c ft_memcmp.c ft_memcpy.c \
@@ -26,8 +26,9 @@ FILES = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c 
 FILES_O = $(FILES:%.c=%.o)
 
 %.o: %.c
-	cc $(FLAGS) $< -o $@ -I includes
-	ar rcs ${NAME} $@
+	@echo "compiling $<"
+	@cc $(FLAGS) $< -o $@ -I includes
+	@ar rcs ${NAME} $@
 
 all: ${NAME}
 ${NAME}: ${FILES_O}

@@ -76,6 +76,27 @@ int	is_a_dir(char *path)
 	return (0);
 }
 
+void	free_minishell(t_minishell *shell)
+{
+	close_fd(shell);
+	ft_free_split(shell->path);
+	free_tree(&shell->tree);
+	free_env_list(shell->envp_list);
+	shell->envp_list = NULL;
+	free_envp_str(shell->envp);
+	rl_clear_history();
+	// free(shell->prompt);
+	// shell->prompt = NULL;
+	free_pid_list(&shell->pid);
+}
+
+void	free_execve(t_execve *exec)
+{
+	ft_free_split(exec->args);
+	free(exec->cmd);
+	free(exec);
+}
+
 /**
  * exec_cmd - Executes a command by searching for it in the PATH and using execve.
  * @tree: Pointer to the syntax tree node containing the command.
@@ -92,7 +113,7 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 	//	2 - Verificar se o comando é pra expandir ou não
 	//	3 - Se sim, expandir usando a PATH
 	//		3.1 - Se a PATH não existir, comando não encontrado e dar exit 127
-	//		3.2 - Se não for entrado na PATH, comando não encontrado e dar exit 127
+	//		3.2 - Se executornão for entrado na PATH, comando não encontrado e dar exit 127
 	//	4 - Se não, usar o próprio exec->cmd
 	//	5 - colocar o comando no full_path
 	//	6 - verificar se o full_path existe
@@ -124,8 +145,11 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 
 		if (shell->path == NULL || full_path == NULL)
 		{
+			// ft_putstr_fd(exec->cmd, STDERR_FILENO);
+			// ft_printf_fd(STDERR_FILENO, ": No such file or directory\n");
 			ft_printf_fd(STDERR_FILENO, "%s: No such file or directory\n", exec->cmd);
-			free(exec);
+			free_execve(exec);
+			free_minishell(shell);
 			exit(127);
 		}
 	}
@@ -135,7 +159,8 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 	if (full_path == NULL)
 	{
 		ft_printf_fd(STDERR_FILENO, "%s: No such file or directory\n", exec->cmd);
-		free(exec);
+		free_execve(exec);
+		free_minishell(shell);
 		exit(127);
 	}
 
@@ -143,18 +168,24 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 	{
 		perror(exec->cmd);
 		// dar free nas coisas
+		free_execve(exec);
+		free_minishell(shell);
 		exit(127);
 	}
 	if (access(full_path, X_OK) != 0)
 	{
 		perror(exec->cmd);
 		// dar free nas coisas
+		free_execve(exec);
+		free_minishell(shell);
 		exit(126);
 	}
 	if (is_a_dir(full_path))
 	{
 		ft_printf_fd(STDERR_FILENO, "%s: is a directory\n", exec->cmd);
 		// dar free nas coisas
+		free_execve(exec);
+		free_minishell(shell);
 		exit(126);
 	}
 
@@ -165,7 +196,8 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 	perror(full_path);
 
 	// dar free nas coisas
-
+	free_execve(exec);
+	free_minishell(shell);
 	exit(1);
 
 
@@ -213,8 +245,8 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 	// 	ret_code = 1;
 	// }
 	// // free(full_path);
-	// ft_free_split(shell->path);
-	// ft_free_split(exec->args);
+	// ft_ft_free_split(shell->path);
+	// ft_ft_free_split(exec->args);
 	// free(exec->cmd);
 	// free(exec);
 	// shell->status = ret_code;
@@ -282,10 +314,12 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 				if (is_builtin(tree->left))
 				{
 					shell->status = execute_builtin(shell, tree->left);
+					free_minishell(shell);
 					exit(shell->status);
 				}
 				exec_cmd(tree->left, shell);
 			}
+			free_minishell(shell);
 			exit(1);
 		}
 		ft_lstadd_back(&(shell->pid), ft_lstnew((void *)((long)pid[0])));
@@ -309,10 +343,12 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 			if (is_builtin(tree->right))
 			{
 				shell->status = execute_builtin(shell, tree->right);
+				free_minishell(shell);
 				exit(shell->status);
 			}
 			exec_cmd(tree->right, shell);
 		}
+		free_minishell(shell);
 		exit(1);
 	}
 	ft_lstadd_back(&(shell->pid), ft_lstnew((void *)((long)pid[1])));

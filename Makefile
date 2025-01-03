@@ -66,9 +66,9 @@ ft_printf:
 
 # compiling objects files
 obj/%.o: srcs/%.c ./include/minishell.h
-			mkdir -p $(dir $@)
+			@mkdir -p $(dir $@)
 			@cc $(FLAGS) $(HEADERS) -c $< -o $@
-			@echo "compiling objects"
+			@echo "compiling $<"
 
 # cleanning up objects files
 clean:

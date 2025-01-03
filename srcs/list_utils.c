@@ -76,6 +76,7 @@ void	free_pid_list(t_lst **pid)
 		*pid = (*pid)->next;
 		free(curr);
 	}
+	*pid = NULL;
 }
 
 void	*free_tree(t_tree **tree)
