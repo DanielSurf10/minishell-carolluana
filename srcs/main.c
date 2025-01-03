@@ -52,6 +52,7 @@ int	main(int argc __attribute__((unused)), \
 		char **argv __attribute__((unused)), char **envp)
 {
 	t_minishell	shell;
+	int			prompt_has_only_spaces;
 
 	// char *envp[] = { "HOME=/home/daniel", "PATH=/bin:/usr/bin",
 	// 	"PWD=/home/daniel/Documentos/GitHub/minishell-carolluana", NULL };
@@ -86,6 +87,9 @@ int	main(int argc __attribute__((unused)), \
 		shell.token_list = NULL;
 		shell.tree = NULL;
 		shell.token_list = tokenizer(shell.prompt);
+
+		prompt_has_only_spaces = shell.prompt[0] != '\0' && ft_is_space_str(shell.prompt) == 0;
+
 		free(shell.prompt);
 		shell.prompt = NULL;
 		if (shell.token_list)
@@ -106,7 +110,7 @@ int	main(int argc __attribute__((unused)), \
 			else
 				shell.status = 2;
 		}
-		else if (shell.prompt[0] != '\0' && ft_is_space_str(shell.prompt) == 0)
+		else if (prompt_has_only_spaces)
 			ft_printf_fd(STDERR_FILENO, "Syntax error\n");
 		add_history(shell.prompt);
 		free_envp_str(shell.envp);
