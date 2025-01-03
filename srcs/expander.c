@@ -17,6 +17,8 @@ void	expander(t_list *sub_list, t_minishell *shell)
 	t_list	*node;
 	char	*temp;
 
+	// return ;
+
 	node = sub_list;
 	while (node)
 	{
@@ -93,6 +95,7 @@ int	expander_var(char *str, int i, t_minishell *shell, char **result)
 		temp = *result;
 		*result = ft_strjoin(*result, value);
 		free(temp);
+		free(value);
 	}
 	else if (ft_strcmp(var, "?") == 0)
 		handle_state(var, shell, result);
