@@ -90,6 +90,7 @@ int	main(int argc __attribute__((unused)), \
 
 		prompt_has_only_spaces = shell.prompt[0] != '\0' && ft_is_space_str(shell.prompt) == 0;
 
+		add_history(shell.prompt);
 		free(shell.prompt);
 		shell.prompt = NULL;
 		if (shell.token_list)
@@ -112,7 +113,6 @@ int	main(int argc __attribute__((unused)), \
 		}
 		else if (prompt_has_only_spaces)
 			ft_printf_fd(STDERR_FILENO, "Syntax error\n");
-		add_history(shell.prompt);
 		free_envp_str(shell.envp);
 		free_tree(&shell.tree);
 	}
