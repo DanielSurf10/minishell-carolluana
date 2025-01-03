@@ -39,3 +39,16 @@ void	state_requires_backtrack(t_tkn_data *tkn_data, int	*i)
 		*i = (*i) - 1;
 	}
 }
+
+void	token_clear_list(t_list **token_list)
+{
+	t_list	*aux;
+
+	while (*token_list)
+	{
+		aux = *token_list;
+		*token_list = (*token_list)->next;
+		free(aux->token.lexeme);
+		free(aux);
+	}
+}

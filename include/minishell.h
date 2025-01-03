@@ -145,6 +145,7 @@ int		is_metachar(char c);
 int		token_get_state_50(char c);
 int		token_get_state_51(char c);
 int		token_get_state_52(char c);
+void	token_clear_list(t_list **token_list);
 
 //utils.c
 void	ft_strcpy(char *prompt, char *copy);

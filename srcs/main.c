@@ -109,7 +109,10 @@ int	main(int argc __attribute__((unused)), \
 				shell.token_list = NULL;
 			}
 			else
+			{
+				token_clear_list(&shell.token_list);
 				shell.status = 2;
+			}
 		}
 		else if (prompt_has_only_spaces)
 			ft_printf_fd(STDERR_FILENO, "Syntax error\n");
