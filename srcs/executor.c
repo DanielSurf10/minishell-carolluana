@@ -6,7 +6,7 @@
 /*   By: lsouza-r <lsouza-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:59:12 by lsouza-r          #+#    #+#             */
-/*   Updated: 2024/12/29 15:18:35 by lsouza-r         ###   ########.fr       */
+/*   Updated: 2024/12/29 18:01:41 by lsouza-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 	full_path = NULL;
 	get_path(shell);
 	get_args(tree->sub_list, exec);
-
 	if (ft_strchr(exec->cmd, '/') == NULL) // Comando para expandir
 	{
 		while (shell->path && shell->path[i])
@@ -155,7 +154,6 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 	}
 	else
 		full_path = ft_strdup(exec->cmd);
-
 	if (full_path == NULL)
 	{
 		ft_printf_fd(STDERR_FILENO, "%s: No such file or directory\n", exec->cmd);
