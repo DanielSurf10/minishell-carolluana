@@ -24,7 +24,11 @@ int	echo(char **arg)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		return (0);
 	}
-	if (arg[i] && ft_strcmp(arg[i], "-n") == 0)
+
+	// Aqui tem que ver se vai aceitar "-nnnn" e "-ne"
+	// Ou só "-n" e "-n -n"
+
+	while (arg[i] && ft_strncmp(arg[i], "-n", 2) == 0)
 	{
 		has_flag = 1;
 		i++;

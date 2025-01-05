@@ -55,11 +55,12 @@ int		ft_tolower(int c);
 int		ft_toupper(int c);
 
 //ft_printf
-int	ft_printf(const char *str, ...);
-int	print_format(const char *str, va_list args, int idx);
-int	ft_putnbr_hex(unsigned long nbr, int type);
-int	ft_putnbr_dec(unsigned int n);
-int	ft_put_pointer(unsigned long nbr, int type);
-int	print_format_hash(unsigned long nbr, char type);
+int		ft_printf(const char *str, ...);
+int		print_format(const char *str, va_list args, int idx);
+int		ft_putnbr_hex(unsigned long nbr, int type);
+int		ft_putnbr_dec(unsigned int n);
+int		ft_put_pointer(unsigned long nbr, int type);
+int		print_format_hash(unsigned long nbr, char type);
+void	ft_putstr_fd(char *s, int fd);
 
 #endif

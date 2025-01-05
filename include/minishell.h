@@ -23,8 +23,10 @@
 # include <readline/history.h>
 # include "../libs/libft/libft.h"
 # include "../libs/ft_printf/src/ft_printf.h"
-#include <sys/wait.h>
-#include <fcntl.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include "get_next_line.h"
 
 extern int volatile	g_signal;
 
@@ -143,6 +145,7 @@ int		is_metachar(char c);
 int		token_get_state_50(char c);
 int		token_get_state_51(char c);
 int		token_get_state_52(char c);
+void	token_clear_list(t_list **token_list);
 
 //utils.c
 void	ft_strcpy(char *prompt, char *copy);
@@ -175,7 +178,7 @@ int		pwd(void);
 int		echo(char **arg);
 int		change_directory(t_envp **env_list, char **path);
 void	update_pwd(t_envp **env_list, char *old_pwd, char *pwd);
-int		check_path(char **path);
+int		check_path(char *new_path, char **path);
 int		check_num_path(char **path);
 
 //exec_builtin.c
@@ -212,6 +215,7 @@ int		key_exist(char *arg, t_envp *env_list);
 int		export_no_args(t_envp **env_list);
 int		insert_var(char *arg, t_envp **env_list);
 char	**get_key_value(char *arg, char **dest);
+t_envp	*env_list_copy(t_envp *env_list);
 
 //unset.c
 int		unset(char **arg, t_envp **env_list);

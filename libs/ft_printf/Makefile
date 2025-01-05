@@ -12,7 +12,7 @@
 
 NAME	= libftprintf.a
 CC		= cc
-FLAGS	= -Wall -Wextra -Werror -c
+FLAGS	= -Wall -Wextra -Werror -c -g3
 INCLUDE	= include
 
 SRC	= ${addprefix src/, \
@@ -42,12 +42,13 @@ ${NAME}: ${OBJ}
 bonus: ${OBJ_BONUS}
 
 obj/%.o: src/%.c
-	$(shell if [ ! -d obj ]; then mkdir -p obj; fi)
-	${CC} ${FLAGS} -I ${INCLUDE} $< -o $@
+	@$(shell if [ ! -d obj ]; then mkdir -p obj; fi)
+	@${CC} ${FLAGS} -I ${INCLUDE} $< -o $@
 	@ar rcs ${NAME} $@
 
 obj/%.o: src_bonus/%.c
 	$(shell if [ ! -d obj ]; then mkdir -p obj; fi)
+	@echo "compiling $<"
 	${CC} ${FLAGS} -I ${INCLUDE} $< -o $@
 	@ar rcs ${NAME} $@
 

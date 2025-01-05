@@ -52,6 +52,10 @@ int	main(int argc __attribute__((unused)), \
 		char **argv __attribute__((unused)), char **envp)
 {
 	t_minishell	shell;
+	int			prompt_has_only_spaces;
+
+	// char *envp[] = { "HOME=/home/daniel", "PATH=/bin:/usr/bin",
+	// 	"PWD=/home/daniel/Documentos/GitHub/minishell-carolluana", NULL };
 
 	init_shell(&shell);
 	shell.envp_list = create_env_list(envp);
@@ -61,7 +65,18 @@ int	main(int argc __attribute__((unused)), \
 		init_signals();
 		dup2(shell.fd_stdin, STDIN_FILENO); // lembrar de colocar se der erro dup2 < 0
 		dup2(shell.fd_stdout, STDOUT_FILENO); // lembrar de colocar se der erro dup2 < 0
-		shell.prompt = readline("minihell: ");
+		// shell.prompt = readline("minihell: ");
+
+		if (isatty(0))
+			shell.prompt = readline("minihell: ");
+		else
+		{
+			char *line;
+			line = get_next_line(0);
+			shell.prompt = ft_strtrim(line, "\n");
+			free(line);
+		}
+
 		if (g_signal)
 		{
 			shell.status = g_signal;
@@ -72,6 +87,12 @@ int	main(int argc __attribute__((unused)), \
 		shell.token_list = NULL;
 		shell.tree = NULL;
 		shell.token_list = tokenizer(shell.prompt);
+
+		prompt_has_only_spaces = shell.prompt[0] != '\0' && ft_is_space_str(shell.prompt) == 0;
+
+		add_history(shell.prompt);
+		free(shell.prompt);
+		shell.prompt = NULL;
 		if (shell.token_list)
 		{
 			if (valid_list(shell.token_list, &shell))
@@ -84,17 +105,19 @@ int	main(int argc __attribute__((unused)), \
 				wait_pid(&shell);
 				close_fd(&shell);
 
-				free_tree(&shell.tree);
 				free_pid_list(&shell.pid);
 				shell.token_list = NULL;
 			}
+			else
+			{
+				token_clear_list(&shell.token_list);
+				shell.status = 2;
+			}
 		}
-		else if (shell.prompt[0] != '\0' && ft_is_space_str(shell.prompt) == 0)
-		{
+		else if (prompt_has_only_spaces)
 			ft_printf_fd(STDERR_FILENO, "Syntax error\n");
-			shell.status = 2;
-		}
-		add_history(shell.prompt);
+		free_envp_str(shell.envp);
+		free_tree(&shell.tree);
 	}
 	rl_clear_history();
 	free_env_list(shell.envp_list);

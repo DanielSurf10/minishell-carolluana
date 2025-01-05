@@ -27,7 +27,7 @@ void	get_path(t_minishell *shell)
 			break;
 		i++;
 	}
-	if (shell->path[i] != NULL)
+	if (shell->envp[i] != NULL)
 		shell->path = ft_split(shell->envp[i] + 5, ':');
 	else
 		shell->path = NULL;
@@ -67,6 +67,36 @@ void	get_args(t_list *sub_list, t_execve *exec)
 	exec->args = args;
 }
 
+int	is_a_dir(char *path)
+{
+	struct stat	buf;
+
+	if (stat(path, &buf) == 0 && S_ISDIR(buf.st_mode))
+		return (1);
+	return (0);
+}
+
+void	free_minishell(t_minishell *shell)
+{
+	close_fd(shell);
+	ft_free_split(shell->path);
+	free_tree(&shell->tree);
+	free_env_list(shell->envp_list);
+	shell->envp_list = NULL;
+	free_envp_str(shell->envp);
+	rl_clear_history();
+	// free(shell->prompt);
+	// shell->prompt = NULL;
+	free_pid_list(&shell->pid);
+}
+
+void	free_execve(t_execve *exec)
+{
+	ft_free_split(exec->args);
+	free(exec->cmd);
+	free(exec);
+}
+
 /**
  * exec_cmd - Executes a command by searching for it in the PATH and using execve.
  * @tree: Pointer to the syntax tree node containing the command.
@@ -74,19 +104,31 @@ void	get_args(t_list *sub_list, t_execve *exec)
  */
 void	exec_cmd(t_tree	*tree, t_minishell *shell)
 {
-	int			ret_code;
 	t_execve	*exec;
 	int			i;
 	char		*path_slash;
 	char		*full_path;
 
+	//	1 - Pegar a variável PATH
+	//	2 - Verificar se o comando é pra expandir ou não
+	//	3 - Se sim, expandir usando a PATH
+	//		3.1 - Se a PATH não existir, comando não encontrado e dar exit 127
+	//		3.2 - Se executornão for entrado na PATH, comando não encontrado e dar exit 127
+	//	4 - Se não, usar o próprio exec->cmd
+	//	5 - colocar o comando no full_path
+	//	6 - verificar se o full_path existe
+	//		6.1 - Se não, comando não encontrado e dar exit 127
+	//	7 - Verificar se full_path tem permissão de execução
+	//		7.1 - Se não, permissão negada e dar exit 126
+	//	8 - Executar o comando
+	//		8.1 - Se falhar, perror(exec->cmd) e exit 1
+
 	i = 0;
-	ret_code = 0;
 	exec = ft_calloc(1, sizeof(t_execve));
+	full_path = NULL;
 	get_path(shell);
 	get_args(tree->sub_list, exec);
-	full_path = NULL;
-	if (ft_strchr(exec->cmd, '/') == NULL && exec->cmd[0])
+	if (ft_strchr(exec->cmd, '/') == NULL) // Comando para expandir
 	{
 		while (shell->path && shell->path[i])
 		{
@@ -94,42 +136,119 @@ void	exec_cmd(t_tree	*tree, t_minishell *shell)
 			full_path = ft_strjoin(path_slash, exec->cmd);
 			free(path_slash);
 			if (access(full_path, F_OK | X_OK) == 0)
-				break;
+				break ;
 			free(full_path);
 			full_path = NULL;
 			i++;
 		}
+
+		if (shell->path == NULL || full_path == NULL)
+		{
+			// ft_putstr_fd(exec->cmd, STDERR_FILENO);
+			// ft_printf_fd(STDERR_FILENO, ": No such file or directory\n");
+			ft_printf_fd(STDERR_FILENO, "%s: No such file or directory\n", exec->cmd);
+			free_execve(exec);
+			free_minishell(shell);
+			exit(127);
+		}
 	}
 	else
 		full_path = ft_strdup(exec->cmd);
-	if (ft_strchr(exec->cmd, '/') != NULL || full_path)
-		execve(full_path, exec->args, shell->envp);
-	if (!full_path || !full_path[0] || access(full_path, F_OK) != 0)
+	if (full_path == NULL)
 	{
-		if (full_path)
-			perror(exec->cmd);
-		else
-			ft_printf_fd(STDERR_FILENO, "%s: No such file or directory\n", exec->cmd);
-		ret_code = 127;
+		ft_printf_fd(STDERR_FILENO, "%s: No such file or directory\n", exec->cmd);
+		free_execve(exec);
+		free_minishell(shell);
+		exit(127);
 	}
-	else if (full_path && access(full_path, F_OK | X_OK) != 0)
+
+	if (access(full_path, F_OK) != 0)
 	{
-		perror(full_path);
-		ret_code = 126;
+		perror(exec->cmd);
+		// dar free nas coisas
+		free_execve(exec);
+		free_minishell(shell);
+		exit(127);
 	}
-	else
+	if (access(full_path, X_OK) != 0)
 	{
-		perror(full_path);
-		ret_code = 1;
+		perror(exec->cmd);
+		// dar free nas coisas
+		free_execve(exec);
+		free_minishell(shell);
+		exit(126);
 	}
-	// if (full_path)
-	// 	free(full_path);
-	ft_free_split(shell->path);
-	ft_free_split(exec->args);
-	free(exec->cmd);
-	free(exec);
-	shell->status = ret_code;
-	exit(ret_code);
+	if (is_a_dir(full_path))
+	{
+		ft_printf_fd(STDERR_FILENO, "%s: is a directory\n", exec->cmd);
+		// dar free nas coisas
+		free_execve(exec);
+		free_minishell(shell);
+		exit(126);
+	}
+
+	execve(full_path, exec->args, shell->envp);
+
+	// A patir daqui deu ruim
+
+	perror(full_path);
+
+	// dar free nas coisas
+	free_execve(exec);
+	free_minishell(shell);
+	exit(1);
+
+
+	// i = 0;
+	// // ret_code = 0;
+	// exec = ft_calloc(1, sizeof(t_execve));
+	// get_path(shell);
+	// get_args(tree->sub_list, exec);
+	// full_path = NULL;
+	// if (ft_strchr(exec->cmd, '/') == NULL && exec->cmd[0])
+	// {
+	// 	while (shell->path && shell->path[i])
+	// 	{
+	// 		path_slash = ft_strjoin(shell->path[i], "/");
+	// 		full_path = ft_strjoin(path_slash, exec->cmd);
+	// 		free(path_slash);
+	// 		if (access(full_path, F_OK | X_OK) == 0)
+	// 			break;
+	// 		free(full_path);
+	// 		full_path = NULL;
+	// 		i++;
+	// 	}
+	// }
+	// else
+	// 	full_path = ft_strdup(exec->cmd);
+	// if ((ft_strchr(exec->cmd, '/') != NULL || full_path)
+	// 		&& (full_path && access(full_path, F_OK | X_OK) == 0))
+	// 	execve(full_path, exec->args, shell->envp);
+	// if (!full_path || !full_path[0] || access(full_path, F_OK) != 0)
+	// {
+	// 	if (full_path)
+	// 		perror(exec->cmd);
+	// 	else
+	// 		ft_printf_fd(STDERR_FILENO, "%s: No such file or directory\n", exec->cmd);
+	// 	ret_code = 127;
+	// }
+	// else if (full_path && access(full_path, F_OK | X_OK) != 0)
+	// {
+	// 	perror(full_path);
+	// 	ret_code = 126;
+	// }
+	// else
+	// {
+	// 	perror(full_path);
+	// 	ret_code = 1;
+	// }
+	// // free(full_path);
+	// ft_ft_free_split(shell->path);
+	// ft_ft_free_split(exec->args);
+	// free(exec->cmd);
+	// free(exec);
+	// shell->status = ret_code;
+	// exit(ret_code);
 }
 
 /**
@@ -193,10 +312,12 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 				if (is_builtin(tree->left))
 				{
 					shell->status = execute_builtin(shell, tree->left);
+					free_minishell(shell);
 					exit(shell->status);
 				}
 				exec_cmd(tree->left, shell);
 			}
+			free_minishell(shell);
 			exit(1);
 		}
 		ft_lstadd_back(&(shell->pid), ft_lstnew((void *)((long)pid[0])));
@@ -220,10 +341,12 @@ int	handle_pipe(t_tree *tree, t_minishell *shell, int left)
 			if (is_builtin(tree->right))
 			{
 				shell->status = execute_builtin(shell, tree->right);
+				free_minishell(shell);
 				exit(shell->status);
 			}
 			exec_cmd(tree->right, shell);
 		}
+		free_minishell(shell);
 		exit(1);
 	}
 	ft_lstadd_back(&(shell->pid), ft_lstnew((void *)((long)pid[1])));
@@ -350,11 +473,15 @@ void	wait_pid(t_minishell *shell)
 void	close_fd(t_minishell *shell)
 {
 	t_lst	*curr;
+	t_lst	*temp;
 
 	curr = shell->fd_list;
 	while (curr)
 	{
 		close((long)curr->content);
+		temp = curr;
 		curr = curr->next;
+		free(temp);
 	}
+	shell->fd_list = NULL;
 }

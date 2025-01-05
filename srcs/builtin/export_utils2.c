@@ -18,7 +18,6 @@ int	insert_var(char *arg, t_envp **env_list)
 	int		status_command;
 
 	new_env = NULL;
-	status_command = 0;
 	if (!arg || !env_list)
 		return (0);
 	new_env = get_key_value(arg, new_env);
@@ -76,4 +75,23 @@ char	**new_var_split(char *arg)
 	else
 		new_var = ft_split(arg, '=');
 	return (new_var);
+}
+
+t_envp	*env_list_copy(t_envp *env_list)
+{
+	t_envp	*temp;
+	t_envp	*new_env_list;
+	t_envp	*new_env_var;
+
+	temp = env_list;
+	new_env_list = NULL;
+	while (temp)
+	{
+		new_env_var = env_create_node();
+		new_env_var->key = ft_strdup(temp->key);
+		new_env_var->value = ft_strdup(temp->value);
+		add_node_to_list(&new_env_list, new_env_var);
+		temp = temp->next;
+	}
+	return (new_env_list);
 }

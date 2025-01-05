@@ -46,6 +46,7 @@ SRCS = $(addprefix srcs/, \
 			expander.c \
 			expander2.c \
 			heredoc.c \
+			get_next_line.c \
 		)
 
 OBJ = $(SRCS:srcs/%.c=obj/%.o)
@@ -65,9 +66,9 @@ ft_printf:
 
 # compiling objects files
 obj/%.o: srcs/%.c ./include/minishell.h
-			mkdir -p $(dir $@)
+			@mkdir -p $(dir $@)
 			@cc $(FLAGS) $(HEADERS) -c $< -o $@
-			@echo "compiling objects"
+			@echo "compiling $<"
 
 # cleanning up objects files
 clean:

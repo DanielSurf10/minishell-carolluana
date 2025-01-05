@@ -14,13 +14,22 @@
 
 char	**handle_state(char *str, t_minishell *shell, char **result)
 {
+	char	*itoa_status;
+	char	*tmp_result;
+
 	if (*result == NULL)
 	{
 		*result = ft_calloc(1, sizeof (char));
 		(*result)[0] = '\0';
 	}
 	if (*str == '?')
-		*result = ft_strjoin(*result, ft_itoa(shell->status));
+	{
+		itoa_status = ft_itoa(shell->status);
+		tmp_result = *result;
+		*result = ft_strjoin(*result, itoa_status);
+		free(tmp_result);
+		free(itoa_status);
+	}
 	return (result);
 }
 
