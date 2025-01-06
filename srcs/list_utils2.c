@@ -44,3 +44,17 @@ t_redir	*ft_lst_last(t_redir *lst)
 		lst = lst->next;
 	return (lst);
 }
+
+void	free_redir(t_redir **redir)
+{
+	t_redir	*curr;
+
+	while (*redir)
+	{
+		curr = *redir;
+		*redir = (*redir)->next;
+		free(curr->file);
+		free(curr);
+	}
+	*redir = NULL;
+}

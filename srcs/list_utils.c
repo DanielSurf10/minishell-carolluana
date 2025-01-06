@@ -89,6 +89,8 @@ void	*free_tree(t_tree **tree)
 		free_tree(&(*tree)->left);
 	if ((*tree)->sub_list)
 		free_list(&(*tree)->sub_list);
+	if ((*tree)->redir)
+		free_redir(&(*tree)->redir);
 	free(*tree);
 	*tree = NULL;
 	return (NULL);

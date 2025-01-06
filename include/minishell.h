@@ -157,6 +157,7 @@ t_redir	*ft_lst_new(char *file, int rd_type);
 void	ft_lst_add_back(t_redir **lst, t_redir *new);
 t_redir	*ft_lst_last(t_redir *lst);
 void	free_pid_list(t_lst **pid);
+void	free_redir(t_redir **redir);
 
 //parsing-tree
 t_tree	*build_tree(t_list	*tkn_list);
