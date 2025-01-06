@@ -378,6 +378,7 @@ int	handle_redir(t_tree	*tree, t_minishell *shell)
 			if (fd == -1)
 			{
 				perror(expanded_file);
+				free(expanded_file);
 				return (1);
 			}
 			dup2(fd, STDOUT_FILENO);
@@ -389,6 +390,7 @@ int	handle_redir(t_tree	*tree, t_minishell *shell)
 			if (fd == -1)
 			{
 				perror(expanded_file);
+				free(expanded_file);
 				return (1);
 			}
 			dup2(fd, STDOUT_FILENO);
@@ -400,6 +402,7 @@ int	handle_redir(t_tree	*tree, t_minishell *shell)
 			if (fd == -1)
 			{
 				perror(expanded_file);
+				free(expanded_file);
 				return (1);
 			}
 			dup2(fd, STDIN_FILENO);
@@ -415,8 +418,8 @@ int	handle_redir(t_tree	*tree, t_minishell *shell)
 		expanded_file = NULL;
 		node = node->next;
 	}
-	free(expanded_file);
-	expanded_file = NULL;
+	// free(expanded_file);
+	// expanded_file = NULL;
 	return (0);
 }
 /**
